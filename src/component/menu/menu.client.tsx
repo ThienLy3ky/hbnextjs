@@ -1,7 +1,8 @@
-import NameShop from "component/logo/name";
+import NameShop from "@/src/component/logo/name";
 import * as React from "react";
-import CartContext from "component/context/client.context";
-import CartDropdown from "page/client/cart/cart.dropdown";
+import CartContext from "@/src/component/context/client.context";
+import CartDropdown from "@/src/pages/cart/cart.dropdown";
+import Link from "next/link";
 const MenuClient = (props: any) => {
   const { data } = props;
   console.log(data);
@@ -31,16 +32,16 @@ const MenuClient = (props: any) => {
                   id="navbarCollapse"
                 >
                   <div className="navbar-nav mr-auto py-0">
-                    <a href="/" className="nav-item nav-link active">
+                    <Link href="/" className="nav-item nav-link active">
                       Trang Chủ
-                    </a>
-                    <a href="/shops" className="nav-item nav-link">
+                    </Link>
+                    <Link href="/shops" className="nav-item nav-link">
                       Nhãn Hàng
-                    </a>
+                    </Link>
                     <div className="nav-item dropdowns">
-                      <a href="/checkout" className="nav-link nav-item">
+                      <Link href="/checkout" className="nav-link nav-item">
                         Thanh Toán
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div
@@ -48,9 +49,9 @@ const MenuClient = (props: any) => {
                     style={{ display: "block !important" }}
                   >
                     <div className="btn px-0 ml-3 no-padding no-margin">
-                      <a href="#/" className="btn px-0">
+                      <Link href="#/" className="btn px-0">
                         <i className="fas fa-heart text-primary"></i>
-                      </a>
+                      </Link>
                       <span
                         className="badge number-noti rounded-circle"
                         style={{ paddingBottom: "2px" }}
@@ -59,13 +60,13 @@ const MenuClient = (props: any) => {
                       </span>
                     </div>
                     <div className="btn px-0 ml-3 no-padding no-margin">
-                      <a
+                      <Link
                         className="btn px-0 ml-3 no-padding no-margin"
                         data-toggle="collapse"
                         href="#cart-dropdown"
                       >
                         <i className="fas fa-shopping-cart text-primary"></i>
-                      </a>
+                      </Link>
                       <span
                         className="badge number-noti rounded-circle"
                         style={{ paddingBottom: "2px" }}

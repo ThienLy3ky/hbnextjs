@@ -1,4 +1,4 @@
-import NameShop from "component/logo/name";
+import NameShop from "@/src/component/logo/name";
 
 const Header = (props: any) => {
   const { data } = props;

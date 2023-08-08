@@ -1,12 +1,14 @@
-import CardProductShort from "component/card/card.product.short";
-import TitlePage from "component/title";
-import products from "config/MOCK_DATA.product.json";
-import Pagination from "./pagination";
-import SortClient from "./sort";
-import FilterClient from "./filter";
+
+import CardProductShort from "@/src/component/card/card.product.short";
+import TitlePage from "@/src/component/title";
+import products from "@/src/config/MOCK_DATA.product.json";
+import Pagination from "@/src/component/pagination/pagination-client";
+import SortClient from "@/src/component/sort/sort-client";
+import FilterClient from "@/src/component/filter/filter-client";
+import ClientLayout from "@/src/component/layout/client.layout";
 export default function Shops() {
   return (
-    <div>
+    <ClientLayout>
       <TitlePage
         nameLink={{ name: "Trang Chủ", link: "/" }}
         namePage="Nhãn Hàng"
@@ -21,7 +23,10 @@ export default function Shops() {
               </div>
 
               {products.slice(0, 10).map((product) => (
-                <div className="col-lg-4 col-md-6 col-sm-6 pb-1">
+                <div
+                  className="col-lg-4 col-md-6 col-sm-6 pb-1"
+                  key={product.id}
+                >
                   <CardProductShort
                     name={product.name}
                     image={product.image}
@@ -40,6 +45,6 @@ export default function Shops() {
           {/* <!-- Shop Product End --> */}
         </div>
       </div>
-    </div>
+    </ClientLayout>
   );
 }

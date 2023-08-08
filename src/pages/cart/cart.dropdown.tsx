@@ -1,6 +1,6 @@
 import * as React from "react";
-import CartContext from "component/context/client.context";
-import { formatMoney } from "utils/action.helper";
+import CartContext from "@/src/component/context/client.context";
+import { formatMoney } from "@/src/utils/action.helper";
 export default function CartDropdown(props: any) {
   const { carts, setCarts } = React.useContext(CartContext);
   let sumPrice = 0,

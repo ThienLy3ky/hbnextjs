@@ -5,10 +5,8 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <link rel="icon" href="/public/static/favicon.ico" />
         <meta name="deScription" content="Health and beautiful " />
-        <link rel="apple-touch-icon" href="/public/static/logo192.png" />
-        <link rel="manifest" href="/public/static/manifest.json" />
+        <link rel="manifest" href="/manifest.json" />
         <link
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
           rel="stylesheet"

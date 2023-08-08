@@ -1,14 +1,17 @@
-import { useParams, useSearchParams } from "react-router-dom";
-
-import products from "config/MOCK_DATA.product.json";
-import CardProductShort from "component/card/card.product.short";
-
+// import { useParams, useSearchParams } from "react-router-dom";
+import ClientLayout from "@/src/component/layout/client.layout";
+import products from "@/src/config/MOCK_DATA.product.json";
+import CardProductShort from "@/src/component/card/card.product.short";
+import { useRouter } from "next/router";
 export default function ProductDetail() {
-  const { id } = useParams();
+  const router = useRouter();
+  console.log("🚀 ~ file: [index].tsx:8 ~ ProductDetail ~ router:", router);
+  const { index } = router.query;
+
   const rate = Math.random();
-  const _product = products?.find((product) => product.name === id);
+  const _product = products?.find((product) => product.name === index);
   return (
-    <div>
+    <ClientLayout>
       <div className="container-fluid pb-5">
         <div className="row px-xl-5">
           <div className="col-lg-5 mb-30">
@@ -19,10 +22,10 @@ export default function ProductDetail() {
             >
               <div className="carousel-inner bg-light">
                 <div className="carousel-item active">
-                  <img className="w-100 h-100" src={_product?.image} alt="" />
+                  <img className=" h-100" src={_product?.image} alt="" />
                 </div>
                 <div className="carousel-item">
-                  <img className="w-100 h-100" src={_product?.image} alt="" />
+                  <img className=" h-100" src={_product?.image} alt="" />
                 </div>
                 <div className="carousel-item">
                   <img className="w-100 h-100" src={_product?.image} alt="" />
@@ -451,6 +454,6 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
-    </div>
+    </ClientLayout>
   );
 }

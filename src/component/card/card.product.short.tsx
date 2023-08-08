@@ -4,6 +4,7 @@ import { addCart } from "@/src/utils/cart.client";
 import { formatMoney } from "@/src/utils/action.helper";
 import Image from "next/image";
 import CardImage from "../image/image";
+import Link from "next/link";
 
 interface propsIF {
   name: string;
@@ -48,13 +49,13 @@ export default function CardProductShort(props: propsIF) {
         </div>
       </div>
       <div className="col py-4">
-        <a
+        <Link
           title={name}
           className="h6 text-decoration-none text-truncate"
           href={"/products/" + name}
         >
           {name.slice(0, 30)}
-        </a>
+        </Link>
         <div className="d-flex justify-content-betwen mt-2">
           <div className="col-6 no-padding">
             {rate}

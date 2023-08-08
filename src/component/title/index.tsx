@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Title(props: any) {
   const { nameLink, namePage } = props;
   return (
@@ -5,9 +7,9 @@ export default function Title(props: any) {
       <div className="row px-xl-5">
         <div className="col-12">
           <nav className="breadcrumb bg-light mb-30">
-            <a className="breadcrumb-item text-dark" href={nameLink?.link}>
+            <Link className="breadcrumb-item text-dark" href={nameLink?.link}>
               {nameLink?.name}
-            </a>
+            </Link>
             <span className="breadcrumb-item active">{namePage}</span>
           </nav>
         </div>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import "@/public/static/library/css/style.css";
 export default function NotFound() {
   return (
     <section className="page_404">

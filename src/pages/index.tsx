@@ -1,14 +1,15 @@
+import ClientLayout from "../component/layout/client.layout";
 import BannerClient from "@/src/component/banner/banner.client";
-import Categories from "./home/categori";
-import FlashProducts from "./home/products.flash";
-import Sale from "./home/sale";
-import Feature from "./home/feature";
+import Categories from "../component/categories/categori";
+import FlashProducts from "../component/product-flash/products.flash";
+import Sale from "../component/sale/sale";
+import Feature from "../component/header/feature";
 import TestProduct from "./home/test.component";
-import HomeSlide from "./home/slide.home";
-import ListProduct from "./home/list.product";
+import HomeSlide from "../component/slide/slide.home";
+import ListProduct from "../component/list-product-client/list.product";
 export default function home() {
   return (
-    <div>
+    <ClientLayout>
       <BannerClient />
       <Feature />
       <HomeSlide />
@@ -28,6 +29,6 @@ export default function home() {
         <ListProduct />
       </div>
       <Sale />
-    </div>
+    </ClientLayout>
   );
 }
