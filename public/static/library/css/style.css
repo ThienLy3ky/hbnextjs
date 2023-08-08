@@ -11196,11 +11196,11 @@ h6 {
   }
 }
 .btn-cart {
-  background-image: url("/image/cart.png");
-  cursor: url("/image/cart.png"), auto;
+  background-image: url("/static/image/cart.png");
+  cursor: url("/static/image/cart.png"), auto;
 }
 .btn-heart {
-  background-image: url("/image/heartnone.png");
+  background-image: url("/static/image/heartnone.png");
 }
 .btn-groups {
   position: absolute;
