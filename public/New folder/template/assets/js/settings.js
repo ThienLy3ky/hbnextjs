@@ -16,7 +16,7 @@
     //background constants
     var navbar_classes = "navbar-danger navbar-success navbar-warning navbar-dark navbar-light navbar-primary navbar-info navbar-pink";
     var sidebar_classes = "sidebar-light sidebar-dark";
-    var $body = $("body");
+    var $body = $(".container-scroller");
 
     //sidebar backgrounds
     $("#sidebar-default-theme").on("click", function() {

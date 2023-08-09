@@ -18,6 +18,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return <Component {...pageProps} />;
 }
-export function reportWebVitals(metric) {
-  console.log(metric);
-}
+// export function reportWebVitals(metric) {
+//   console.log(metric);
+// }

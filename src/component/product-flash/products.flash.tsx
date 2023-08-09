@@ -48,7 +48,7 @@ export default function FlashProducts() {
           </a>
         </div>
       </div>
-      <Script type="text/javascript" src="/static/library/js/main.js"></Script>
+      
     </div>
   );
 }

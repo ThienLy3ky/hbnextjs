@@ -5,8 +5,8 @@ import CartDropdown from "@/src/pages/cart/cart.dropdown";
 import Link from "next/link";
 const MenuClient = (props: any) => {
   const { data } = props;
-  console.log(data);
   const { carts, setCarts } = React.useContext(CartContext);
+
   return (
     <div className="container-fluid">
       <div className="banner_bg_main">
@@ -49,9 +49,9 @@ const MenuClient = (props: any) => {
                     style={{ display: "block !important" }}
                   >
                     <div className="btn px-0 ml-3 no-padding no-margin">
-                      <Link href="#/" className="btn px-0">
+                      <a href="#/" className="btn px-0">
                         <i className="fas fa-heart text-primary"></i>
-                      </Link>
+                      </a>
                       <span
                         className="badge number-noti rounded-circle"
                         style={{ paddingBottom: "2px" }}
@@ -60,13 +60,13 @@ const MenuClient = (props: any) => {
                       </span>
                     </div>
                     <div className="btn px-0 ml-3 no-padding no-margin">
-                      <Link
+                      <a
                         className="btn px-0 ml-3 no-padding no-margin"
                         data-toggle="collapse"
                         href="#cart-dropdown"
                       >
                         <i className="fas fa-shopping-cart text-primary"></i>
-                      </Link>
+                      </a>
                       <span
                         className="badge number-noti rounded-circle"
                         style={{ paddingBottom: "2px" }}

@@ -89,6 +89,17 @@
         }
       }, 1000);
     }
+
+    $('[data-toggle="minimize"]').on("click", function () {
+      if (
+        $(".container-scroller").hasClass("sidebar-toggle-display") ||
+        $(".container-scroller").hasClass("sidebar-absolute")
+      ) {
+        $(".container-scroller").toggleClass("sidebar-hidden");
+      } else {
+        $(".container-scroller").toggleClass("sidebar-icon-only");
+      }
+    });
   });
 
   // Back to top button

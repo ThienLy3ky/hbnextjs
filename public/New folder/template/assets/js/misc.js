@@ -1,7 +1,7 @@
 (function($) {
   'use strict';
   $(function() {
-    var body = $('body');
+    var body = $(".container-scroller");
     var contentWrapper = $('.content-wrapper');
     var scroller = $('.container-scroller');
     var footer = $('.footer');

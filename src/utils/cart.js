@@ -3,7 +3,7 @@ export const setCartToLS = (access_token) =>
 
 export const getCartFromLS = () => {
   try {
-    localStorage.getItem("Cart_token") || "";
+    return localStorage.getItem("Cart_token") || "";
   } catch (error) {
     console.log(error);
     return "";

@@ -1,8 +1,10 @@
 import * as React from "react";
 import CartContext from "@/src/component/context/client.context";
 import { formatMoney } from "@/src/utils/action.helper";
+import Link from "next/link";
 export default function CartDropdown(props: any) {
   const { carts, setCarts } = React.useContext(CartContext);
+
   let sumPrice = 0,
     ship = 20;
   return (
@@ -104,13 +106,13 @@ export default function CartDropdown(props: any) {
                           <p className="mb-2">{formatMoney(sumPrice + ship)}</p>
                         </div>
 
-                        <a
+                        <Link
                           type="button"
                           className="btn btn-info btn-block btn-lg"
                           href="/checkout"
                         >
                           Thanh Toán
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>

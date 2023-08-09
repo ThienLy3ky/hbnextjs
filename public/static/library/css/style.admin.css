@@ -23110,28 +23110,28 @@ input:focus {
 @font-face {
   font-family: "Rubik";
   font-weight: 300;
-  src: url("/static/fonts/Rubik/Rubik-Light.ttf");
+  src: url("/static/library/fonts/Rubik/Rubik-Light.ttf");
   /* IE9 Compat Modes */
 }
 
 @font-face {
   font-family: "Rubik";
   font-weight: 400;
-  src: url("/static/fonts/Rubik/Rubik-Regular.ttf");
+  src: url("/static/library/fonts/Rubik/Rubik-Regular.ttf");
   /* IE9 Compat Modes */
 }
 
 @font-face {
   font-family: "Rubik";
   font-weight: 500;
-  src: url("/static/fonts/Rubik/Rubik-Medium.ttf");
+  src: url("/static/library/fonts/Rubik/Rubik-Medium.ttf");
   /* IE9 Compat Modes */
 }
 
 @font-face {
   font-family: "Rubik";
   font-weight: 700;
-  src: url("/static/fonts/Rubik/Rubik-Bold.ttf");
+  src: url("/static/library/fonts/Rubik/Rubik-Bold.ttf");
   /* IE9 Compat Modes */
 }
 
@@ -32893,7 +32893,7 @@ div.tagsinput span.tag a {
 /* Sidebar */
 .sidebar {
   min-height: calc(100vh - 70px);
-  background: #191c24;
+  background: #252934;
   font-weight: normal;
   padding: 0;
   width: 244px;
@@ -32908,7 +32908,7 @@ div.tagsinput span.tag a {
   -webkit-transition: width 0.25s ease, background 0.25s ease;
   -moz-transition: width 0.25s ease, background 0.25s ease;
   -ms-transition: width 0.25s ease, background 0.25s ease;
-  background: #191c24;
+  background: white;
   width: 244px;
   height: 70px;
 }
@@ -32918,7 +32918,8 @@ div.tagsinput span.tag a {
   }
 }
 .sidebar .sidebar-brand-wrapper .sidebar-brand {
-  color: #38425e;
+  background: whitesmoke;
+  color: blue;
   font-size: 1.5rem;
   line-height: 48px;
   margin-right: 0;
@@ -32928,7 +32929,7 @@ div.tagsinput span.tag a {
 .sidebar .sidebar-brand-wrapper .sidebar-brand:active,
 .sidebar .sidebar-brand-wrapper .sidebar-brand:focus,
 .sidebar .sidebar-brand-wrapper .sidebar-brand:hover {
-  color: #252b3e;
+  color: black;
 }
 .sidebar .sidebar-brand-wrapper .sidebar-brand img {
   width: calc(244px - 120px);
@@ -33020,9 +33021,9 @@ div.tagsinput span.tag a {
   color: inherit;
 }
 .sidebar .nav .nav-item .nav-link .menu-title {
-  color: inherit;
+  color: white;
   display: inline-block;
-  font-size: 0.9375rem;
+  font-size: 1.005rem;
   line-height: 1;
   vertical-align: middle;
 }
@@ -33315,8 +33316,14 @@ div.tagsinput span.tag a {
   .nav:not(.sub-menu)
   > .nav-item:hover:not(.nav-category):not(.account-dropdown)
   > .nav-link {
-  background: #0f1015;
+  background: #465ed3;
   color: #ffffff;
+}
+.sidebar
+  .nav:not(.sub-menu)
+  > .nav-item:hover:not(.nav-category):not(.account-dropdown)
+  .menu-icon {
+  background: white;
 }
 .sidebar .nav .menu-items:nth-child(5n + 1) .nav-link .menu-icon i {
   color: #0090e7;
@@ -33657,11 +33664,53 @@ div.tagsinput span.tag a {
 }
 
 .content-wrapper {
-  background: #000000;
+  background: whitesmoke;
+  color: black;
   padding: 1.875rem 1.75rem;
   width: 100%;
   -webkit-flex-grow: 1;
   flex-grow: 1;
 }
-
+.menu-btn i::before{
+  padding: 0;
+  background: #01568200;
+  font-size: xxx-large;
+  -moz-transition: all 0.5s linear;
+  -webkit-transition: all 0.5s linear;
+  transition: all 0.5s linear;
+}
+.menu-btn.down i::before {
+  -moz-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
 /*# sourceMappingURL=maps/style.css.map */
+table thead .sorting:before {
+    right: 1em;
+    content: "\f0de";
+    font-family: 'Font Awesome\ 5 Free';
+    font-weight: 900;
+    font-size: 1rem;
+        position: absolute;
+    bottom: 0.5em;
+    display: block;
+    opacity: .3;
+}
+table thead .sorting:after {
+    content: "\f0dd";
+    font-family: 'Font Awesome\ 5 Free';
+    font-weight: 900;
+    right: 1rem;
+    font-size: 1rem;
+    position: absolute;
+    bottom: 0.5em;
+    display: block;
+    /* opacity: .3; */
+}
+table thead .sorting {
+    cursor: pointer;
+    position: relative;
+}
+.table-hover:hover{
+  background: #e2ee9991;
+}
