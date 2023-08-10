@@ -1,17 +1,20 @@
+import { TextField } from "@mui/material";
+
 export default function InputRow(props: any) {
-  const { row, classname, error, label, change, ...prop } = props;
+  const { row, classname, error, label, change, type, ...prop } = props;
   return (
     <div className={row ? "form-group row" : "form-group"}>
-      <label className="col-sm-3 col-form-label">{label}</label>
-      <div className="col-sm-9">
-        <input
-          {...prop}
-          className="form-control"
-          onChange={(e) => change(e.target.value)}
+      <label className="col-sm-2 col-form-label">{label}</label>
+      <div className="col-sm-10">
+        <TextField
+          type={type}
+          error={error}
+          id="outlined-error"
+          label={error ? error : ""}
+          defaultValue=""
+          size="small"
+          style={{ padding: "5px", width: "100%" }}
         />
-        <i style={{ color: "red", marginLeft: "10px", fontSize: "0.8rem" }}>
-          error
-        </i>
       </div>
     </div>
   );
