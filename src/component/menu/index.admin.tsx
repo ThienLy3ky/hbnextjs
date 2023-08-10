@@ -1,14 +1,58 @@
 import React from "react";
 import ItemMenuAdmin from "../items/menu.admin.item";
-
+import { useRouter } from "next/router";
 export function MenuAdmin() {
+  const menu = [
+    {
+      name: "Đơn hàng",
+      link: "/manager/bills",
+      icon: <i className="mdi mdi-file-document"></i>,
+    },
+    {
+      name: "Mặt hàng",
+      link: "/manager/products",
+      icon: <i className="mdi mdi-pharmacy"></i>,
+    },
+    {
+      name: "Kích thước",
+      link: "/manager/size-product",
+      icon: <i className="mdi mdi-package-variant"></i>,
+    },
+    {
+      name: "Loại mặt hàng",
+      link: "/manager/type-product",
+      icon: <i className="mdi mdi-dropbox"></i>,
+    },
+    {
+      name: "Danh mục mặt hàng",
+      link: "/manager/category",
+      icon: <i className="mdi mdi-format-list-bulleted-type"></i>,
+    },
+    {
+      name: "Nhóm mặt hàng",
+      link: "/manager/group-product",
+      icon: <i className="mdi mdi-ungroup"></i>,
+    },
+    {
+      name: "Quản lý sale",
+      link: "/manager/sale",
+      icon: <i className="mdi mdi-percent"></i>,
+    },
+    {
+      name: "Cài đặt chung",
+      link: "/manager/setting",
+      icon: <i className="mdi mdi-settings"></i>,
+    },
+  ];
+  const router = useRouter().route;
+
   return (
     <nav className="sidebar sidebar-offcanvas" id="sidebar">
-      <div className="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-around fixed-top">
+      <div className="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-around">
         <a className="brand-logo">HB shops</a>
         <a className="">
           <button
-            className="navbar-toggler navbar-toggler align-self-center menu-btn 
+            className="navbar-toggler align-self-center menu-btn 
             "
             style={{ padding: 0 }}
             type="button"
@@ -18,45 +62,20 @@ export function MenuAdmin() {
           </button>
         </a>
       </div>
-      <ul className="nav">
+      <ul className="nav pt-0">
         <li className="nav-item nav-category">
           <span className="nav-link">Navigation</span>
         </li>
-        <ItemMenuAdmin
-          name="cong ty"
-          link="bills"
-          icon={<i className="mdi mdi-speedometer"></i>}
-        />
-        <ItemMenuAdmin
-          name="San pham"
-          link="products"
-          icon={<i className="mdi mdi-speedometer"></i>}
-        />
-        <ItemMenuAdmin
-          name="cong ty"
-          link="company"
-          icon={<i className="mdi mdi-speedometer"></i>}
-        />
-        <ItemMenuAdmin
-          name="cong ty"
-          link="category"
-          icon={<i className="mdi mdi-speedometer"></i>}
-        />
-        <ItemMenuAdmin
-          name="cong ty"
-          link="size-product"
-          icon={<i className="mdi mdi-speedometer"></i>}
-        />
-        <ItemMenuAdmin
-          name="cong ty"
-          link="type-product"
-          icon={<i className="mdi mdi-speedometer"></i>}
-        />
-        <ItemMenuAdmin
-          name="cong ty"
-          link="setting"
-          icon={<i className="mdi mdi-speedometer"></i>}
-        />
+        {menu.map(({ name, link, icon }, index) => (
+          <ItemMenuAdmin
+            key={index}
+            name={name}
+            active={link === router}
+            link={link}
+            icon={icon}
+          />
+        ))}
+
         <li className="nav-item menu-items">
           <a
             className="nav-link"
