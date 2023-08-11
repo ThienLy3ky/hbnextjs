@@ -35,11 +35,6 @@ export default function Document() {
           src="/static/library/js/easing.min.js"
           strategy="beforeInteractive"
         ></Script>
-        {/* <Script
-          type="text/javascript"
-          src="/static/library/js/main.js"
-          strategy="beforeInteractive"
-        ></Script> */}
       </body>
     </Html>
   );
