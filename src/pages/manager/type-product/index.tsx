@@ -1,24 +1,57 @@
 import AdminLayout from "@/src/component/layout/client.admin";
+import EnhancedTable from "@/src/component/table/table.mui";
+import { hederTable } from "@/src/controller/constant/interface";
 import useTypeHook from "@/src/controller/hooks/type.hook";
 import TypeModal from "@/src/create_update/admin/type";
 import { Box, Button, Fade, Modal, Typography } from "@mui/material";
 import { useState } from "react";
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { useSelector } from "react-redux";
 
+const Head: hederTable[] = [
+  {
+    id: "name",
+    label: "Tên",
+    sort: true,
+    align: "left",
+    numeric: false,
+    disablePadding: false,
+  },
+  {
+    id: "code",
+    label: "Mã",
+    align: "left",
+    sort: true,
+    numeric: true,
+    disablePadding: false,
+  },
+  {
+    id: "image",
+    label: "Hình",
+    align: "right",
+    sort: true,
+    numeric: false,
+    disablePadding: false,
+  },
+];
+type Order = "asc" | "desc";
 export default function TypeProduct() {
+  const chains = useSelector((state: any) => state.app.template);
+  console.log("🚀 ~ file: index.tsx:39 ~ TypeProduct ~ chains:");
   const [modal, setModal] = useState(false);
-  const [query, setQuery] = useState({ limit: 25, page: 1 });
-  const { data, isLoading } = useTypeHook(query);
+  const [query, setQuery] = useState({
+    limit: 0,
+    page: 1,
+    order: "desc",
+    orderBy: "createdAt",
+  });
+  const [dataEd, setDataEd] = useState();
+  // const { data, isLoading, refetch } = useTypeHook(query);
+  const handleDeleted = (data: string) => {
+    console.log(
+      "🚀 ~ file: index.tsx:57 ~ handleDeleted ~ data deleted:",
+      data
+    );
+  };
   return (
     <AdminLayout title="Loại mặt hàng">
       <div className="col p-0">
@@ -26,7 +59,7 @@ export default function TypeProduct() {
           <input
             className="form-control col-md-3"
             type="text"
-            placeholder="Timf kieems !!"
+            placeholder="Tìm kiếm !!"
           />
           <Button
             variant="contained"
@@ -36,17 +69,44 @@ export default function TypeProduct() {
             // style={{ height: "calc(2.25rem + 2px)" }}
             endIcon={<i className="mdi mdi-plus"></i>}
           >
-            Tao moi
+            Tạo mới
           </Button>
         </div>
-        {/* <EnhancedTable /> */}
+        {/* <EnhancedTable
+          isPagination={query.limit > 0}
+          rows={data.items}
+          header={Head}
+          isDeleted={true}
+          isUpdate={true}
+          onUpdate={(data: any) => {
+            setModal(true);
+            setDataEd(data);
+          }}
+          onDelete={(data: string) => handleDeleted(data)}
+          page={parseInt(data.page)}
+          pageSum={data.total}
+          setLimit={(e: any) => setQuery({ ...query, limit: e })}
+          order={{ order: query.order, orderBy: query.orderBy }}
+          setPage={(e: any, page: number) => {
+            setQuery({ ...query, page: page + 1 });
+          }}
+          setOder={(e: any) =>
+            setQuery({
+              ...query,
+              ...e,
+              order: e.order === "asc" ? "desc" : "asc",
+            })
+          }
+          limit={parseInt(data.limit)}
+        /> */}
       </div>
-      <TypeModal
-        data=""
+      {/* <TypeModal
+        refetch={refetch}
+        data={dataEd}
         title="Loại mặt hàng"
         openModal={modal}
         onclose={setModal}
-      />
+      /> */}
     </AdminLayout>
   );
 }

@@ -1587,3 +1587,30 @@ table thead .sorting {
 .pi-8 input {
   padding: 8px !important;
 }
+p {
+  margin: 0 !important;
+}
+.btn-edit {
+  border-radius: 20px;
+  border-right: 1px darkblue solid;
+  background-color: white;
+  color: blue;
+}
+.btn-delete {
+  border-radius: 20px;
+  border-right: 1px darkblue solid;
+  background-color: white;
+  color: rgb(241, 9, 9);
+}
+.btn-delete:hover {
+  background-color: rgb(241, 202, 25);
+  color: rgb(252, 11, 11);
+}
+.btn-edit:hover {
+  background-color: blue;
+  color: white;
+}
+button:focus {
+  outline: 0 !important;
+  /* outline: 5px auto -webkit-focus-ring-color; */
+}

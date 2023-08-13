@@ -1,111 +1,108 @@
 import AdminLayout from "@/src/component/layout/client.admin";
 import EnhancedTable from "@/src/component/table/table.mui";
+import { hederTable } from "@/src/controller/constant/interface";
+import useSizeHook from "@/src/controller/hooks/type.hook";
+import SizeModal from "@/src/create_update/admin/type";
+import { Box, Button, Fade, Modal, Typography } from "@mui/material";
 import { useState } from "react";
 
-export default function Darboard() {
-  const [order, setOrder] = useState<{ order: "asc"; orderBy: "" }>({
-    order: "asc" || "desc",
-    orderBy: "",
+const Head: hederTable[] = [
+  {
+    id: "name",
+    label: "Tên",
+    sort: true,
+    align: "left",
+    numeric: false,
+    disablePadding: false,
+  },
+  {
+    id: "code",
+    label: "Mã",
+    align: "left",
+    sort: true,
+    numeric: true,
+    disablePadding: false,
+  },
+  {
+    id: "image",
+    label: "Hình",
+    align: "right",
+    sort: true,
+    numeric: false,
+    disablePadding: false,
+  },
+];
+type Order = "asc" | "desc";
+export default function SizeProduct() {
+  const [modal, setModal] = useState(false);
+  const [query, setQuery] = useState({
+    limit: 0,
+    page: 1,
+    order: "desc",
+    orderBy: "createdAt",
   });
-  const [selected, setSelected] = useState<readonly string[]>([]);
-  const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(5);
-  interface Data {
-    calories: number;
-    carbs: number;
-    fat: number;
-    name: string;
-    protein: number;
-  }
-
-  function createData(
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number
-  ): Data {
-    return {
-      name,
-      calories,
-      fat,
-      carbs,
-      protein,
-    };
-  }
-
-  const rows = [
-    createData("Cupcake", 305, 3.7, 67, 4.3),
-    createData("Donut", 452, 25.0, 51, 4.9),
-    createData("Eclair", 262, 16.0, 24, 6.0),
-    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createData("Gingerbread", 356, 16.0, 49, 3.9),
-    createData("Honeycomb", 408, 3.2, 87, 6.5),
-    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createData("Jelly Bean", 375, 0.0, 94, 0.0),
-    createData("KitKat", 518, 26.0, 65, 7.0),
-    createData("Lollipop", 392, 0.2, 98, 0.0),
-    createData("Marshmallow", 318, 0, 81, 2.0),
-    createData("Nougat", 360, 19.0, 9, 37.0),
-    createData("Oreo", 437, 18.0, 63, 4.0),
-  ];
-
-  const headCells = [
-    {
-      id: "name",
-      numeric: false,
-      disablePadding: true,
-      sort: true,
-      label: "Dessert (100g serving)",
-    },
-    {
-      id: "calories",
-      numeric: true,
-      sort: true,
-      disablePadding: false,
-      label: "Calories",
-    },
-    {
-      id: "fat",
-      numeric: true,
-      sort: true,
-      disablePadding: false,
-      label: "Fat (g)",
-    },
-    {
-      id: "carbs",
-      numeric: true,
-      sort: false,
-      disablePadding: false,
-      label: "Carbs (g)",
-    },
-    {
-      id: "protein",
-      numeric: true,
-      sort: true,
-      disablePadding: false,
-      label: "Protein (g)",
-    },
-    {
-      id: "hhh",
-      numeric: true,
-      sort: true,
-      disablePadding: false,
-      label: "Protein (g)",
-    },
-  ];
+  const [dataEd, setDataEd] = useState();
+  const { data, isLoading, refetch } = useSizeHook(query);
+  const handleDeleted = (data: string) => {
+    console.log(
+      "🚀 ~ file: index.tsx:57 ~ handleDeleted ~ data deleted:",
+      data
+    );
+  };
   return (
-    <AdminLayout>
-      <EnhancedTable
-        header={headCells}
-        rows={rows}
-        page={1}
-        order={order}
-        limit={10}
-        setLimit={setLimit}
-        setPage={setPage}
-        setOder={setOrder}
-        pageSum={100}
+    <AdminLayout title="Kichs thuocws mặt hàng">
+      <div className="col p-0">
+        <div className="col d-flex justify-content-between p-2 ">
+          <input
+            className="form-control col-md-3"
+            type="text"
+            placeholder="Tìm kiếm !!"
+          />
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => setModal(true)}
+            size="small"
+            // style={{ height: "calc(2.25rem + 2px)" }}
+            endIcon={<i className="mdi mdi-plus"></i>}
+          >
+            Tạo mới
+          </Button>
+        </div>
+        <EnhancedTable
+          isPagination={query.limit > 0}
+          rows={data.items}
+          header={Head}
+          isDeleted={true}
+          isUpdate={true}
+          onUpdate={(data: any) => {
+            setModal(true);
+            setDataEd(data);
+          }}
+          onDelete={(data: string) => handleDeleted(data)}
+          page={parseInt(data.page)}
+          pageSum={data.total}
+          setLimit={(e: any) => setQuery({ ...query, limit: e })}
+          order={{ order: query.order, orderBy: query.orderBy }}
+          setPage={(e: any, page: number) => {
+            setQuery({ ...query, page: page + 1 });
+          }}
+          setOder={(e: any) =>
+            setQuery({
+              ...query,
+              ...e,
+              order: e.order === "asc" ? "desc" : "asc",
+            })
+          }
+          limit={parseInt(data.limit)}
+        />
+      </div>
+      <SizeModal
+        refetch={refetch}
+        data={dataEd}
+        title="Loại mặt hàng"
+        openModal={modal}
+        onclose={setModal}
       />
     </AdminLayout>
   );

@@ -3,6 +3,12 @@ import QueryString from "query-string";
 // import { showNotificationError } from "@/common/function";
 import axiosInstance from "./axios";
 import { METHOD_TYPE } from "../keys/method";
+import NotiAdmin from "@/src/component/notification/notification.admin";
+import {
+  showNotificationError,
+  showNotificationSuccess,
+} from "@/src/component/notification/notificationFc";
+import { toast } from "react-toastify";
 
 export default class APIService {
   static async request(
@@ -46,16 +52,15 @@ export default class APIService {
       })
       .catch(function (error) {
         if (error?.response?.status === 403) {
-          // showNotificationError(
-          //   "Your session has expired. Please sign in again to continue"
-          // );
+          showNotificationError(
+            "Your session has expired. Please sign in again to continue"
+          );
           // ReduxService.resetApp();
         } else if (!error?.message?.includes("canceled")) {
-          console.log(error?.response?.data?.message);
-          // showNotificationError(error?.response?.data?.message);
-        }
-        console.log("500");
+          showNotificationError(error?.response?.data?.message);
 
+          // (error?.response?.data?.message);
+        }
         return false;
       });
   }

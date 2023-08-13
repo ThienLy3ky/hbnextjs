@@ -15,25 +15,19 @@ import {
 import { visuallyHidden } from "@mui/utils";
 
 type Order = "asc" | "desc";
-
+type Align = "right" | "left" | "center";
 interface HeadCell {
   disablePadding: boolean;
   id: string;
   label: string;
+  align: Align;
   numeric: boolean;
   sort: boolean;
 }
 
 function EnhancedTableHead(props: any) {
-  const {
-    option,
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
+  const { option, onSelectAllClick, order, numSelected, rowCount, setOder } =
+    props;
 
   return (
     <TableHead style={{ background: "#ccccf3" }}>
@@ -52,20 +46,22 @@ function EnhancedTableHead(props: any) {
         {option?.map((headCell: HeadCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
+            align={headCell.align}
             padding={headCell.disablePadding ? "none" : "normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
+            sortDirection={order.orderBy === headCell.id ? order.order : false}
           >
             {headCell.sort ? (
               <TableSortLabel
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : "asc"}
-                onClick={() => console.log("sort")}
+                active={order.orderBy === headCell.id}
+                direction={order.orderBy === headCell.id ? order.order : "asc"}
+                onClick={(e) => {
+                  setOder({ ...order, orderBy: headCell.id });
+                }}
               >
                 {headCell.label}
-                {orderBy === headCell.id ? (
+                {order.orderBy === headCell.id ? (
                   <Box component="span" sx={visuallyHidden}>
-                    {order === "desc"
+                    {order.order === "desc"
                       ? "sorted descending"
                       : "sorted ascending"}
                   </Box>
@@ -76,6 +72,9 @@ function EnhancedTableHead(props: any) {
             )}
           </TableCell>
         ))}
+        <TableCell align="right" padding="normal">
+          Hành động
+        </TableCell>
       </TableRow>
     </TableHead>
   );
@@ -89,7 +88,12 @@ interface IProps {
   setOder: Function;
   setLimit: Function;
   setPage: Function;
+  onDelete: Function;
+  onUpdate: Function;
   pageSum: number;
+  isDeleted: boolean;
+  isUpdate: boolean;
+  isPagination: boolean;
 }
 export default function EnhancedTable(props: IProps) {
   const {
@@ -102,6 +106,11 @@ export default function EnhancedTable(props: IProps) {
     setOder,
     setPage,
     pageSum,
+    isDeleted,
+    isUpdate,
+    onDelete,
+    isPagination,
+    onUpdate,
   } = props;
   const [selected, setSelected] = React.useState<readonly string[]>([]);
 
@@ -118,8 +127,8 @@ export default function EnhancedTable(props: IProps) {
           >
             <EnhancedTableHead
               numSelected={selected.length}
-              order={order?.order}
-              orderBy={order?.orderBy}
+              order={order}
+              setOder={setOder}
               onSelectAllClick={() => console.log("sort")}
               onRequestSort={() => console.log("sort")}
               rowCount={rows?.length}
@@ -153,28 +162,56 @@ export default function EnhancedTable(props: IProps) {
                       return (
                         //
                         <TableCell
-                          align={index === 0 ? "left" : "right"}
+                          align={index === 0 ? "left" : val?.align}
                           key={index}
                         >
                           {row[val.id]}
                         </TableCell>
                       );
                     })}
+                    <TableCell align="right" className="pt-0 pr-1 pb-0">
+                      {isDeleted ? (
+                        <button
+                          className="p-2 border-0 col-3 btn-edit"
+                          onClick={() => onUpdate(row)}
+                        >
+                          <i className="mdi mdi-pencil"></i>
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                      {isUpdate ? (
+                        <button
+                          className="p-2 border-0 col-3 btn-delete"
+                          onClick={() => onDelete(row._id)}
+                        >
+                          <i className="mdi mdi-delete"></i>
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                    </TableCell>
                   </TableRow>
                 );
               })}
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 20]}
-          component="div"
-          count={pageSum}
-          rowsPerPage={limit}
-          page={page}
-          onPageChange={(e) => setPage(e)}
-          onRowsPerPageChange={(e) => setLimit(e)}
-        />
+        {isPagination ? (
+          <TablePagination
+            className="m-0"
+            rowsPerPageOptions={[1, 5, 10, 20]}
+            component="div"
+            count={pageSum}
+            rowsPerPage={limit}
+            page={page - 1}
+            labelRowsPerPage="Page"
+            onPageChange={(e, page) => setPage(e, page)}
+            onRowsPerPageChange={(e) => setLimit(e.target.value)}
+          />
+        ) : (
+          ""
+        )}
       </Paper>
     </Box>
   );

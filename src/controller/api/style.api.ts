@@ -2,8 +2,8 @@ import { createCancelTokenHandler } from "@/src/utils/utils";
 import APIService from "./index";
 import { METHOD_TYPE } from "../keys/method";
 
-const apiUrl = `/type-product`;
-const TypeSevice = {
+const apiUrl = `/style-product`;
+const StyleSevice = {
   getAll(query: any) {
     return APIService.request(
       METHOD_TYPE.GET,
@@ -48,6 +48,6 @@ const TypeSevice = {
   },
 };
 
-const cancelTokenHandlerObject = createCancelTokenHandler(TypeSevice);
+const cancelTokenHandlerObject = createCancelTokenHandler(StyleSevice);
 
-export default TypeSevice;
+export default StyleSevice;
