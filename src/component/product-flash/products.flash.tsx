@@ -48,7 +48,6 @@ export default function FlashProducts() {
           </a>
         </div>
       </div>
-      
     </div>
   );
 }

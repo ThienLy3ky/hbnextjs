@@ -21,8 +21,6 @@ export default function AdminLayout({ children, title }: any) {
           </div>
         </div>
       </div>
-
-      <Script type="text/javascript" src="/static/library/js/index.js"></Script>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import EnhancedTable from "@/src/component/table/table.mui";
 import { hederTable } from "@/src/controller/constant/interface";
 import useCompanyHook from "@/src/controller/hooks/company.hook";
 import CompanyModal from "@/src/create_update/admin/company";
-import { Box, Button, Fade, Modal, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
