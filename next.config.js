@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    // rawJsFromFile: fs.readFileSync("./public/static/library/js/bootstrap.bundle.min.js").toString(),
+    SERVER_URL: process.env.SERVER_URL,
   },
   images: {
     domains: [
@@ -13,4 +13,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig
+module.exports = nextConfig;

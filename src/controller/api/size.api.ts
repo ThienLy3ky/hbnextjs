@@ -3,7 +3,7 @@ import APIService from "./index";
 import { METHOD_TYPE } from "../keys/method";
 
 const apiUrl = `/size-product`;
-const SizeSevice = {
+const SizeService = {
   getAll(query: any) {
     return APIService.request(
       METHOD_TYPE.GET,
@@ -48,6 +48,6 @@ const SizeSevice = {
   },
 };
 
-const cancelTokenHandlerObject = createCancelTokenHandler(SizeSevice);
+const cancelTokenHandlerObject = createCancelTokenHandler(SizeService);
 
-export default SizeSevice;
+export default SizeService;

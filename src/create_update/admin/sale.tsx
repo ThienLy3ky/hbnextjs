@@ -3,7 +3,7 @@ import ModalAdmin from "@/src/component/modal/modal.addUpdate";
 import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
 import EnhancedTable from "@/src/component/table/table.mui";
-import TypeSevice from "@/src/controller/api/type.api";
+import TypeService from "@/src/controller/api/type.api";
 import {
   FormatData,
   removeVietnameseTones,
@@ -37,14 +37,14 @@ export default function TypeModal(props: any) {
     }
     setLoading(true);
     if (!data) {
-      const res = await TypeSevice.create({ name, code });
+      const res = await TypeService.create({ name, code });
       refetch();
       setLoading(false);
       onclose(false);
       console.log("🚀 ~ file: type.tsx:30 ~ handleSubmit ~ res:", res);
       return;
     }
-    const res = await TypeSevice.update(data._id, { name, code });
+    const res = await TypeService.update(data._id, { name, code });
     refetch();
     setLoading(false);
     onclose(false);

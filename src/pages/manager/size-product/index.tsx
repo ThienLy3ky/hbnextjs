@@ -1,9 +1,9 @@
 import AdminLayout from "@/src/component/layout/client.admin";
 import EnhancedTable from "@/src/component/table/table.mui";
 import { hederTable } from "@/src/controller/constant/interface";
-import useSizeHook from "@/src/controller/hooks/type.hook";
-import SizeModal from "@/src/create_update/admin/type";
-import { Box, Button, Fade, Modal, Typography } from "@mui/material";
+import useSizeHook from "@/src/controller/hooks/size.hook";
+import SizeModal from "@/src/create_update/admin/size";
+import { Button } from "@mui/material";
 import { useState } from "react";
 
 const Head: hederTable[] = [
@@ -24,9 +24,9 @@ const Head: hederTable[] = [
     disablePadding: false,
   },
   {
-    id: "image",
-    label: "Hình",
-    align: "right",
+    id: "description",
+    label: "Mô tả",
+    align: "left",
     sort: true,
     numeric: false,
     disablePadding: false,
@@ -50,7 +50,7 @@ export default function SizeProduct() {
     );
   };
   return (
-    <AdminLayout title="Kichs thuocws mặt hàng">
+    <AdminLayout title="Kích Thước mặt hàng">
       <div className="col p-0">
         <div className="col d-flex justify-content-between p-2 ">
           <input
@@ -100,7 +100,7 @@ export default function SizeProduct() {
       <SizeModal
         refetch={refetch}
         data={dataEd}
-        title="Loại mặt hàng"
+        title="Kích Thước mặt hàng"
         openModal={modal}
         onclose={setModal}
       />

@@ -32,7 +32,7 @@ function EnhancedTableHead(props: any) {
   return (
     <TableHead style={{ background: "#ccccf3" }}>
       <TableRow>
-        <TableCell padding="checkbox">
+        {/* <TableCell padding="checkbox">
           <Checkbox
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -42,7 +42,7 @@ function EnhancedTableHead(props: any) {
               "aria-label": "select all desserts",
             }}
           />
-        </TableCell>
+        </TableCell> */}
         {option?.map((headCell: HeadCell) => (
           <TableCell
             key={headCell.id}
@@ -55,7 +55,7 @@ function EnhancedTableHead(props: any) {
                 active={order.orderBy === headCell.id}
                 direction={order.orderBy === headCell.id ? order.order : "asc"}
                 onClick={(e) => {
-                  setOder({ ...order, orderBy: headCell.id });
+                  setOder ? setOder({ ...order, orderBy: headCell.id }) : "";
                 }}
               >
                 {headCell.label}
@@ -83,14 +83,14 @@ interface IProps {
   rows: Object[];
   header: HeadCell[];
   order: { order: string; orderBy: string };
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
   setOder: Function;
   setLimit: Function;
   setPage: Function;
   onDelete: Function;
   onUpdate: Function;
-  pageSum: number;
+  pageSum?: number;
   isDeleted: boolean;
   isUpdate: boolean;
   isPagination: boolean;
@@ -100,7 +100,7 @@ export default function EnhancedTable(props: IProps) {
     rows,
     header,
     order,
-    page,
+    page = 1,
     limit,
     setLimit,
     setOder,
@@ -128,7 +128,7 @@ export default function EnhancedTable(props: IProps) {
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
-              setOder={setOder}
+              setOder={rows.length ? setOder : false}
               onSelectAllClick={() => console.log("sort")}
               onRequestSort={() => console.log("sort")}
               rowCount={rows?.length}
@@ -149,7 +149,7 @@ export default function EnhancedTable(props: IProps) {
                     selected={isItemSelected}
                     sx={{ cursor: "pointer" }}
                   >
-                    <TableCell padding="checkbox">
+                    {/* <TableCell padding="checkbox">
                       <Checkbox
                         color="primary"
                         checked={isItemSelected}
@@ -157,7 +157,7 @@ export default function EnhancedTable(props: IProps) {
                           "aria-labelledby": labelId,
                         }}
                       />
-                    </TableCell>
+                    </TableCell> */}
                     {header?.map((val, index) => {
                       return (
                         //
@@ -202,8 +202,8 @@ export default function EnhancedTable(props: IProps) {
             className="m-0"
             rowsPerPageOptions={[1, 5, 10, 20]}
             component="div"
-            count={pageSum}
-            rowsPerPage={limit}
+            count={pageSum || 0}
+            rowsPerPage={limit || 0}
             page={page - 1}
             labelRowsPerPage="Page"
             onPageChange={(e, page) => setPage(e, page)}

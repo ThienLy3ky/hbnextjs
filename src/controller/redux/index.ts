@@ -1,6 +1,6 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { store } from "../store";
-import TemplateSevice from "../api/template.api";
+import TemplateService from "../api/template.api";
 import { setTemplate } from "./slice";
 export default class ReduxService {
   static async callDispatchAction(action: any) {
@@ -90,7 +90,7 @@ export default class ReduxService {
   // }
 
   static async getSetting() {
-    const res = await TemplateSevice.getAll();
+    const res = await TemplateService.getAll();
     ReduxService.callDispatchAction(setTemplate(res));
   }
 

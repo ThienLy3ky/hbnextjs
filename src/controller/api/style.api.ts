@@ -3,7 +3,7 @@ import APIService from "./index";
 import { METHOD_TYPE } from "../keys/method";
 
 const apiUrl = `/style-product`;
-const StyleSevice = {
+const StyleService = {
   getAll(query: any) {
     return APIService.request(
       METHOD_TYPE.GET,
@@ -48,6 +48,6 @@ const StyleSevice = {
   },
 };
 
-const cancelTokenHandlerObject = createCancelTokenHandler(StyleSevice);
+const cancelTokenHandlerObject = createCancelTokenHandler(StyleService);
 
-export default StyleSevice;
+export default StyleService;

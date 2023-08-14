@@ -1,21 +1,24 @@
 import { useQuery } from "react-query";
 import { QUERY_KEY } from "../keys/querykey";
-import TypeService from "../api/type.api";
+import TypeService from "../api/style.api";
 
 const getData = async ({ queryKey }: any) => {
   const query = queryKey[1];
   const res = await TypeService.getAll(query);
   return {
-    items: res?.data?.items || [],
-    totalPages: res?.data?.totalPages || 0,
-    page: res?.data?.page || 1,
-    total: res?.data?.total || 0,
-    limit: res?.data?.limit || 25,
+    items: res?.items || [],
+    totalPages: res?.totalPages || 0,
+    page: res?.page || 1,
+    total: res?.total || 0,
+    limit: res?.limit || 20,
   };
 };
 
-const useTypeHook = (query: any) => {
-  const { data, isLoading } = useQuery([QUERY_KEY.TypeProduct, query], getData);
+const useStyleHook = (query: any) => {
+  const { data, isLoading, refetch } = useQuery(
+    [QUERY_KEY.StyleProduct, query],
+    getData
+  );
   return {
     isLoading,
     data: {
@@ -23,9 +26,10 @@ const useTypeHook = (query: any) => {
       totalPages: data?.totalPages || 0,
       page: data?.page || 1,
       total: data?.total || 0,
-      limit: data?.limit || 25,
+      limit: data?.limit || 20,
     },
+    refetch,
   };
 };
 
-export default useTypeHook;
+export default useStyleHook;

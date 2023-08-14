@@ -3,7 +3,7 @@ import APIService from "./index";
 import { METHOD_TYPE } from "../keys/method";
 
 const apiUrl = `/setting`;
-const SettingSevice = {
+const SettingService = {
   getAll(query: any) {
     return APIService.request(
       METHOD_TYPE.GET,
@@ -48,6 +48,6 @@ const SettingSevice = {
   },
 };
 
-const cancelTokenHandlerObject = createCancelTokenHandler(SettingSevice);
+const cancelTokenHandlerObject = createCancelTokenHandler(SettingService);
 
-export default SettingSevice;
+export default SettingService;

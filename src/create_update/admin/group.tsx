@@ -2,7 +2,7 @@ import InputRow from "@/src/component/input/input.row";
 import ModalAdmin from "@/src/component/modal/modal.addUpdate";
 import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
-import TypeService from "@/src/controller/api/type.api";
+import GroupService from "@/src/controller/api/group.api";
 import {
   FormatData,
   removeVietnameseTones,
@@ -10,23 +10,28 @@ import {
 } from "@/src/utils/action.helper";
 import { useEffect, useState } from "react";
 
-export default function TypeModal(props: any) {
+export default function GroupModal(props: any) {
   const { title, openModal, onclose, data, refetch } = props;
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
-  const [file, setFile] = useState();
+  const [description, setDescription] = useState("");
   const err = validateForm.notNull(name) || validateForm.notNull(code);
   useEffect(() => {
     if (data) {
       setCode(data.code);
       setName(data.name);
+      setDescription(data.description);
       return;
     }
-    setCode("");
-    setName("");
+    initData();
   }, [data]);
 
+  const initData = () => {
+    setCode("");
+    setName("");
+    setDescription("");
+  };
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (err || loading) {
@@ -35,16 +40,22 @@ export default function TypeModal(props: any) {
     }
     setLoading(true);
     if (!data) {
-      const res = await TypeService.create({ name, code });
+      const res = await GroupService.create({ name, code, description });
       refetch();
       setLoading(false);
+      initData();
       onclose(false);
       console.log("🚀 ~ file: type.tsx:30 ~ handleSubmit ~ res:", res);
       return;
     }
-    const res = await TypeService.update(data._id, { name, code });
+    const res = await GroupService.update(data._id, {
+      name,
+      code,
+      description,
+    });
     refetch();
     setLoading(false);
+    initData();
     onclose(false);
     console.log("🚀 ~ file: type.tsx:34 ~ handleSubmit ~ res:", res);
     return;
@@ -85,17 +96,22 @@ export default function TypeModal(props: any) {
             />
             <InputRow
               row={true}
-              name="image"
-              type="file"
+              textarea={true}
+              name="description"
+              type="text"
               placeholder=""
-              label="Hình ảnh"
-              // change={setFile}
+              label="Mô tả"
+              value={description}
+              change={(e: any) =>
+                setDescription(FormatData.iName(e.target.value))
+              }
             />
           </div>
         </div>
         {!err ? (
           <FooterModal
             save="Lưu"
+            loading={loading}
             cancel="Huỷ"
             onCancel={() => onclose(false)}
           />

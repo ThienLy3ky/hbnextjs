@@ -2,7 +2,7 @@ import { createCancelTokenHandler } from "@/src/utils/utils";
 import APIService from "./index";
 import { METHOD_TYPE } from "../keys/method";
 
-const TemplateSevice = {
+const TemplateService = {
   getAll() {
     return APIService.request(
       METHOD_TYPE.GET,
@@ -16,6 +16,6 @@ const TemplateSevice = {
   },
 };
 
-const cancelTokenHandlerObject = createCancelTokenHandler(TemplateSevice);
+const cancelTokenHandlerObject = createCancelTokenHandler(TemplateService);
 
-export default TemplateSevice;
+export default TemplateService;

@@ -3,7 +3,7 @@ import APIService from "./index";
 import { METHOD_TYPE } from "../keys/method";
 
 const apiUrl = `/banner`;
-const BannerSevice = {
+const BannerService = {
   getAll(query: any) {
     return APIService.request(
       METHOD_TYPE.GET,
@@ -48,6 +48,6 @@ const BannerSevice = {
   },
 };
 
-const cancelTokenHandlerObject = createCancelTokenHandler(BannerSevice);
+const cancelTokenHandlerObject = createCancelTokenHandler(BannerService);
 
-export default BannerSevice;
+export default BannerService;

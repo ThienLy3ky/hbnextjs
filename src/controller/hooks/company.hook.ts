@@ -1,21 +1,25 @@
 import { useQuery } from "react-query";
 import { QUERY_KEY } from "../keys/querykey";
-import TypeSevice from "../api/type.api";
+import CompanyService from "../api/company.api";
 
 const getData = async ({ queryKey }: any) => {
   const query = queryKey[1];
-  const res = await TypeSevice.getAll(query);
+  const res = await CompanyService.getAll(query);
+  console.log("🚀 ~ file: company.hook.ts:8 ~ getData ~ res:", res);
   return {
-    items: res?.data?.items || [],
-    totalPages: res?.data?.totalPages || 0,
-    page: res?.data?.page || 1,
-    total: res?.data?.total || 0,
-    limit: res?.data?.limit || 25,
+    items: res?.items || [],
+    totalPages: res?.totalPages || 0,
+    page: res?.page || 1,
+    total: res?.total || 0,
+    limit: res?.limit || 25,
   };
 };
 
-const useTypeHook = (query: any) => {
-  const { data, isLoading } = useQuery([QUERY_KEY.TypeProduct, query], getData);
+const useCompanyHook = (query: any) => {
+  const { data, isLoading, refetch } = useQuery(
+    [QUERY_KEY.CompanyProduct, query],
+    getData
+  );
   return {
     isLoading,
     data: {
@@ -25,7 +29,8 @@ const useTypeHook = (query: any) => {
       total: data?.total || 0,
       limit: data?.limit || 25,
     },
+    refetch,
   };
 };
 
-export default useTypeHook;
+export default useCompanyHook;

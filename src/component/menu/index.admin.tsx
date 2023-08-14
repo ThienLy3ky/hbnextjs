@@ -14,6 +14,11 @@ export function MenuAdmin() {
       icon: <i className="mdi mdi-pharmacy"></i>,
     },
     {
+      name: "Công Ty",
+      link: "/manager/company",
+      icon: <i className="mdi mdi-factory"></i>,
+    },
+    {
       name: "Kích thước",
       link: "/manager/size-product",
       icon: <i className="mdi mdi-package-variant"></i>,
@@ -27,6 +32,11 @@ export function MenuAdmin() {
       name: "Danh mục mặt hàng",
       link: "/manager/category",
       icon: <i className="mdi mdi-format-list-bulleted-type"></i>,
+    },
+    {
+      name: "Kiểu dáng mặt hàng",
+      link: "/manager/styles-product",
+      icon: <i className="mdi mdi-palette"></i>,
     },
     {
       name: "Nhóm mặt hàng",

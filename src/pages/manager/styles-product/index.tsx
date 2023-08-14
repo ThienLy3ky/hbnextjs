@@ -1,8 +1,8 @@
 import AdminLayout from "@/src/component/layout/client.admin";
 import EnhancedTable from "@/src/component/table/table.mui";
 import { hederTable } from "@/src/controller/constant/interface";
-import useTypeHook from "@/src/controller/hooks/type.hook";
-import TypeModal from "@/src/create_update/admin/type";
+import useStyleHook from "@/src/controller/hooks/style.hook";
+import StyleModal from "@/src/create_update/admin/style";
 import { Button } from "@mui/material";
 import { useState } from "react";
 
@@ -24,8 +24,8 @@ const Head: hederTable[] = [
     disablePadding: false,
   },
   {
-    id: "image",
-    label: "Hình",
+    id: "description",
+    label: "Mô tả",
     align: "right",
     sort: true,
     numeric: false,
@@ -33,7 +33,7 @@ const Head: hederTable[] = [
   },
 ];
 type Order = "asc" | "desc";
-export default function TypeProduct() {
+export default function StyleProduct() {
   const [modal, setModal] = useState(false);
   const [query, setQuery] = useState({
     limit: 0,
@@ -42,7 +42,7 @@ export default function TypeProduct() {
     orderBy: "createdAt",
   });
   const [dataEd, setDataEd] = useState();
-  const { data, isLoading, refetch } = useTypeHook(query);
+  const { data, isLoading, refetch } = useStyleHook(query);
   const handleDeleted = (data: string) => {
     console.log(
       "🚀 ~ file: index.tsx:57 ~ handleDeleted ~ data deleted:",
@@ -50,7 +50,7 @@ export default function TypeProduct() {
     );
   };
   return (
-    <AdminLayout title="Loại mặt hàng">
+    <AdminLayout title="Kiểu dáng mặt hàng">
       <div className="col p-0">
         <div className="col d-flex justify-content-between p-2 ">
           <input
@@ -97,10 +97,10 @@ export default function TypeProduct() {
           limit={parseInt(data.limit)}
         />
       </div>
-      <TypeModal
+      <StyleModal
         refetch={refetch}
         data={dataEd}
-        title="Loại mặt hàng"
+        title="Kiểu dáng mặt hàng"
         openModal={modal}
         onclose={setModal}
       />

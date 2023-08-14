@@ -1,10 +1,10 @@
 import { useQuery } from "react-query";
 import { QUERY_KEY } from "../keys/querykey";
-import TypeSevice from "../api/type.api";
+import TypeService from "../api/type.api";
 
 const getData = async ({ queryKey }: any) => {
   const query = queryKey[1];
-  const res = await TypeSevice.getAll(query);
+  const res = await TypeService.getAll(query);
   return {
     items: res?.data?.items || [],
     totalPages: res?.data?.totalPages || 0,

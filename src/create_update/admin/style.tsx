@@ -2,31 +2,31 @@ import InputRow from "@/src/component/input/input.row";
 import ModalAdmin from "@/src/component/modal/modal.addUpdate";
 import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
-import EnhancedTable from "@/src/component/table/table.mui";
-import TypeSevice from "@/src/controller/api/type.api";
+import StyleService from "@/src/controller/api/style.api";
 import {
   FormatData,
   removeVietnameseTones,
   validateForm,
 } from "@/src/utils/action.helper";
-import { Box, Button, Fade, Modal, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
-export default function TypeModal(props: any) {
+export default function StyleModal(props: any) {
   const { title, openModal, onclose, data, refetch } = props;
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
-  const [file, setFile] = useState();
+  const [description, setDescription] = useState("");
   const err = validateForm.notNull(name) || validateForm.notNull(code);
   useEffect(() => {
     if (data) {
       setCode(data.code);
       setName(data.name);
+      setDescription(data.description);
       return;
     }
     setCode("");
     setName("");
+    setDescription("");
   }, [data]);
 
   const handleSubmit = async (e: any) => {
@@ -37,14 +37,18 @@ export default function TypeModal(props: any) {
     }
     setLoading(true);
     if (!data) {
-      const res = await TypeSevice.create({ name, code });
+      const res = await StyleService.create({ name, code, description });
       refetch();
       setLoading(false);
       onclose(false);
       console.log("🚀 ~ file: type.tsx:30 ~ handleSubmit ~ res:", res);
       return;
     }
-    const res = await TypeSevice.update(data._id, { name, code });
+    const res = await StyleService.update(data._id, {
+      name,
+      code,
+      description,
+    });
     refetch();
     setLoading(false);
     onclose(false);
@@ -87,17 +91,22 @@ export default function TypeModal(props: any) {
             />
             <InputRow
               row={true}
-              name="image"
-              type="file"
+              textarea={true}
+              name="description"
+              type="text"
               placeholder=""
-              label="Hình ảnh"
-              // change={setFile}
+              label="Mô tả"
+              value={description}
+              change={(e: any) =>
+                setDescription(FormatData.iName(e.target.value))
+              }
             />
           </div>
         </div>
         {!err ? (
           <FooterModal
             save="Lưu"
+            loading={loading}
             cancel="Huỷ"
             onCancel={() => onclose(false)}
           />

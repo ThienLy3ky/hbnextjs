@@ -3,7 +3,7 @@ import ModalAdmin from "@/src/component/modal/modal.addUpdate";
 import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
 import EnhancedTable from "@/src/component/table/table.mui";
-import TypeSevice from "@/src/controller/api/type.api";
+import CompanyService from "@/src/controller/api/company.api";
 import {
   FormatData,
   removeVietnameseTones,
@@ -12,21 +12,34 @@ import {
 import { Box, Button, Fade, Modal, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
-export default function TypeModal(props: any) {
+export default function CompanyModal(props: any) {
   const { title, openModal, onclose, data, refetch } = props;
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
-  const [file, setFile] = useState();
-  const err = validateForm.notNull(name) || validateForm.notNull(code);
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const err =
+    validateForm.notNull(name) ||
+    validateForm.notNull(code) ||
+    validateForm.notNull(phone) ||
+    validateForm.notNull(email) ||
+    validateForm.notNull(address);
   useEffect(() => {
     if (data) {
       setCode(data.code);
       setName(data.name);
+      setPhone(data.phone);
+      setEmail(data.email);
+      setAddress(data.address);
       return;
     }
     setCode("");
     setName("");
+    setAddress("");
+    setPhone("");
+    setEmail("");
   }, [data]);
 
   const handleSubmit = async (e: any) => {
@@ -37,14 +50,26 @@ export default function TypeModal(props: any) {
     }
     setLoading(true);
     if (!data) {
-      const res = await TypeSevice.create({ name, code });
+      const res = await CompanyService.create({
+        name,
+        code,
+        address,
+        email,
+        phone,
+      });
       refetch();
       setLoading(false);
       onclose(false);
       console.log("🚀 ~ file: type.tsx:30 ~ handleSubmit ~ res:", res);
       return;
     }
-    const res = await TypeSevice.update(data._id, { name, code });
+    const res = await CompanyService.update(data._id, {
+      name,
+      code,
+      address,
+      email,
+      phone,
+    });
     refetch();
     setLoading(false);
     onclose(false);
@@ -87,17 +112,40 @@ export default function TypeModal(props: any) {
             />
             <InputRow
               row={true}
-              name="image"
-              type="file"
-              placeholder=""
-              label="Hình ảnh"
-              // change={setFile}
+              error={phone === "" ? "not null" : false}
+              type="phone"
+              value={phone}
+              name="phone"
+              placeholder="Số ĐT"
+              label="Số ĐT"
+              change={(e: any) => setPhone(e.target.value)}
+            />
+            <InputRow
+              row={true}
+              error={email === "" ? "not null" : false}
+              type="email"
+              value={email}
+              name="email"
+              placeholder="email"
+              label="Email"
+              change={(e: any) => setEmail(e.target.value)}
+            />
+            <InputRow
+              row={true}
+              error={address === "" ? "not null" : false}
+              type="address"
+              value={address}
+              name="address"
+              placeholder="địa chỉ"
+              label="Địa chỉ"
+              change={(e: any) => setAddress(e.target.value)}
             />
           </div>
         </div>
         {!err ? (
           <FooterModal
             save="Lưu"
+            loading={loading}
             cancel="Huỷ"
             onCancel={() => onclose(false)}
           />
