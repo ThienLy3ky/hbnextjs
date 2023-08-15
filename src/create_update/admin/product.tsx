@@ -17,6 +17,20 @@ export default function TypeModal(props: any) {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
+  const [description, setDescription] = useState("");
+  const [summary, setSummary] = useState("");
+  const [keyWord, setKeyWord] = useState("");
+  const [company, setCompany] = useState("");
+  const [type, setType] = useState("");
+  const [categories, setCategories] = useState("");
+  const [expirationDate, setExpDay] = useState("");
+  const [dateOfProduction, setDayOff] = useState("");
+  const [size, setSize] = useState("");
+  const [priceOlder, setpriceOlder] = useState("");
+  const [priceNew, setpriceNew] = useState("");
+  const [group, setgroup] = useState("");
+  const [style, setStyle] = useState("");
+  const [quantity, setquantity] = useState("");
   const [file, setFile] = useState();
   const err = validateForm.notNull(name) || validateForm.notNull(code);
   useEffect(() => {
@@ -56,8 +70,16 @@ export default function TypeModal(props: any) {
     <ModalAdmin openModal={openModal} onclose={() => onclose(false)}>
       <form onSubmit={handleSubmit} method="post">
         <HeadModal onclose={() => onclose(false)} title={title} />
-        <div className="modal-body">
+        <div className="modal-body" style={{ overflow: "scroll" }}>
           <div className="col">
+            <InputRow
+              row={true}
+              name="image"
+              type="file"
+              placeholder=""
+              label="Hình ảnh"
+              // change={setFile}
+            />
             <InputRow
               row={true}
               error={name === "" ? "not null" : false}
@@ -87,11 +109,143 @@ export default function TypeModal(props: any) {
             />
             <InputRow
               row={true}
-              name="image"
-              type="file"
-              placeholder=""
-              label="Hình ảnh"
-              // change={setFile}
+              error={code === "" ? "not null" : false}
+              type="code"
+              value={code}
+              name="code"
+              placeholder="Từ khoá"
+              label="Từ khoá"
+              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+            />{" "}
+            <InputRow
+              row={true}
+              error={code === "" ? "not null" : false}
+              type="code"
+              value={code}
+              name="code"
+              placeholder="Kích thước"
+              label="Kích thước"
+              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+            />{" "}
+            <InputRow
+              row={true}
+              error={code === "" ? "not null" : false}
+              type="code"
+              value={code}
+              name="code"
+              placeholder="Kiểu dáng"
+              label="Kiểu dáng"
+              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+            />{" "}
+            <InputRow
+              row={true}
+              error={code === "" ? "not null" : false}
+              type="code"
+              value={code}
+              name="code"
+              placeholder="Nhóm mặt hàng"
+              label="Nhóm mặt hàng"
+              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+            />{" "}
+            <InputRow
+              row={true}
+              error={code === "" ? "not null" : false}
+              type="code"
+              value={code}
+              name="code"
+              placeholder="Giá cũ"
+              label="Giá cũ"
+              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+            />{" "}
+            <InputRow
+              row={true}
+              error={code === "" ? "not null" : false}
+              type="code"
+              value={code}
+              name="code"
+              placeholder="Giá mới"
+              label="Giá mới"
+              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+            />{" "}
+            <InputRow
+              row={true}
+              error={code === "" ? "not null" : false}
+              type="code"
+              value={code}
+              name="code"
+              placeholder="Số lượng"
+              label="Số lượng"
+              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+            />{" "}
+            <InputRow
+              row={true}
+              error={code === "" ? "not null" : false}
+              type="code"
+              value={code}
+              name="code"
+              placeholder="Danh mục"
+              label="Danh mục"
+              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+            />{" "}
+            <InputRow
+              row={true}
+              error={code === "" ? "not null" : false}
+              type="code"
+              value={code}
+              name="code"
+              placeholder="Loại"
+              label="Loại"
+              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+            />{" "}
+            <InputRow
+              row={true}
+              error={code === "" ? "not null" : false}
+              type="code"
+              value={code}
+              name="code"
+              placeholder="công ty"
+              label="công ty"
+              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+            />{" "}
+            <InputRow
+              row={true}
+              error={code === "" ? "not null" : false}
+              type="code"
+              value={code}
+              name="code"
+              placeholder="hạn SD"
+              label="hạn SD"
+              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+            />{" "}
+            <InputRow
+              row={true}
+              error={code === "" ? "not null" : false}
+              type="code"
+              value={code}
+              name="code"
+              placeholder="Ngày SX"
+              label="Ngày SX"
+              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+            />{" "}
+            <InputRow
+              row={true}
+              error={code === "" ? "not null" : false}
+              type="code"
+              value={code}
+              name="code"
+              placeholder="Tiêu đề"
+              label="Tiêu đề"
+              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+            />{" "}
+            <InputRow
+              row={true}
+              error={code === "" ? "not null" : false}
+              type="text"
+              value={code}
+              name="code"
+              placeholder="Mô Tả"
+              label="Mô Tả"
+              change={(e: any) => setCode(FormatData.iName(e.target.value))}
             />
           </div>
         </div>
