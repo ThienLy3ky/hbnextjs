@@ -32,9 +32,9 @@ const MenuClient = (props: any) => {
                   id="navbarCollapse"
                 >
                   <div className="navbar-nav mr-auto py-0">
-                    <Link href="/" className="nav-item nav-link active">
+                    <a href={"/"} className="nav-item nav-link active">
                       Trang Chủ
-                    </Link>
+                    </a>
                     <Link href="/shops" className="nav-item nav-link">
                       Nhãn Hàng
                     </Link>

@@ -2,6 +2,7 @@ import { TextField } from "@mui/material";
 
 export default function InputRow(props: any) {
   const {
+    alignLabel,
     row,
     classname,
     error,
@@ -20,18 +21,20 @@ export default function InputRow(props: any) {
       }
     >
       <label
-        className="col-sm-3 col-form-label pr-0"
-        style={{ fontWeight: "bolder", color: "darkblue" }}
+        className="col-sm-3 col-form-label"
+        style={{
+          fontWeight: "bolder",
+          color: "darkblue",
+          textAlign: alignLabel || "left",
+        }}
       >
         {label}
       </label>
       <div className="col-sm-9 pl-0">
         {textarea ? (
           <textarea
-            className=""
             name={name}
             type={type}
-            error={!error ? false : true}
             value={value}
             id="outlined-error"
             label={error ? error : ""}
@@ -43,7 +46,6 @@ export default function InputRow(props: any) {
           />
         ) : (
           <TextField
-            className=""
             name={name}
             type={type}
             error={!error ? false : true}
