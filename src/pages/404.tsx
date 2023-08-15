@@ -16,9 +16,9 @@ export default function NotFound() {
 
                 <p>Bạn vui lòng kiểm tra lại địa chỉ!</p>
 
-                <Link href="/" className="link_404">
+                <a href={"/"} className="link_404">
                   Quay về trang chủ
-                </Link>
+                </a>
               </div>
             </div>
           </div>

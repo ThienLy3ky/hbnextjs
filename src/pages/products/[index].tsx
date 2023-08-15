@@ -3,7 +3,12 @@ import ClientLayout from "@/src/component/layout/client.layout";
 import products from "@/src/config/MOCK_DATA.product.json";
 import CardProductShort from "@/src/component/card/card.product.short";
 import { useRouter } from "next/router";
+import SlideIF from "./slide";
+import dynamic from "next/dynamic";
 export default function ProductDetail() {
+  const DynamicHeader = dynamic(() => import("./slide"), {
+    ssr: false,
+  });
   const router = useRouter();
   console.log("🚀 ~ file: [index].tsx:8 ~ ProductDetail ~ router:", router);
   const { index } = router.query;
@@ -341,7 +346,7 @@ export default function ProductDetail() {
                 <div className="tab-pane fade" id="tab-pane-3">
                   <div className="row">
                     <div className="col-md-6">
-                      <h4 className="mb-4">1 review for "Product Name"</h4>
+                      <h4 className="mb-4">1 review for Product Name</h4>
                       <div className="media mb-4">
                         <img
                           src="img/user.jpg"
@@ -431,29 +436,7 @@ export default function ProductDetail() {
         </div>
       </div>
 
-      <div className="container-fluid py-5">
-        <h2 className="section-title position-relative text-uppercase mx-xl-5 mb-4">
-          <span className="bg-secondary pr-3">You May Also Like</span>
-        </h2>
-        <div className="row px-xl-5">
-          <div className="col">
-            <div className="owl-carousel related-carousel">
-              {products.slice(0, 10).map((product) => (
-                <CardProductShort
-                  name={product.name}
-                  image={product.image}
-                  rate={3.3}
-                  oldPrice={product.priceOlder}
-                  newPrice={product.priceNew}
-                  totalRate={40}
-                  id={product.id.toString()}
-                  key={product.id}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+      <DynamicHeader products={products} />
     </ClientLayout>
   );
 }

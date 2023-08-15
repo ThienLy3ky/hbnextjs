@@ -3,10 +3,7 @@
 
   // Dropdown on mouse hover
   $(document).ready(function () {
-    $(".menu-btn").on("click", function () {
-      console.log("====================================");
-      console.log();
-      console.log("====================================");
+    $(document).on("click", ".menu-btn", function () {
       if (
         $(".container-scroller").hasClass("sidebar-toggle-display") ||
         $(".container-scroller").hasClass("sidebar-absolute")
