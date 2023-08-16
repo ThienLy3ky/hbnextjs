@@ -1617,3 +1617,10 @@ button:focus {
 /* .modal-dialog{
   max-width: ;
 } */
+.group-price {
+  border-bottom: 2px dotted green;
+  border-radius: 10px;
+}
+.group-price:hover {
+  background: whitesmoke;
+}

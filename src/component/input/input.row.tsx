@@ -21,7 +21,7 @@ export default function InputRow(props: any) {
       }
     >
       <label
-        className="col-sm-3 col-form-label"
+        className="col-sm-3 col-form-label pl-4"
         style={{
           fontWeight: "bolder",
           color: "darkblue",

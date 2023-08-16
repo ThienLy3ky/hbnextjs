@@ -32,7 +32,7 @@ const Head: hederTable[] = [
     disablePadding: false,
   },
   {
-    id: "newPrice",
+    id: "quanlity",
     label: "Số lượng",
     align: "left",
     sort: true,
@@ -40,7 +40,7 @@ const Head: hederTable[] = [
     disablePadding: false,
   },
   {
-    id: "newPrice",
+    id: "..",
     label: "Giá",
     align: "left",
     sort: true,
