@@ -1,3 +1,4 @@
+import { formatNumber, formatString } from "@/src/utils/action.helper";
 import { TextField } from "@mui/material";
 
 export default function InputRow(props: any) {
@@ -42,8 +43,44 @@ export default function InputRow(props: any) {
             size="small"
             style={{ padding: "5px", width: "100%" }}
             {...prop}
-            onChange={change}
+            onChange={(e) => change(formatString(e.target.value))}
           />
+        ) : type === "number" || type === "money" ? (
+          <TextField
+            name={name}
+            type="text"
+            error={!error ? false : true}
+            value={Number(value).toLocaleString()}
+            id="outlined-error"
+            label={error ? error : ""}
+            // defaultValue={value}
+            size="small"
+            style={{ padding: "5px", width: "100%" }}
+            {...prop}
+            onChange={(e) => change(formatNumber(e.target.value))}
+          />
+        ) : type === "file" ? (
+          <input
+            name={name}
+            type="file"
+            // error={!error ? false : true}
+            // value={value}
+            id="outlined-error"
+            // label={error ? error : ""}
+            // defaultValue={value}
+            // size="small"
+            style={{ padding: "5px", width: "100%" }}
+            {...prop}
+            // onChange={(e) => change(formatString(e.target.value))}
+          >
+            {/* <img
+              src={"/static/image/download.png"}
+              width={50}
+              alt="upload"
+              height={50}
+            /> */}
+            <button>upload</button>
+          </input>
         ) : (
           <TextField
             name={name}
@@ -56,7 +93,7 @@ export default function InputRow(props: any) {
             size="small"
             style={{ padding: "5px", width: "100%" }}
             {...prop}
-            onChange={change}
+            onChange={(e) => change(formatString(e.target.value))}
           />
         )}
       </div>

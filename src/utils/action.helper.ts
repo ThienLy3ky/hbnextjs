@@ -169,8 +169,18 @@ export const formatMoney = (money: number) => {
     currency: "VND",
   });
 };
-// export const formatNumber = (value: number) => {
-//   return parseInt(value.replace(/([\Wa-zA-Z])/g, "")) > 0
-//     ? parseInt(value.replace(/([\Wa-zA-Z])/g, ""))
-//     : 0;
-// };
+export const formatNumber = (value: string) => {
+  return parseInt(value.replace(/([\Wa-zA-Z])/g, "")) > 0
+    ? parseInt(value.replace(/([\Wa-zA-Z])/g, ""))
+    : 0;
+};
+export const formatString = (str: string) => {
+  str = str.replace(/ + /g, " ");
+  // Remove punctuations
+  // Bỏ dấu câu, kí tự đặc biệt
+  str = str.replace(
+    /!|@|%|\^|\*|\=|\<|\>|\?|\/|\;|\&|\#|\[|\]|~|\$|_|`|{|}|\||\\/g,
+    " "
+  );
+  return str;
+};

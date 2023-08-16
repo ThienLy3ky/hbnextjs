@@ -155,7 +155,6 @@ export default function TypeModal(props: any) {
         <div className="modal-body" style={{ overflow: "scroll" }}>
           <div className="col">
             <InputRow
-              row={true}
               name="image"
               type="file"
               placeholder=""
@@ -171,12 +170,8 @@ export default function TypeModal(props: any) {
               placeholder="Tên"
               label="Tên"
               change={(e: any) => {
-                setName(FormatData.iName(e.target.value));
-                setCode(
-                  removeVietnameseTones(
-                    FormatData.iName(e?.target?.value || "")
-                  )
-                );
+                setName(FormatData.iName(e));
+                setCode(removeVietnameseTones(FormatData.iName(e)));
               }}
             />
             <InputRow
@@ -186,9 +181,7 @@ export default function TypeModal(props: any) {
               value={description}
               placeholder="Tiêu đề"
               label="Tiêu đề"
-              change={(e: any) =>
-                setDescription(FormatData.iName(e.target.value))
-              }
+              change={(e: any) => setDescription(FormatData.iName(e))}
             />
             <InputRow
               row={true}
@@ -197,7 +190,9 @@ export default function TypeModal(props: any) {
               value={code}
               placeholder="Mã"
               label="Mã"
-              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+              change={(e: any) =>
+                setCode(removeVietnameseTones(FormatData.iName(e || "")))
+              }
             />
             <InputRow
               row={true}
@@ -206,17 +201,17 @@ export default function TypeModal(props: any) {
               value={keyWord}
               placeholder="Từ khoá"
               label="Từ khoá"
-              change={(e: any) => setKeyWord(FormatData.iName(e.target.value))}
+              change={(e: any) => setKeyWord(FormatData.iName(e))}
             />
 
             <InputRow
               row={true}
               // error={code === "" ? "not null" : false}
-              type="code"
+              type="number"
               value={quantity}
               placeholder="Số lượng"
               label="Số lượng"
-              change={(e: any) => setquantity(FormatData.iName(e.target.value))}
+              change={(e: any) => setquantity(FormatData.iName(e))}
             />
             <InputRow
               row={true}
@@ -225,9 +220,7 @@ export default function TypeModal(props: any) {
               value={categories}
               placeholder="Danh mục"
               label="Danh mục"
-              change={(e: any) =>
-                setCategories(FormatData.iName(e.target.value))
-              }
+              change={(e: any) => setCategories(FormatData.iName(e))}
             />
             <InputRow
               row={true}
@@ -236,7 +229,7 @@ export default function TypeModal(props: any) {
               value={type}
               placeholder="Loại"
               label="Loại"
-              change={(e: any) => setType(FormatData.iName(e.target.value))}
+              change={(e: any) => setType(FormatData.iName(e))}
             />
             <InputRow
               row={true}
@@ -245,7 +238,7 @@ export default function TypeModal(props: any) {
               value={company}
               placeholder="công ty"
               label="công ty"
-              change={(e: any) => setCompany(FormatData.iName(e.target.value))}
+              change={(e: any) => setCompany(FormatData.iName(e))}
             />
             <div className="col-12 p-0">
               <h5
@@ -302,7 +295,7 @@ export default function TypeModal(props: any) {
                     type="code"
                     placeholder="Nhóm mặt hàng"
                     label="Nhóm mặt hàng"
-                    change={(e: any) => setgroup(e.target.value)}
+                    change={(e: any) => setgroup(e)}
                   />
                   <div className="col-12 row p-0 mr-0 ml-0 mt-2">
                     <div className="col-6 p-0">
@@ -313,7 +306,7 @@ export default function TypeModal(props: any) {
                         type="code"
                         placeholder="Kích thước"
                         label="Kích thước"
-                        change={(e: any) => setSize(e.target.value)}
+                        change={(e: any) => setSize(e)}
                       />
                     </div>
                     <div className="col-6 p-0">
@@ -324,7 +317,7 @@ export default function TypeModal(props: any) {
                         type="code"
                         placeholder="Kiểu dáng"
                         label="Kiểu dáng"
-                        change={(e: any) => setStyle(e.target.value)}
+                        change={(e: any) => setStyle(e)}
                       />
                     </div>
                   </div>
@@ -334,10 +327,10 @@ export default function TypeModal(props: any) {
                         row={true}
                         value={priceOlder}
                         // error={code === "" ? "not null" : false}
-                        type="money"
+                        type="number"
                         placeholder="Giá cũ"
                         label="Giá cũ"
-                        change={(e: any) => setpriceOlder(e.target.value)}
+                        change={(e: any) => setpriceOlder(e)}
                       />
                     </div>
                     <div className="col-6 p-0">
@@ -345,10 +338,10 @@ export default function TypeModal(props: any) {
                         row={true}
                         value={priceNew}
                         // error={code === "" ? "not null" : false}
-                        type="money"
+                        type="number"
                         placeholder="Giá mới"
                         label="Giá mới"
-                        change={(e: any) => setpriceNew(e.target.value)}
+                        change={(e: any) => setpriceNew(e)}
                       />
                     </div>
                   </div>
@@ -360,24 +353,24 @@ export default function TypeModal(props: any) {
                 <InputRow
                   row={true}
                   // error={code === "" ? "not null" : false}
-                  type="code"
-                  value={code}
+                  type="date"
+                  value={expirationDate}
                   name="code"
                   placeholder="hạn SD"
                   label="hạn SD"
-                  change={(e: any) => setCode(FormatData.iName(e.target.value))}
+                  change={(e: any) => setExpDay(e)}
                 />
               </div>
               <div className="col-6 p-0">
                 <InputRow
                   row={true}
                   // error={code === "" ? "not null" : false}
-                  type="code"
-                  value={code}
+                  type="date"
+                  value={dateOfProduction}
                   name="code"
                   placeholder="Ngày SX"
                   label="Ngày SX"
-                  change={(e: any) => setCode(FormatData.iName(e.target.value))}
+                  change={(e: any) => setDayOff(e)}
                 />
               </div>
             </div>
@@ -386,10 +379,11 @@ export default function TypeModal(props: any) {
               row={true}
               // error={code === "" ? "not null" : false}
               type="text"
-              value={code}
+              value={description}
+              textarea={true}
               placeholder="Mô Tả"
               label="Mô Tả"
-              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+              change={(e: any) => setDescription(e)}
             />
           </div>
         </div>

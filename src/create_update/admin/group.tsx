@@ -76,12 +76,8 @@ export default function GroupModal(props: any) {
               placeholder="Tên"
               label="Tên"
               change={(e: any) => {
-                setName(FormatData.iName(e.target.value));
-                setCode(
-                  removeVietnameseTones(
-                    FormatData.iName(e?.target?.value || "")
-                  )
-                );
+                setName(FormatData.iName(e));
+                setCode(removeVietnameseTones(FormatData.iName(e || "")));
               }}
             />
             <InputRow
@@ -92,7 +88,7 @@ export default function GroupModal(props: any) {
               name="code"
               placeholder="Mã"
               label="Mã"
-              change={(e: any) => setCode(FormatData.iName(e.target.value))}
+              change={(e: any) => setCode(removeVietnameseTones(FormatData.iName(e || "")));}
             />
             <InputRow
               row={true}
@@ -102,9 +98,7 @@ export default function GroupModal(props: any) {
               placeholder=""
               label="Mô tả"
               value={description}
-              change={(e: any) =>
-                setDescription(FormatData.iName(e.target.value))
-              }
+              change={(e: any) => setDescription(FormatData.iName(e))}
             />
           </div>
         </div>
