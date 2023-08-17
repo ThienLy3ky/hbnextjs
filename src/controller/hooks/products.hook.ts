@@ -1,10 +1,10 @@
 import { useQuery } from "react-query";
 import { QUERY_KEY } from "../keys/querykey";
-import TypeService from "../api/type.api";
+import ProductService from "../api/product.api";
 
 const getData = async ({ queryKey }: any) => {
   const query = queryKey[1];
-  const res = await TypeService.getAll(query);
+  const res = await ProductService.getAll(query);
   return {
     items: res?.data?.items || [],
     totalPages: res?.data?.totalPages || 0,
@@ -15,7 +15,10 @@ const getData = async ({ queryKey }: any) => {
 };
 
 const useTypeHook = (query: any) => {
-  const { data, isLoading } = useQuery([QUERY_KEY.TypeProduct, query], getData);
+  const { data, isLoading, refetch } = useQuery(
+    [QUERY_KEY.Product, query],
+    getData
+  );
   return {
     isLoading,
     data: {
@@ -25,6 +28,7 @@ const useTypeHook = (query: any) => {
       total: data?.total || 0,
       limit: data?.limit || 25,
     },
+    refetch,
   };
 };
 

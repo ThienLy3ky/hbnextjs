@@ -1,5 +1,6 @@
 import { formatNumber, formatString } from "@/src/utils/action.helper";
 import { TextField } from "@mui/material";
+import UploadInput from "./input.upload";
 
 export default function InputRow(props: any) {
   const {
@@ -22,7 +23,9 @@ export default function InputRow(props: any) {
       }
     >
       <label
-        className="col-sm-3 col-form-label pl-4"
+        className={
+          row ? "col-sm-3 col-form-label pl-4" : "col-12 col-form-label pl-4"
+        }
         style={{
           fontWeight: "bolder",
           color: "darkblue",
@@ -31,11 +34,16 @@ export default function InputRow(props: any) {
       >
         {label}
       </label>
-      <div className="col-sm-9 pl-0">
+      <div
+        className={
+          row
+            ? "col-sm-9 pl-0"
+            : "col-12 col-form-label pl-4  d-flex justify-content-center"
+        }
+      >
         {textarea ? (
           <textarea
             name={name}
-            type={type}
             value={value}
             id="outlined-error"
             label={error ? error : ""}
@@ -60,27 +68,7 @@ export default function InputRow(props: any) {
             onChange={(e) => change(formatNumber(e.target.value))}
           />
         ) : type === "file" ? (
-          <input
-            name={name}
-            type="file"
-            // error={!error ? false : true}
-            // value={value}
-            id="outlined-error"
-            // label={error ? error : ""}
-            // defaultValue={value}
-            // size="small"
-            style={{ padding: "5px", width: "100%" }}
-            {...prop}
-            // onChange={(e) => change(formatString(e.target.value))}
-          >
-            {/* <img
-              src={"/static/image/download.png"}
-              width={50}
-              alt="upload"
-              height={50}
-            /> */}
-            <button>upload</button>
-          </input>
+          <UploadInput />
         ) : (
           <TextField
             name={name}

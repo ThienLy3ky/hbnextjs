@@ -2,14 +2,13 @@ import InputRow from "@/src/component/input/input.row";
 import ModalAdmin from "@/src/component/modal/modal.addUpdate";
 import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
-import EnhancedTable from "@/src/component/table/table.mui";
-import TypeService from "@/src/controller/api/type.api";
+import ProductService from "@/src/controller/api/product.api";
 import {
   FormatData,
   removeVietnameseTones,
   validateForm,
 } from "@/src/utils/action.helper";
-import { Box, Button, Fade, Modal, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 interface IGroupconst {
   size: string;
@@ -69,14 +68,40 @@ export default function TypeModal(props: any) {
     }
     setLoading(true);
     if (!data) {
-      const res = await TypeService.create({ name, code });
+      const res = await ProductService.create({
+        name,
+        code,
+        summary,
+        keyWord,
+        company,
+        description,
+        type,
+        expirationDate,
+        dateOfProduction,
+        price: groupPrice,
+        quantity,
+        categories,
+      });
       refetch();
       setLoading(false);
       onclose(false);
       console.log("🚀 ~ file: type.tsx:30 ~ handleSubmit ~ res:", res);
       return;
     }
-    const res = await TypeService.update(data._id, { name, code });
+    const res = await ProductService.update(data._id, {
+      name,
+      code,
+      summary,
+      keyWord,
+      company,
+      description,
+      type,
+      expirationDate,
+      dateOfProduction,
+      price: groupPrice,
+      quantity,
+      categories,
+    });
     refetch();
     setLoading(false);
     onclose(false);
@@ -178,10 +203,10 @@ export default function TypeModal(props: any) {
               row={true}
               // error={code === "" ? "not null" : false}
               type="code"
-              value={description}
+              value={summary}
               placeholder="Tiêu đề"
               label="Tiêu đề"
-              change={(e: any) => setDescription(FormatData.iName(e))}
+              change={(e: any) => setSummary(FormatData.iName(e))}
             />
             <InputRow
               row={true}

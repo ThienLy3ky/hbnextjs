@@ -1,7 +1,7 @@
 import AdminLayout from "@/src/component/layout/client.admin";
 import EnhancedTable from "@/src/component/table/table.mui";
 import { hederTable } from "@/src/controller/constant/interface";
-import useSizeHook from "@/src/controller/hooks/size.hook";
+import useProductHook from "@/src/controller/hooks/products.hook";
 import ProductModal from "@/src/create_update/admin/product";
 import { Button } from "@mui/material";
 import { useState } from "react";
@@ -40,8 +40,8 @@ const Head: hederTable[] = [
     disablePadding: false,
   },
   {
-    id: "..",
-    label: "Giá",
+    id: "group",
+    label: "nhom",
     align: "left",
     sort: true,
     numeric: false,
@@ -58,7 +58,7 @@ export default function ProductAdmin() {
     orderBy: "createdAt",
   });
   const [dataEd, setDataEd] = useState();
-  const { data, isLoading, refetch } = useSizeHook(query);
+  const { data, isLoading, refetch } = useProductHook(query);
   const handleDeleted = (data: string) => {
     console.log(
       "🚀 ~ file: index.tsx:57 ~ handleDeleted ~ data deleted:",
