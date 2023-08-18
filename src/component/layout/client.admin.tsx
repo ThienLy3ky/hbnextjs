@@ -1,8 +1,13 @@
 import "@/public/static/library/css/materialdesignicons.min.css";
 import "@/public/static/library/css/style.admin.css";
 import { MenuAdmin } from "@/src/component/menu/index.admin";
+import ReduxService from "@/src/controller/redux";
 import Script from "next/script";
+import { useEffect } from "react";
 export default function AdminLayout({ children, title }: any) {
+  useEffect(() => {
+    Promise.allSettled([ReduxService.getGroupPrice()]);
+  });
   return (
     <div className="container-scroller">
       <MenuAdmin />

@@ -15,7 +15,7 @@ export default function TypeModal(props: any) {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
-  const [file, setFile] = useState();
+  const [file, setFile] = useState("");
   const err = validateForm.notNull(name) || validateForm.notNull(code);
   useEffect(() => {
     if (data) {
@@ -29,20 +29,24 @@ export default function TypeModal(props: any) {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    const formData = new FormData();
     if (err || loading) {
       console.log("validate fail");
       return;
     }
     setLoading(true);
     if (!data) {
-      const res = await TypeService.create({ name, code });
+      formData.append("images", file);
+      formData.append("name", name);
+      formData.append("code", code);
+      const res = await TypeService.create(formData);
       refetch();
       setLoading(false);
       onclose(false);
       console.log("🚀 ~ file: type.tsx:30 ~ handleSubmit ~ res:", res);
       return;
     }
-    const res = await TypeService.update(data._id, { name, code });
+    const res = await TypeService.update(data._id, { name, code, image: file });
     refetch();
     setLoading(false);
     onclose(false);
@@ -77,14 +81,16 @@ export default function TypeModal(props: any) {
               name="code"
               placeholder="Mã"
               label="Mã"
-              change={(e: any) => setCode(removeVietnameseTones(FormatData.iName(e || "")));}
+              change={(e: any) =>
+                setCode(removeVietnameseTones(FormatData.iName(e || "")))
+              }
             />
             <InputRow
               name="image"
               type="file"
               placeholder=""
               label="Hình ảnh"
-              // change={setFile}
+              change={(e: any) => setFile(e)}
             />
           </div>
         </div>

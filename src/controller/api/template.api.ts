@@ -14,6 +14,17 @@ const TemplateService = {
       null
     );
   },
+  getForAdmin() {
+    return APIService.request(
+      METHOD_TYPE.GET,
+      "/admin-template",
+      this.getAll.name,
+      cancelTokenHandlerObject,
+      null,
+      null,
+      null
+    );
+  },
 };
 
 const cancelTokenHandlerObject = createCancelTokenHandler(TemplateService);

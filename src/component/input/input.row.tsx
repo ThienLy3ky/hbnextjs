@@ -68,7 +68,7 @@ export default function InputRow(props: any) {
             onChange={(e) => change(formatNumber(e.target.value))}
           />
         ) : type === "file" ? (
-          <UploadInput />
+          <UploadInput change={(e: any) => change(e)} />
         ) : (
           <TextField
             name={name}

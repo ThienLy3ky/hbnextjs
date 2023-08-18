@@ -1,7 +1,7 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { store } from "../store";
 import TemplateService from "../api/template.api";
-import { setTemplate } from "./slice";
+import { setPriceGroup, setTemplate } from "./slice";
 export default class ReduxService {
   static async callDispatchAction(action: any) {
     store.dispatch(action);
@@ -93,7 +93,10 @@ export default class ReduxService {
     const res = await TemplateService.getAll();
     ReduxService.callDispatchAction(setTemplate(res));
   }
-
+  static async getGroupPrice() {
+    const res = await TemplateService.getAll();
+    ReduxService.callDispatchAction(setPriceGroup(res));
+  }
   // static logout() {
   //   if (
   //     ReduxService.getConnectionMethod() === CONNECTION_METHOD.WALLET_CONNECT

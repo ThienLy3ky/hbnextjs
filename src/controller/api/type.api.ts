@@ -37,13 +37,16 @@ const TypeService = {
     );
   },
   create(payload: object) {
+    console.log("🚀 ~ file: type.api.ts:40 ~ create ~ payload:", payload);
     return APIService.request(
       METHOD_TYPE.POST,
       `${apiUrl}`,
       this.update.name,
       cancelTokenHandlerObject,
       null,
-      payload
+      payload,
+      null,
+      { "Content-Type": "multipart/form-data" }
     );
   },
 };

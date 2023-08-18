@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
-export default function UploadInput(props: any) {
+export default function UploadInput({ change }: any) {
   const [preview, setPreview] = useState("/static/image/download.png");
   const handleChange = async (e: any) => {
     const { files } = e.target;
@@ -14,6 +14,9 @@ export default function UploadInput(props: any) {
           return null;
         }
         setPreview(URL.createObjectURL(file));
+        change(() => {
+          return file;
+        });
         return null;
       });
     } catch (error) {

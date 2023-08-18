@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   template: {},
+  priceGroup: {},
   // metamask: {
   //   accounts: [],
   //   address: "",
@@ -26,6 +27,9 @@ export const appSlice = createSlice({
     setTemplate: (state, action) => {
       state.template = action.payload;
     },
+    setPriceGroup: (state, action) => {
+      state.priceGroup = action.payload;
+    },
     // setWalletConnect: (state, action) => {
     //   state.walletConnect = action.payload;
     // },
@@ -36,6 +40,6 @@ export const appSlice = createSlice({
   },
 });
 
-export const { setTemplate } = appSlice.actions;
+export const { setTemplate, setPriceGroup } = appSlice.actions;
 
 export default appSlice.reducer;
