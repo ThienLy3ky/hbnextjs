@@ -36,19 +36,19 @@ export default function TypeModal(props: any) {
       return;
     }
     setLoading(true);
-    if (!data) {
-      const res = await TypeService.create({ name, code });
-      refetch();
-      setLoading(false);
-      onclose(false);
+    // if (!data) {
+    //   const res = await TypeService.create({ name, code });
+    //   refetch();
+    //   setLoading(false);
+    //   onclose(false);
       
-      return;
-    }
-    const res = await TypeService.update(data._id, { name, code });
-    refetch();
-    setLoading(false);
-    onclose(false);
-    return;
+    //   return;
+    // }
+    // const res = await TypeService.update(data._id, { name, code });
+    // refetch();
+    // setLoading(false);
+    // onclose(false);
+    // return;
   };
 
   return (
@@ -78,7 +78,7 @@ export default function TypeModal(props: any) {
               name="code"
               placeholder="Mã"
               label="Mã"
-              change={(e: any) => setCode(removeVietnameseTones(FormatData.iName(e || "")));}
+              change={(e: any) => setCode(removeVietnameseTones(FormatData.iName(e || "")))}
             />
             <InputRow
               name="image"
