@@ -35,20 +35,20 @@ export default function TypeModal(props: any) {
       console.log("validate fail");
       return;
     }
-    setLoading(true);
-    if (!data) {
-      const res = await TypeService.create({ name, code });
-      refetch();
-      setLoading(false);
-      onclose(false);
+    // setLoading(true);
+    // if (!data) {
+    //   const res = await TypeService.create({ name, code });
+    //   refetch();
+    //   setLoading(false);
+    //   onclose(false);
 
-      return;
-    }
-    const res = await TypeService.update(data._id, { name, code });
-    refetch();
-    setLoading(false);
-    onclose(false);
-    return;
+    //   return;
+    // }
+    // const res = await TypeService.update(data._id, { name, code });
+    // refetch();
+    // setLoading(false);
+    // onclose(false);
+    // return;
   };
 
   return (
