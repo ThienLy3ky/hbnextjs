@@ -18,7 +18,7 @@ const TemplateService = {
     return APIService.request(
       METHOD_TYPE.GET,
       "/admin-template",
-      this.getAll.name,
+      this.getForAdmin.name,
       cancelTokenHandlerObject,
       null,
       null,

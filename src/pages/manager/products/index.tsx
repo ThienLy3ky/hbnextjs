@@ -3,8 +3,9 @@ import EnhancedTable from "@/src/component/table/table.mui";
 import { hederTable } from "@/src/controller/constant/interface";
 import useProductHook from "@/src/controller/hooks/products.hook";
 import ProductModal from "@/src/create_update/admin/product";
-import { Button } from "@mui/material";
+import { Alert, Button, Snackbar } from "@mui/material";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Head: hederTable[] = [
   {
@@ -16,7 +17,7 @@ const Head: hederTable[] = [
     disablePadding: false,
   },
   {
-    id: "type",
+    id: "code",
     label: "Mã",
     align: "left",
     sort: true,
@@ -24,24 +25,17 @@ const Head: hederTable[] = [
     disablePadding: false,
   },
   {
-    id: "newPrice",
-    label: "Giá",
+    id: "type",
+    idChil: "name",
+    label: "Loại",
     align: "left",
     sort: true,
     numeric: false,
     disablePadding: false,
   },
   {
-    id: "quanlity",
-    label: "Số lượng",
-    align: "left",
-    sort: true,
-    numeric: false,
-    disablePadding: false,
-  },
-  {
-    id: "group",
-    label: "nhom",
+    id: "summary",
+    label: "Tóm Tắt",
     align: "left",
     sort: true,
     numeric: false,
@@ -50,7 +44,10 @@ const Head: hederTable[] = [
 ];
 type Order = "asc" | "desc";
 export default function ProductAdmin() {
+  const dataSelect = useSelector((state: any) => state.app);
   const [modal, setModal] = useState(false);
+  const [status, setStatus] = useState({ status: "error", message: "" });
+  const [alert, setAlert] = useState(false);
   const [query, setQuery] = useState({
     limit: 0,
     page: 1,
@@ -58,6 +55,7 @@ export default function ProductAdmin() {
     orderBy: "createdAt",
   });
   const [dataEd, setDataEd] = useState();
+
   const { data, isLoading, refetch } = useProductHook(query);
   const handleDeleted = (data: string) => {
     console.log(
@@ -66,7 +64,7 @@ export default function ProductAdmin() {
     );
   };
   return (
-    <AdminLayout title="Kích Thước mặt hàng">
+    <AdminLayout title="Quản Lý mặt hàng">
       <div className="col p-0">
         <div className="col d-flex justify-content-between p-2 ">
           <input
@@ -77,7 +75,10 @@ export default function ProductAdmin() {
           <Button
             variant="contained"
             color="success"
-            onClick={() => setModal(true)}
+            onClick={() => {
+              setModal(true);
+              setDataEd(undefined);
+            }}
             size="small"
             // style={{ height: "calc(2.25rem + 2px)" }}
             endIcon={<i className="mdi mdi-plus"></i>}
@@ -114,12 +115,58 @@ export default function ProductAdmin() {
         />
       </div>
       <ProductModal
+        options={dataSelect}
         refetch={refetch}
         data={dataEd}
         title="Quản lý Mặt hàng"
         openModal={modal}
         onclose={setModal}
+        noti={setAlert}
+        setStatus={setStatus}
       />
+      {status.status === "success" ? (
+        <Snackbar
+          open={alert}
+          autoHideDuration={6000}
+          onClose={() => setAlert(false)}
+        >
+          <Alert
+            onClose={() => setAlert(false)}
+            severity={"success"}
+            sx={{ width: "100%" }}
+          >
+            {status.message}
+          </Alert>
+        </Snackbar>
+      ) : (
+        <Snackbar
+          open={alert}
+          autoHideDuration={6000}
+          onClose={() => setAlert(false)}
+          style={{ background: "red" }}
+        >
+          <Alert
+            onClose={() => setAlert(false)}
+            severity={"error"}
+            sx={{ width: "100%" }}
+          >
+            {status.message}
+          </Alert>
+        </Snackbar>
+      )}
+      <Snackbar
+        open={alert}
+        autoHideDuration={6000}
+        onClose={() => setAlert(false)}
+      >
+        <Alert
+          onClose={() => setAlert(false)}
+          severity={"success"}
+          sx={{ width: "100%" }}
+        >
+          {status.message}
+        </Alert>
+      </Snackbar>
     </AdminLayout>
   );
 }

@@ -10,7 +10,6 @@ export default function ProductDetail() {
     ssr: false,
   });
   const router = useRouter();
-  console.log("🚀 ~ file: [index].tsx:8 ~ ProductDetail ~ router:", router);
   const { index } = router.query;
 
   const rate = Math.random();

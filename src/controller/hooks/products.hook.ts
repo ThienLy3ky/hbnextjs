@@ -6,11 +6,11 @@ const getData = async ({ queryKey }: any) => {
   const query = queryKey[1];
   const res = await ProductService.getAll(query);
   return {
-    items: res?.data?.items || [],
-    totalPages: res?.data?.totalPages || 0,
-    page: res?.data?.page || 1,
-    total: res?.data?.total || 0,
-    limit: res?.data?.limit || 25,
+    items: res?.items || [],
+    totalPages: res?.totalPages || 0,
+    page: res?.page || 1,
+    total: res?.total || 0,
+    limit: res?.limit || 25,
   };
 };
 

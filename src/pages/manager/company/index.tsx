@@ -62,7 +62,10 @@ export default function CompanyProduct() {
           <Button
             variant="contained"
             color="success"
-            onClick={() => setModal(true)}
+            onClick={() => {
+              setModal(true);
+              setDataEd(undefined);
+            }}
             size="small"
             // style={{ height: "calc(2.25rem + 2px)" }}
             endIcon={<i className="mdi mdi-plus"></i>}

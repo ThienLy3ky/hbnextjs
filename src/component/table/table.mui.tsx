@@ -19,6 +19,7 @@ type Align = "right" | "left" | "center";
 interface HeadCell {
   disablePadding: boolean;
   id: string;
+  idChil?: string;
   label: string;
   align: Align;
   numeric: boolean;
@@ -129,8 +130,8 @@ export default function EnhancedTable(props: IProps) {
               numSelected={selected.length}
               order={order}
               setOder={rows.length ? setOder : false}
-              onSelectAllClick={() => console.log("sort")}
-              onRequestSort={() => console.log("sort")}
+              // onSelectAllClick={() => console.log("sort")}
+              // onRequestSort={() => console.log("sort")}
               rowCount={rows?.length}
               option={header}
             />
@@ -141,7 +142,7 @@ export default function EnhancedTable(props: IProps) {
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => console.log(event, row.name)}
+                    // onClick={(event) => console.log(event, row.name)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
@@ -161,12 +162,33 @@ export default function EnhancedTable(props: IProps) {
                     {header?.map((val, index) => {
                       return (
                         //
-                        <TableCell
-                          align={index === 0 ? "left" : val?.align}
-                          key={index}
-                        >
-                          {row[val.id]}
-                        </TableCell>
+                        val.idChil ? (
+                          <TableCell
+                            align={index === 0 ? "left" : val?.align}
+                            key={index}
+                          >
+                            {val.id === "image" ? (
+                              <a href={row[val.id][val.idChil]}>
+                                {row[val.id]?.toString().slice(0, 50)}
+                              </a>
+                            ) : (
+                              row[val.id][val.idChil]?.toString().slice(0, 50)
+                            )}
+                          </TableCell>
+                        ) : (
+                          <TableCell
+                            align={index === 0 ? "left" : val?.align}
+                            key={index}
+                          >
+                            {val.id === "image" ? (
+                              <a href={row[val.id]}>
+                                {row[val.id]?.toString().slice(0, 50)}
+                              </a>
+                            ) : (
+                              row[val.id]?.toString().slice(0, 50)
+                            )}
+                          </TableCell>
+                        )
                       );
                     })}
                     <TableCell align="right" className="pt-0 pr-1 pb-0">

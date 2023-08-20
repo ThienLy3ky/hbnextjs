@@ -45,7 +45,7 @@ export default function GroupModal(props: any) {
       setLoading(false);
       initData();
       onclose(false);
-      console.log("🚀 ~ file: type.tsx:30 ~ handleSubmit ~ res:", res);
+
       return;
     }
     const res = await GroupService.update(data._id, {
@@ -57,7 +57,6 @@ export default function GroupModal(props: any) {
     setLoading(false);
     initData();
     onclose(false);
-    console.log("🚀 ~ file: type.tsx:34 ~ handleSubmit ~ res:", res);
     return;
   };
 
@@ -88,7 +87,9 @@ export default function GroupModal(props: any) {
               name="code"
               placeholder="Mã"
               label="Mã"
-              change={(e: any) => setCode(removeVietnameseTones(FormatData.iName(e || "")));}
+              change={(e: any) =>
+                setCode(removeVietnameseTones(FormatData.iName(e || "")))
+              }
             />
             <InputRow
               row={true}

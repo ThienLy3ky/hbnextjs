@@ -1,4 +1,5 @@
 import InputRow from "@/src/component/input/input.row";
+import UploadInput from "@/src/component/input/input.upload";
 import ModalAdmin from "@/src/component/modal/modal.addUpdate";
 import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
@@ -39,18 +40,24 @@ export default function TypeModal(props: any) {
       formData.append("images", file);
       formData.append("name", name);
       formData.append("code", code);
-      const res = await TypeService.create(formData);
+      const res = await TypeService.create(formData, code);
       refetch();
       setLoading(false);
       onclose(false);
-      console.log("🚀 ~ file: type.tsx:30 ~ handleSubmit ~ res:", res);
+
       return;
     }
-    const res = await TypeService.update(data._id, { name, code, image: file });
+
+    formData.append("images", file);
+    formData.append("name", name);
+    formData.append("code", code);
+    const res = await TypeService.update(data._id, formData, code);
     refetch();
+    setCode("");
+    setName("");
+    setFile("");
     setLoading(false);
     onclose(false);
-    console.log("🚀 ~ file: type.tsx:34 ~ handleSubmit ~ res:", res);
     return;
   };
 
@@ -85,9 +92,11 @@ export default function TypeModal(props: any) {
                 setCode(removeVietnameseTones(FormatData.iName(e || "")))
               }
             />
-            <InputRow
+            <UploadInput
               name="image"
               type="file"
+              code={code}
+              older={data?.image}
               placeholder=""
               label="Hình ảnh"
               change={(e: any) => setFile(e)}

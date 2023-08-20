@@ -5,7 +5,6 @@ import CompanyService from "../api/company.api";
 const getData = async ({ queryKey }: any) => {
   const query = queryKey[1];
   const res = await CompanyService.getAll(query);
-  console.log("🚀 ~ file: company.hook.ts:8 ~ getData ~ res:", res);
   return {
     items: res?.items || [],
     totalPages: res?.totalPages || 0,

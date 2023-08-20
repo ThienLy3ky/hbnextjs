@@ -1,5 +1,6 @@
 import AdminLayout from "@/src/component/layout/client.admin";
 import EnhancedTable from "@/src/component/table/table.mui";
+import TypeService from "@/src/controller/api/type.api";
 import { hederTable } from "@/src/controller/constant/interface";
 import useTypeHook from "@/src/controller/hooks/type.hook";
 import TypeModal from "@/src/create_update/admin/type";
@@ -43,7 +44,9 @@ export default function TypeProduct() {
   });
   const [dataEd, setDataEd] = useState();
   const { data, isLoading, refetch } = useTypeHook(query);
-  const handleDeleted = (data: string) => {
+  const handleDeleted = async (data: string) => {
+    await TypeService.delete(data);
+    refetch();
     console.log(
       "🚀 ~ file: index.tsx:57 ~ handleDeleted ~ data deleted:",
       data
@@ -61,7 +64,10 @@ export default function TypeProduct() {
           <Button
             variant="contained"
             color="success"
-            onClick={() => setModal(true)}
+            onClick={() => {
+              setModal(true);
+              setDataEd(undefined);
+            }}
             size="small"
             // style={{ height: "calc(2.25rem + 2px)" }}
             endIcon={<i className="mdi mdi-plus"></i>}

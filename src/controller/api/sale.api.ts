@@ -43,7 +43,9 @@ const SaleService = {
       this.update.name,
       cancelTokenHandlerObject,
       null,
-      payload
+      payload,
+      null,
+      { "Content-Type": "multipart/form-data" }
     );
   },
 };

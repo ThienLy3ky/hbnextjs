@@ -60,7 +60,7 @@ export default function CompanyModal(props: any) {
       refetch();
       setLoading(false);
       onclose(false);
-      console.log("🚀 ~ file: type.tsx:30 ~ handleSubmit ~ res:", res);
+
       return;
     }
     const res = await CompanyService.update(data._id, {
@@ -73,7 +73,6 @@ export default function CompanyModal(props: any) {
     refetch();
     setLoading(false);
     onclose(false);
-    console.log("🚀 ~ file: type.tsx:34 ~ handleSubmit ~ res:", res);
     return;
   };
 
@@ -104,7 +103,9 @@ export default function CompanyModal(props: any) {
               name="code"
               placeholder="Mã"
               label="Mã"
-              change={(e: any) => setCode(removeVietnameseTones(FormatData.iName(e || "")));}
+              change={(e: any) =>
+                setCode(removeVietnameseTones(FormatData.iName(e || "")))
+              }
             />
             <InputRow
               row={true}

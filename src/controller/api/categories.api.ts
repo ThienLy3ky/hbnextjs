@@ -15,14 +15,16 @@ const categoriesService = {
       null
     );
   },
-  update(id: string, payload: object) {
+  update(id: string, payload: object, code: string) {
     return APIService.request(
       METHOD_TYPE.PUT,
       `${apiUrl}/${id}`,
       this.update.name,
       cancelTokenHandlerObject,
+      { code },
+      payload,
       null,
-      payload
+      { "Content-Type": "multipart/form-data" }
     );
   },
 
@@ -36,14 +38,16 @@ const categoriesService = {
       null
     );
   },
-  create(payload: object) {
+  create(payload: object, code: string) {
     return APIService.request(
       METHOD_TYPE.POST,
       `${apiUrl}`,
       this.update.name,
       cancelTokenHandlerObject,
+      { code },
+      payload,
       null,
-      payload
+      { "Content-Type": "multipart/form-data" }
     );
   },
 };

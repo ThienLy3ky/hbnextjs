@@ -1,4 +1,6 @@
 import InputRow from "@/src/component/input/input.row";
+import UploadInput from "@/src/component/input/input.upload";
+import InputSelect from "@/src/component/input/select.mui";
 import ModalAdmin from "@/src/component/modal/modal.addUpdate";
 import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
@@ -10,19 +12,22 @@ import {
 } from "@/src/utils/action.helper";
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 interface IGroupconst {
   size: string;
   style: string;
   priceNew: number;
   priceOlder: number;
   group: string;
+  image?: string;
 }
 interface IpropsGroupconst {
   index: number;
   group: IGroupconst;
 }
-export default function TypeModal(props: any) {
-  const { title, openModal, onclose, data, refetch } = props;
+export default function ProductModal(props: any) {
+  const { title, openModal, onclose, data, refetch, options, noti, setStatus } =
+    props;
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
@@ -41,16 +46,48 @@ export default function TypeModal(props: any) {
   const [groupPrice, setGroupPrice] = useState<Array<IGroupconst>>([]);
   const [style, setStyle] = useState("");
   const [quantity, setquantity] = useState("");
-  const [file, setFile] = useState();
+  const [file, setFile] = useState("");
   const err = validateForm.notNull(name) || validateForm.notNull(code);
+
   useEffect(() => {
+    setCode("");
+    setName("");
+    setDayOff("");
+    setCategories("");
+    setType("");
+    setGroupPrice([]);
+    setFile("");
+    setExpDay("");
+    setKeyWord("");
+    setSummary("");
+    setDescription("");
+    setCompany("");
     if (data) {
       setCode(data.code);
       setName(data.name);
+      setDayOff(data.dateOfProduction);
+      setCategories(data.categories?._id);
+      setType(data.type?._id);
+      data.price?.map(({ size, style, group, priceNew, priceOlder }: any) => {
+        setGroupPrice([
+          {
+            size: size._id,
+            style: style._id,
+            group: group._id,
+            priceNew,
+            priceOlder,
+          },
+          ...groupPrice,
+        ]);
+      });
+      setExpDay(data.expirationDate);
+      setKeyWord(data.keyWord);
+      setSummary(data.summary);
+      setDescription(data.description);
+      setCompany(data.copany?._id);
+
       return;
     }
-    setCode("");
-    setName("");
   }, [data]);
 
   const GroupPrice: IGroupconst = {
@@ -59,6 +96,7 @@ export default function TypeModal(props: any) {
     priceNew,
     priceOlder,
     group,
+    image: "",
   };
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -67,6 +105,14 @@ export default function TypeModal(props: any) {
       return;
     }
     setLoading(true);
+    const formData = new FormData();
+    formData.append("images", file);
+    const image = file
+      ? await ProductService.uploadImage(formData, code)
+      : undefined;
+    if (image) {
+      groupPrice[0].image = image[0];
+    }
     if (!data) {
       const res = await ProductService.create({
         name,
@@ -82,10 +128,11 @@ export default function TypeModal(props: any) {
         quantity,
         categories,
       });
+      setStatus({ status: "success", message: "Cập nhật thành công" });
       refetch();
       setLoading(false);
       onclose(false);
-      console.log("🚀 ~ file: type.tsx:30 ~ handleSubmit ~ res:", res);
+      noti(true);
       return;
     }
     const res = await ProductService.update(data._id, {
@@ -102,38 +149,49 @@ export default function TypeModal(props: any) {
       quantity,
       categories,
     });
+    setStatus({ status: "success", message: "Thay đổi thành công" });
     refetch();
     setLoading(false);
     onclose(false);
-    console.log("🚀 ~ file: type.tsx:34 ~ handleSubmit ~ res:", res);
+    noti(true);
     return;
   };
   const PriceGroup = (props: IpropsGroupconst) => {
     const { group } = props;
+
     return (
       <div className="col-12 p-0 m-0 mt-2 group-price">
-        <InputRow
+        <InputSelect
+          options={options?.priceGroup?.groups}
           row={true}
+          readOnly={true}
+          // error={code === "" ? "not null" : false}
           type="code"
-          value={group?.group}
+          defaultValue={group?.group}
           placeholder="Nhóm mặt hàng"
           label="Nhóm mặt hàng"
         />
         <div className="col-12 row p-0 mr-0 ml-0 mt-2">
           <div className="col-6 p-0">
-            <InputRow
+            <InputSelect
+              options={options?.priceGroup?.sizes}
               row={true}
+              readOnly={true}
+              // error={code === "" ? "not null" : false}
               type="code"
-              value={group?.size}
+              defaultValue={group?.size}
               placeholder="Kích thước"
               label="Kích thước"
             />
           </div>
           <div className="col-6 p-0">
-            <InputRow
+            <InputSelect
+              options={options?.priceGroup?.styles}
               row={true}
+              readOnly={true}
+              // error={code === "" ? "not null" : false}
               type="code"
-              value={group.style}
+              defaultValue={group.style}
               placeholder="Kiểu dáng"
               label="Kiểu dáng"
             />
@@ -179,12 +237,13 @@ export default function TypeModal(props: any) {
         <HeadModal onclose={() => onclose(false)} title={title} />
         <div className="modal-body" style={{ overflow: "scroll" }}>
           <div className="col">
-            <InputRow
+            <UploadInput
               name="image"
               type="file"
               placeholder=""
+              older={data?.price[0].image}
               label="Hình ảnh"
-              // change={setFile}
+              change={setFile}
             />
             <InputRow
               row={true}
@@ -238,32 +297,35 @@ export default function TypeModal(props: any) {
               label="Số lượng"
               change={(e: any) => setquantity(FormatData.iName(e))}
             />
-            <InputRow
+            <InputSelect
+              options={options?.template?.categories}
               row={true}
               // error={code === "" ? "not null" : false}
               type="code"
-              value={categories}
+              change={(e: any) => setCategories(e)}
+              defaultValue={categories}
               placeholder="Danh mục"
               label="Danh mục"
-              change={(e: any) => setCategories(FormatData.iName(e))}
             />
-            <InputRow
+            <InputSelect
+              options={options?.template?.types}
               row={true}
               // error={code === "" ? "not null" : false}
               type="code"
-              value={type}
+              defaultValue={type}
               placeholder="Loại"
               label="Loại"
-              change={(e: any) => setType(FormatData.iName(e))}
+              change={(e: any) => setType(e)}
             />
-            <InputRow
+            <InputSelect
+              options={options?.priceGroup?.companies}
               row={true}
               // error={code === "" ? "not null" : false}
               type="code"
-              value={company}
-              placeholder="công ty"
-              label="công ty"
-              change={(e: any) => setCompany(FormatData.iName(e))}
+              defaultValue={company}
+              placeholder="Công ty"
+              label="Công ty"
+              change={(e: any) => setCompany(e)}
             />
             <div className="col-12 p-0">
               <h5
@@ -313,20 +375,22 @@ export default function TypeModal(props: any) {
                     })
                   : ""}
                 <div className="col-12 p-0 m-0 mt-2 group-price">
-                  <InputRow
+                  <InputSelect
+                    options={options?.priceGroup?.groups}
                     row={true}
-                    value={group}
                     // error={code === "" ? "not null" : false}
                     type="code"
+                    defaultValue={group}
                     placeholder="Nhóm mặt hàng"
                     label="Nhóm mặt hàng"
                     change={(e: any) => setgroup(e)}
                   />
                   <div className="col-12 row p-0 mr-0 ml-0 mt-2">
                     <div className="col-6 p-0">
-                      <InputRow
+                      <InputSelect
+                        options={options?.priceGroup?.sizes}
                         row={true}
-                        value={size}
+                        defaultValue={size}
                         // error={code === "" ? "not null" : false}
                         type="code"
                         placeholder="Kích thước"
@@ -335,10 +399,10 @@ export default function TypeModal(props: any) {
                       />
                     </div>
                     <div className="col-6 p-0">
-                      <InputRow
+                      <InputSelect
+                        options={options?.priceGroup?.styles}
                         row={true}
-                        value={style}
-                        // error={code === "" ? "not null" : false}
+                        defaultValue={style}
                         type="code"
                         placeholder="Kiểu dáng"
                         label="Kiểu dáng"
@@ -414,6 +478,7 @@ export default function TypeModal(props: any) {
         </div>
         {!err ? (
           <FooterModal
+            loading={loading}
             save="Lưu"
             cancel="Huỷ"
             onCancel={() => onclose(false)}

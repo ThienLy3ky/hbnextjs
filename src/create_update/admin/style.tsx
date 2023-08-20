@@ -41,7 +41,7 @@ export default function StyleModal(props: any) {
       refetch();
       setLoading(false);
       onclose(false);
-      console.log("🚀 ~ file: type.tsx:30 ~ handleSubmit ~ res:", res);
+
       return;
     }
     const res = await StyleService.update(data._id, {
@@ -52,7 +52,6 @@ export default function StyleModal(props: any) {
     refetch();
     setLoading(false);
     onclose(false);
-    console.log("🚀 ~ file: type.tsx:34 ~ handleSubmit ~ res:", res);
     return;
   };
 

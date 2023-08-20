@@ -1,4 +1,5 @@
 import InputRow from "@/src/component/input/input.row";
+import UploadInput from "@/src/component/input/input.upload";
 import ModalAdmin from "@/src/component/modal/modal.addUpdate";
 import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
@@ -15,7 +16,7 @@ export default function CategoryModal(props: any) {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
-  const [file, setFile] = useState();
+  const [file, setFile] = useState("");
   const [description, setDescription] = useState("");
   const err = validateForm.notNull(name) || validateForm.notNull(code);
   useEffect(() => {
@@ -36,24 +37,24 @@ export default function CategoryModal(props: any) {
       console.log("validate fail");
       return;
     }
+    const formData = new FormData();
     setLoading(true);
+    formData.append("images", file);
+    formData.append("name", name);
+    formData.append("code", code);
+    formData.append("description", description);
     if (!data) {
-      const res = await CategoryService.create({ name, code, description });
+      const res = await CategoryService.create(formData, code);
       refetch();
       setLoading(false);
       onclose(false);
-      console.log("🚀 ~ file: type.tsx:30 ~ handleSubmit ~ res:", res);
+
       return;
     }
-    const res = await CategoryService.update(data._id, {
-      name,
-      code,
-      description,
-    });
+    const res = await CategoryService.update(data._id, formData, code);
     refetch();
     setLoading(false);
     onclose(false);
-    console.log("🚀 ~ file: type.tsx:34 ~ handleSubmit ~ res:", res);
     return;
   };
 
@@ -84,7 +85,9 @@ export default function CategoryModal(props: any) {
               name="code"
               placeholder="Mã"
               label="Mã"
-              change={(e: any) => setCode(removeVietnameseTones(FormatData.iName(e || "")));}
+              change={(e: any) =>
+                setCode(removeVietnameseTones(FormatData.iName(e || "")))
+              }
             />
             <InputRow
               row={true}
@@ -96,12 +99,14 @@ export default function CategoryModal(props: any) {
               value={description}
               change={(e: any) => setDescription(FormatData.iName(e))}
             />
-            <InputRow
+            <UploadInput
               name="image"
               type="file"
+              code={code}
+              older={data?.image}
               placeholder=""
               label="Hình ảnh"
-              // change={setFile}
+              change={setFile}
             />
           </div>
         </div>

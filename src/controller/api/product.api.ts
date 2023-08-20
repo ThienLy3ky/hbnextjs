@@ -43,7 +43,20 @@ const ProductService = {
       this.update.name,
       cancelTokenHandlerObject,
       null,
-      payload
+      payload,
+      null
+    );
+  },
+  uploadImage(payload: object, code: string) {
+    return APIService.request(
+      METHOD_TYPE.POST,
+      `${apiUrl}/upload`,
+      this.update.name,
+      cancelTokenHandlerObject,
+      { code },
+      payload,
+      null,
+      { "Content-Type": "multipart/form-data" }
     );
   },
 };

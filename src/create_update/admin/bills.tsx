@@ -41,14 +41,13 @@ export default function TypeModal(props: any) {
       refetch();
       setLoading(false);
       onclose(false);
-      console.log("🚀 ~ file: type.tsx:30 ~ handleSubmit ~ res:", res);
+      
       return;
     }
     const res = await TypeService.update(data._id, { name, code });
     refetch();
     setLoading(false);
     onclose(false);
-    console.log("🚀 ~ file: type.tsx:34 ~ handleSubmit ~ res:", res);
     return;
   };
 

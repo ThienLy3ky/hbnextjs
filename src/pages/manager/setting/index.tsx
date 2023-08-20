@@ -36,7 +36,6 @@ export default function Setting() {
         SDT,
         email,
       });
-      console.log("🚀 ~ file: index.tsx:26 ~ handlUpdate ~ res:", res);
     }
     await ReduxService.getSetting();
   };

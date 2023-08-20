@@ -4,10 +4,11 @@ import { MenuAdmin } from "@/src/component/menu/index.admin";
 import ReduxService from "@/src/controller/redux";
 import Script from "next/script";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 export default function AdminLayout({ children, title }: any) {
   useEffect(() => {
-    Promise.allSettled([ReduxService.getGroupPrice()]);
-  });
+    Promise.all([ReduxService.getGroupPrice()]);
+  }, []);
   return (
     <div className="container-scroller">
       <MenuAdmin />
