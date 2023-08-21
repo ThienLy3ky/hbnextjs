@@ -6,7 +6,7 @@ import ModalAdmin from "@/src/component/modal/modal.addUpdate";
 import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 interface IGroupconst {
   size: string;
   style: string;
@@ -27,38 +27,29 @@ interface IGroupProps {
   groups: IGroupconst[];
   onSave: any;
 }
-const GroupPrice: IGroupconst = {
-  size: "",
-  style: "",
-  priceNew: 0,
-  priceOlder: 0,
-  group: "",
-  image: "",
-};
-export default function ProductGroup(props: IGroupProps) {
+// const GroupPrice: IGroupconst = {
+//   size,
+//   style,
+//   priceNew,
+//   priceOlder,
+//   groups,
+//   image: "",
+// };
+export default function NewProductGroup(props: IGroupProps) {
   const { options, openModal, onclose, groups, onSave } = props;
   const [size, setSize] = useState("");
   const [priceOlder, setpriceOlder] = useState(0);
   const [priceNew, setpriceNew] = useState(0);
-  const [change, setChange] = useState(false);
+  // const [group, setgroup] = useState("");
   const [groupPrice, setGroupPrice] = useState<Array<IGroupconst>>([]);
   const [style, setStyle] = useState("");
   const [quantity, setquantity] = useState("");
-  useEffect(() => {
-    setGroupPrice(groups);
-  }, [groups, openModal]);
+
   const err = false;
 
   const handleSubmit = () => {
-    onSave(groupPrice);
+    onSave(groups);
     onclose(false);
-  };
-  const add = () => {
-    setGroupPrice([...groupPrice, GroupPrice]);
-  };
-  const remove = (index: number) => {
-    groupPrice.splice(index, 1);
-    setChange(!change);
   };
   return (
     <ModalAdmin
@@ -69,14 +60,14 @@ export default function ProductGroup(props: IGroupProps) {
     >
       <HeadModal onclose={() => onclose(false)} title={"Nhóm Sản phẩm"} />
       <div className="modal-body" style={{ overflow: "scroll" }}>
-        {groupPrice?.map(
+        {groups?.map(
           (
             { group, size, style, image, priceNew, priceOlder }: any,
             index: number
           ) => (
-            <div className="col pb-2 d-flex" key={index}>
+            <div className="col pb-2" key={index}>
               <div
-                className="col-11 p-0 m-0 mt-2 group-price"
+                className="col-12 p-0 m-0 mt-2 group-price"
                 style={{ background: "#edfff0" }}
               >
                 <div className="d-flex">
@@ -89,7 +80,7 @@ export default function ProductGroup(props: IGroupProps) {
                       placeholder="Nhóm mặt hàng"
                       label="Nhóm mặt hàng"
                       change={(e: any) => {
-                        groupPrice[index].group = e;
+                        groups[index].group = e;
                       }}
                     />
                     <InputNoStateSelect
@@ -100,7 +91,7 @@ export default function ProductGroup(props: IGroupProps) {
                       label="Kích cỡ"
                       placeholder="Đơn vị tính"
                       change={(e: any) => {
-                        groupPrice[index].size = e;
+                        groups[index].size = e;
                       }}
                     />
                     <InputNoStateSelect
@@ -111,7 +102,7 @@ export default function ProductGroup(props: IGroupProps) {
                       placeholder="Kiểu dáng"
                       label="Kiểu dáng"
                       change={(e: any) => {
-                        groupPrice[index].style = e;
+                        groups[index].style = e;
                       }}
                     />
                   </div>
@@ -134,7 +125,7 @@ export default function ProductGroup(props: IGroupProps) {
                       placeholder="Giá cũ"
                       label="Giá cũ"
                       change={(e: any) => {
-                        groupPrice[index].priceOlder = e;
+                        groups[index].priceOlder = e;
                       }}
                     />
                   </div>
@@ -146,14 +137,11 @@ export default function ProductGroup(props: IGroupProps) {
                       placeholder="Giá mới"
                       label="Giá mới"
                       change={(e: any) => {
-                        groupPrice[index].priceNew = e;
+                        groups[index].priceNew = e;
                       }}
                     />
                   </div>
                 </div>
-              </div>
-              <div className="col-1" onClick={() => remove(index)}>
-                <i className="mdi mdi-minimus">-</i>
               </div>
               {/* <UploadInput
               name="image"

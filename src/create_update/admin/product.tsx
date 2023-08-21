@@ -87,7 +87,7 @@ export default function ProductModal(props: any) {
 
       return;
     }
-  }, [data]);
+  }, [data, openGroup]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

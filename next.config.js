@@ -9,6 +9,7 @@ const nextConfig = {
       "vinpack.vn",
       "assets.herbalifenutrition.com",
       "duocphamdragon.com",
+      "storage.googleapis.com",
     ],
   },
 };
