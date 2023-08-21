@@ -1,20 +1,22 @@
 import { Autocomplete, TextField } from "@mui/material";
 const optionsdefaul = [{ _id: "", name: "Khong co du lieu" }];
 import { AccordionSummary, Typography } from "@mui/material";
-export default function InputSelect(props: any) {
+import { useState } from "react";
+export default function InputNoStateSelect(props: any) {
   const {
     options,
     multiple,
     readOnly = false,
     defaultValue,
-    value,
     label,
     row = false,
     alignLabel = "left",
     placeholder,
     change,
   } = props;
+  const [value, setValue] = useState("");
   const onChange = (e: any, value: any) => {
+    setValue(value?._id);
     change(value?._id);
   };
 
@@ -38,13 +40,12 @@ export default function InputSelect(props: any) {
           options={options || optionsdefaul}
           getOptionLabel={(option: any) => option.name}
           readOnly={readOnly}
-          defaultValue={
-            defaultValue
+          value={
+            value
+              ? options?.find((option: any) => option._id === value)
+              : defaultValue
               ? options?.find((option: any) => option._id === defaultValue)
               : null
-          } //disable
-          value={
-            value ? options?.find((option: any) => option._id === value) : null
           }
           // filterSelectedOptions
           onChange={onChange}

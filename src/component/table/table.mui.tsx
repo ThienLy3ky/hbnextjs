@@ -162,7 +162,7 @@ export default function EnhancedTable(props: IProps) {
                     {header?.map((val, index) => {
                       return (
                         //
-                        val.idChil ? (
+                        val.idChil && row[val.id] ? (
                           <TableCell
                             align={index === 0 ? "left" : val?.align}
                             key={index}

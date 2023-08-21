@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useState } from "react";
 import { StyledObject } from "styled-components";
 
@@ -57,7 +58,7 @@ export default function UploadFiel(props: any) {
     }
   };
   return (
-    <div>
+    <div style={{ textAlign: "center", minWidth: "200px" }}>
       <input
         className="form-control"
         type="file"
@@ -68,7 +69,7 @@ export default function UploadFiel(props: any) {
           position: "absolute",
         }}
       />
-      <img style={{ height: "200px" }} src={preview} />
+      <Image alt="Hình ảnh" layout="fill" objectFit="contain" src={preview} />
     </div>
   );
 }

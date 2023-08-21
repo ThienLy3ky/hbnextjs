@@ -19,7 +19,7 @@ export default function AdminLayout({ children, title }: any) {
         ></div>
         <div
           className="container-fluid page-body-wrapper p-3"
-          style={{ height: "100%", background: "#d1e4ff7a" }}
+          style={{ background: "#d1e4ff7a" }}
         >
           <h2 className="col-12 title-header">{title}</h2>
           <div className="main-panel " style={{ background: "whitesmoke" }}>

@@ -55,7 +55,11 @@ export default function UploadInput({
             : "col-12 col-form-label pl-4  d-flex justify-content-center"
         }
       >
-        <div className="col-8">
+        <div
+          className="col-8"
+          style={{ textAlign: "center", minHeight: "200px", cursor: "copy" }}
+          title="Tải ảnh lên"
+        >
           <input
             className="form-control"
             type="file"
@@ -69,15 +73,15 @@ export default function UploadInput({
             }}
             // onChange={(e) => change(formatString(e.target.value))
           />
-          <img
+          <Image
+            alt="Hình ảnh"
+            layout="fill"
+            objectFit="contain"
             src={
               preview !== "/static/image/download.png"
                 ? preview
                 : older || "/static/image/download.png"
             }
-            width={50}
-            height={"100%"}
-            alt="no image"
           />
         </div>
       </div>

@@ -772,7 +772,7 @@
 
 /* Sidebar */
 .sidebar {
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh);
   background: #252934;
   font-weight: normal;
   padding: 0;
@@ -1623,4 +1623,14 @@ button:focus {
 }
 .group-price:hover {
   background: whitesmoke;
+}
+.box-shawder-bt {
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+.css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded {
+  border: outset;
+}
+.modal-dialog {
+  max-width: 800px;
 }

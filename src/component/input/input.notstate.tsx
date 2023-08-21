@@ -2,14 +2,14 @@ import { formatNumber, formatString } from "@/src/utils/action.helper";
 import { TextField } from "@mui/material";
 import UploadInput from "./input.upload";
 import { AccordionSummary, Typography } from "@mui/material";
-export default function InputRow(props: any) {
+import { useState } from "react";
+export default function InputNotState(props: any) {
   const {
     alignLabel,
     row,
     classname,
     error,
     label,
-    value,
     change,
     type,
     name,
@@ -19,6 +19,7 @@ export default function InputRow(props: any) {
     textarea,
     ...prop
   } = props;
+  const [value, setValue] = useState(0);
   return (
     <AccordionSummary className="box-shawder-bt ">
       <Typography
@@ -49,16 +50,20 @@ export default function InputRow(props: any) {
             name={name}
             type="text"
             error={!error ? false : true}
-            value={value ? Number(value).toLocaleString() : undefined}
             id="outlined-error"
             label={error ? error : ""}
-            defaultValue={
-              !value ? Number(defaultValue).toLocaleString() : undefined
+            value={
+              value
+                ? Number(value || 0).toLocaleString()
+                : Number(defaultValue || 0).toLocaleString()
             }
             size="small"
             style={{ padding: "5px", width: "100%", background: "white" }}
             {...prop}
-            onChange={(e) => change(formatNumber(e.target.value))}
+            onChange={(e) => {
+              setValue(formatNumber(e.target.value));
+              change(formatNumber(e.target.value));
+            }}
           />
         ) : (
           <TextField

@@ -11,7 +11,7 @@ export default function FooterModal(props: any) {
         <button
           type="submit"
           className="btn btn-primary"
-          onSubmit={props.onsubmit}
+          onClick={props.onsubmit}
         >
           {props.save}
         </button>

@@ -11,7 +11,11 @@ export default function ModalAdmin(props: any) {
       aria-describedby="parent-modal-description"
     >
       <Fade in={props.openModal}>
-        <div className="modal-dialog pt-0 mt-0 modal-lg" role="document">
+        <div
+          className="modal-dialog pt-0 mt-0 modal-lg col-md-8 col-sm-10"
+          style={{ maxWidth: "800px !important" }}
+          role="document"
+        >
           <div className="modal-content">{props.children}</div>
         </div>
       </Fade>
