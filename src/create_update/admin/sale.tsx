@@ -32,7 +32,7 @@ export default function TypeModal(props: any) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (err || loading) {
-      console.log("validate fail");
+      // showNotificationError("validate fail");
       return;
     }
     setLoading(true);
@@ -41,7 +41,7 @@ export default function TypeModal(props: any) {
     //   refetch();
     //   setLoading(false);
     //   onclose(false);
-      
+
     //   return;
     // }
     // const res = await TypeService.update(data._id, { name, code });
@@ -78,7 +78,9 @@ export default function TypeModal(props: any) {
               name="code"
               placeholder="Mã"
               label="Mã"
-              change={(e: any) => setCode(removeVietnameseTones(FormatData.iName(e || "")))}
+              change={(e: any) =>
+                setCode(removeVietnameseTones(FormatData.iName(e || "")))
+              }
             />
             <InputRow
               name="image"

@@ -4,6 +4,10 @@ import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
 import SizeService from "@/src/controller/api/size.api";
 import {
+  showNotificationError,
+  showNotificationSuccess,
+} from "@/src/component/notification/notificationFc";
+import {
   FormatData,
   removeVietnameseTones,
   validateForm,
@@ -32,16 +36,16 @@ export default function SizeModal(props: any) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (err || loading) {
-      console.log("validate fail");
+      showNotificationError("validate fail");
       return;
     }
     setLoading(true);
     if (!data) {
       const res = await SizeService.create({ name, code, description });
+      if (res) showNotificationSuccess("Thêm mới thành công");
       refetch();
       setLoading(false);
       onclose(false);
-
       return;
     }
     const res = await SizeService.update(data._id, {
@@ -49,6 +53,7 @@ export default function SizeModal(props: any) {
       code,
       description,
     });
+    if (res) showNotificationSuccess("Thay đổi thành công");
     refetch();
     setLoading(false);
     onclose(false);

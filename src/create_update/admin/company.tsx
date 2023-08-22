@@ -5,6 +5,10 @@ import HeadModal from "@/src/component/modal/modal.head";
 import EnhancedTable from "@/src/component/table/table.mui";
 import CompanyService from "@/src/controller/api/company.api";
 import {
+  showNotificationError,
+  showNotificationSuccess,
+} from "@/src/component/notification/notificationFc";
+import {
   FormatData,
   removeVietnameseTones,
   validateForm,
@@ -45,7 +49,7 @@ export default function CompanyModal(props: any) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (err || loading) {
-      console.log("validate fail");
+      showNotificationError("validate fail");
       return;
     }
     setLoading(true);
@@ -57,6 +61,7 @@ export default function CompanyModal(props: any) {
         email,
         phone,
       });
+      if (res) showNotificationSuccess("Thêm mới thành công");
       refetch();
       setLoading(false);
       onclose(false);
@@ -70,6 +75,7 @@ export default function CompanyModal(props: any) {
       email,
       phone,
     });
+    if (res) showNotificationSuccess("Thay đổi thành công");
     refetch();
     setLoading(false);
     onclose(false);

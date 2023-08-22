@@ -154,19 +154,6 @@ export default function ProductAdmin() {
           </Alert>
         </Snackbar>
       )}
-      <Snackbar
-        open={alert}
-        autoHideDuration={6000}
-        onClose={() => setAlert(false)}
-      >
-        <Alert
-          onClose={() => setAlert(false)}
-          severity={"success"}
-          sx={{ width: "100%" }}
-        >
-          {status.message}
-        </Alert>
-      </Snackbar>
     </AdminLayout>
   );
 }

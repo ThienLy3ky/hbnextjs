@@ -1634,3 +1634,12 @@ button:focus {
 .modal-dialog {
   max-width: 800px;
 }
+.input-upload {
+  padding: 5px;
+  height: 100%;
+  position: absolute;
+  opacity: 0;
+  z-index: 1000;
+  margin: 0;
+  cursor: "copy";
+}

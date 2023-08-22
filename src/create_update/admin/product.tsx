@@ -5,6 +5,10 @@ import InputSelect from "@/src/component/input/select.mui";
 import ModalAdmin from "@/src/component/modal/modal.addUpdate";
 import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
+import {
+  showNotificationError,
+  showNotificationSuccess,
+} from "@/src/component/notification/notificationFc";
 import ProductService from "@/src/controller/api/product.api";
 import GroupProduct from "@/src/create_update/admin/group.product";
 import {
@@ -12,14 +16,6 @@ import {
   removeVietnameseTones,
   validateForm,
 } from "@/src/utils/action.helper";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Button,
-  Typography,
-} from "@mui/material";
-import { group } from "console";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -36,8 +32,7 @@ interface IpropsGroupconst {
   group: IGroupconst;
 }
 export default function ProductModal(props: any) {
-  const { title, openModal, onclose, data, refetch, options, noti, setStatus } =
-    props;
+  const { title, openModal, onclose, data, refetch, options } = props;
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
@@ -52,8 +47,8 @@ export default function ProductModal(props: any) {
   const [openGroup, setOpenGroup] = useState(false);
   const [groupPrice, setGroupPrice] = useState<Array<IGroupconst>>([]);
   const [groupPriceNew, setGroupPriceNew] = useState<Array<IGroupconst>>([]);
-  const [quantity, setquantity] = useState("");
-  const [file, setFile] = useState("");
+  const [imagesUpload, setImageUpload] = useState<Array<Object>>([]);
+  const [imagesDelete, setImageDelete] = useState<Array<String>>([]);
   const err = validateForm.notNull(name) || validateForm.notNull(code);
   const initData = () => {
     setCode("");
@@ -63,89 +58,89 @@ export default function ProductModal(props: any) {
     setType("");
     setGroupPrice([]);
     setGroupPriceNew([]);
-    setFile("");
     setExpDay("");
     setKeyWord("");
     setSummary("");
     setDescription("");
     setCompany("");
+    setImageDelete([]);
+    setImageUpload([]);
   };
   useEffect(() => {
     initData();
     if (data) {
-      setCode(data.code);
-      setName(data.name);
-      setDayOff(new Date(data.dateOfProduction).toISOString().split("T")[0]);
-      setCategories(data.categories?._id);
-      setType(data.type?._id);
-      setExpDay(new Date(data.expirationDate).toISOString().split("T")[0]);
-      setKeyWord(data.keyWord);
-      setSummary(data.summary);
-      setGroupPrice(data?.price);
-      setDescription(data.description);
-      setCompany(data.company?._id);
+      const Data = Object.create(data);
+      setCode(Data.code);
+      setName(Data.name);
+      setDayOff(new Date(Data.dateOfProduction).toISOString().split("T")[0]);
+      setCategories(Data.categories?._id);
+      setType(Data.type?._id);
+      setExpDay(new Date(Data.expirationDate).toISOString().split("T")[0]);
+      setKeyWord(Data.keyWord);
+      setSummary(Data.summary);
+      setGroupPrice(Data?.price);
+      setDescription(Data.description);
+      setCompany(Data.company?._id);
 
       return;
     }
-  }, [data, openGroup]);
-
+  }, [data, openModal]);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (err || loading) {
-      console.log("validate fail");
+      showNotificationError("validate fail");
       return;
     }
     setLoading(true);
+    console.log("delete", imagesDelete);
+    console.log("upload", imagesUpload);
+
     const formData = new FormData();
-    formData.append("images", file);
-    const image = file
-      ? await ProductService.uploadImage(formData, code)
-      : undefined;
-    if (image) {
-      groupPrice[0].image = image[0];
-    }
-    if (!data) {
-      const res = await ProductService.create({
-        name,
-        code,
-        summary,
-        keyWord,
-        company,
-        description,
-        type,
-        expirationDate,
-        dateOfProduction,
-        price: groupPrice,
-        quantity,
-        categories,
-      });
-      setStatus({ status: "success", message: "Cập nhật thành công" });
-      refetch();
-      setLoading(false);
-      onclose(false);
-      noti(true);
-      return;
-    }
-    const res = await ProductService.update(data._id, {
-      name,
-      code,
-      summary,
-      keyWord,
-      company,
-      description,
-      type,
-      expirationDate,
-      dateOfProduction,
-      price: groupPrice,
-      quantity,
-      categories,
-    });
-    setStatus({ status: "success", message: "Thay đổi thành công" });
-    refetch();
+    // formData.append("images", file);
+    // const image = file
+    //   ? await ProductService.uploadImage(formData, code)
+    //   : undefined;
+    // if (image) {
+    //   groupPrice[0].image = image[0];
+    // }
+    // if (!data) {
+    //   const res = await ProductService.create({
+    //     name,
+    //     code,
+    //     summary,
+    //     keyWord,
+    //     company,
+    //     description,
+    //     type,
+    //     expirationDate,
+    //     dateOfProduction,
+    //     price: groupPrice,
+    //     categories,
+    //   });
+    //   if (res) showNotificationSuccess("Cập nhật thành công");
+    //   refetch();
+    //   setLoading(false);
+    //   onclose(false);
+    //   return;
+    // }
+    // const res = await ProductService.update(data._id, {
+    //   name,
+    //   code,
+    //   summary,
+    //   keyWord,
+    //   company,
+    //   description,
+    //   type,
+    //   expirationDate,
+    //   dateOfProduction,
+    //   price: groupPrice,
+    //   categories,
+    // });
+    // if (res) showNotificationSuccess("Thay đổi thành công");
+    // refetch();
     setLoading(false);
-    onclose(false);
-    noti(true);
-    return;
+    // onclose(false);
+    // return;
   };
 
   return (
@@ -197,15 +192,6 @@ export default function ProductModal(props: any) {
               change={(e: any) => setKeyWord(FormatData.iName(e))}
             />
 
-            <InputRow
-              row={true}
-              // error={code === "" ? "not null" : false}
-              type="number"
-              value={quantity}
-              placeholder="Số lượng"
-              label="Số lượng"
-              change={(e: any) => setquantity(FormatData.iName(e))}
-            />
             <InputSelect
               options={options?.template?.categories}
               row={true}
@@ -258,6 +244,10 @@ export default function ProductModal(props: any) {
                   openModal={openGroup}
                   onclose={setOpenGroup}
                   onSave={(e: any) => setGroupPrice(e)}
+                  setImageUpload={setImageUpload}
+                  setImageDelete={(e: any) => {
+                    setImageDelete([...imagesDelete, e]);
+                  }}
                 />
                 {groupPrice?.length > 0
                   ? groupPrice?.map((groups: any, index: number) => {
@@ -302,8 +292,8 @@ export default function ProductModal(props: any) {
                             <div className="col-4">
                               <Image
                                 alt="Hình ảnh"
-                                layout="fill"
-                                objectFit="contain"
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 src={
                                   groups.image || "/static/image/noImage.jpeg"
                                 }
@@ -314,12 +304,12 @@ export default function ProductModal(props: any) {
                             <InputOnlyRead
                               className="col-md-6"
                               label={"Giá Cũ"}
-                              value={groups.priceOlder}
+                              value={Number(groups.priceOlder).toLocaleString()}
                             />
                             <InputOnlyRead
                               className="col-md-6"
                               label={"Giá mới"}
-                              value={groups.priceNew}
+                              value={Number(groups.priceNew).toLocaleString()}
                             />
                           </div>
                         </div>

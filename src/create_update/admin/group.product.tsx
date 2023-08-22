@@ -1,11 +1,9 @@
 import InputNotState from "@/src/component/input/input.notstate";
-import InputRow from "@/src/component/input/input.row";
-import InputSelect from "@/src/component/input/select.mui";
 import InputNoStateSelect from "@/src/component/input/select.nostate";
+import Upload from "@/src/component/input/upload";
 import ModalAdmin from "@/src/component/modal/modal.addUpdate";
 import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 interface IGroupconst {
   size: string;
@@ -26,6 +24,8 @@ interface IGroupProps {
   onclose: any;
   groups: IGroupconst[];
   onSave: any;
+  setImageUpload: any;
+  setImageDelete: any;
 }
 const GroupPrice: IGroupconst = {
   size: "",
@@ -36,29 +36,44 @@ const GroupPrice: IGroupconst = {
   image: "",
 };
 export default function ProductGroup(props: IGroupProps) {
-  const { options, openModal, onclose, groups, onSave } = props;
-  const [size, setSize] = useState("");
-  const [priceOlder, setpriceOlder] = useState(0);
-  const [priceNew, setpriceNew] = useState(0);
-  const [change, setChange] = useState(false);
+  const {
+    options,
+    openModal,
+    onclose,
+    groups,
+    onSave,
+    setImageUpload,
+    setImageDelete,
+  } = props;
   const [groupPrice, setGroupPrice] = useState<Array<IGroupconst>>([]);
-  const [style, setStyle] = useState("");
-  const [quantity, setquantity] = useState("");
+  const [imagesUpload, setImageUploadC] = useState<Array<Object>>([]);
+  const [imagesDelete, setImageDeleteC] = useState<Array<String>>([]);
   useEffect(() => {
+    setImageDeleteC([]);
+    setImageUploadC([]);
     setGroupPrice(groups);
   }, [groups, openModal]);
   const err = false;
 
   const handleSubmit = () => {
     onSave(groupPrice);
+    setImageDelete(imagesDelete);
+    setImageUpload(imagesUpload);
     onclose(false);
   };
   const add = () => {
     setGroupPrice([...groupPrice, GroupPrice]);
   };
-  const remove = (index: number) => {
-    groupPrice.splice(index, 1);
-    setChange(!change);
+  const handleUpload = () => {};
+  const remove = (Item: number) => {
+    let group = groupPrice.filter((e, index) => index !== Item);
+    setImageDeleteC([
+      ...imagesDelete,
+      groupPrice[Item]?.image?.split("/")[
+        (groupPrice[Item]?.image?.split("/").length || 1) - 1
+      ] || "",
+    ]);
+    setGroupPrice(group);
   };
   return (
     <ModalAdmin
@@ -116,11 +131,28 @@ export default function ProductGroup(props: IGroupProps) {
                     />
                   </div>
                   <div className="col-md-4">
-                    <Image
-                      alt="Hình ảnh"
-                      layout="fill"
-                      objectFit="contain"
-                      src={image || "/static/image/noImage.jpeg"}
+                    <Upload
+                      name="image"
+                      type="file"
+                      placeholder=""
+                      older={image}
+                      label="Hình ảnh"
+                      change={(e: object, url: string) => {
+                        groupPrice[index].image = url;
+                        setImageUploadC([
+                          ...imagesUpload,
+                          {
+                            name: image
+                              ? image.split("/")[
+                                  (image?.split("/").length || 1) - 1
+                                ]
+                              : `${group?._id || group}-${size?._id || size}-${
+                                  style?._id || style
+                                }`,
+                            file: e,
+                          },
+                        ]);
+                      }}
                     />
                   </div>
                 </div>
@@ -152,20 +184,33 @@ export default function ProductGroup(props: IGroupProps) {
                   </div>
                 </div>
               </div>
-              <div className="col-1" onClick={() => remove(index)}>
-                <i className="mdi mdi-minimus">-</i>
+              <div
+                className="col-1 d-flex align-items-center"
+                onClick={() => remove(index)}
+              >
+                <button className="btn btn-danger" style={{ height: "100%" }}>
+                  <i
+                    className="mdi mdi-minus-box col p-0"
+                    style={{ fontSize: "200%" }}
+                  />
+                </button>
               </div>
-              {/* <UploadInput
-              name="image"
-              type="file"
-              placeholder=""
-              older={data?.price[0].image}
-              label="Hình ảnh"
-              change={setFile}
-            /> */}
+              {/* */}
             </div>
           )
         )}
+        <div className="col-12">
+          <button
+            className="col-12 btn btn-success"
+            style={{ height: "100%" }}
+            onClick={() => add()}
+          >
+            <i
+              className="mdi mdi-plus-box col p-0"
+              style={{ fontSize: "200%" }}
+            />
+          </button>
+        </div>
       </div>
       {!err ? (
         <FooterModal

@@ -32,7 +32,7 @@ export default function TypeModal(props: any) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (err || loading) {
-      console.log("validate fail");
+      // showNotificationError("validate fail");
       return;
     }
     setLoading(true);

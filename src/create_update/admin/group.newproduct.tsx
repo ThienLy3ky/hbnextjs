@@ -109,8 +109,8 @@ export default function NewProductGroup(props: IGroupProps) {
                   <div className="col-md-4">
                     <Image
                       alt="Hình ảnh"
-                      layout="fill"
-                      objectFit="contain"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      fill
                       src={image || "/static/image/noImage.jpeg"}
                     />
                   </div>

@@ -5,6 +5,10 @@ import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
 import TypeService from "@/src/controller/api/type.api";
 import {
+  showNotificationError,
+  showNotificationSuccess,
+} from "@/src/component/notification/notificationFc";
+import {
   FormatData,
   removeVietnameseTones,
   validateForm,
@@ -32,7 +36,7 @@ export default function TypeModal(props: any) {
     e.preventDefault();
     const formData = new FormData();
     if (err || loading) {
-      console.log("validate fail");
+      showNotificationError("validate fail");
       return;
     }
     setLoading(true);
@@ -44,7 +48,7 @@ export default function TypeModal(props: any) {
       refetch();
       setLoading(false);
       onclose(false);
-
+      if (res) showNotificationSuccess("Thêm mới thành công");
       return;
     }
 
@@ -52,6 +56,7 @@ export default function TypeModal(props: any) {
     formData.append("name", name);
     formData.append("code", code);
     const res = await TypeService.update(data._id, formData, code);
+    if (res) showNotificationSuccess("Thay đổi thành công");
     refetch();
     setCode("");
     setName("");

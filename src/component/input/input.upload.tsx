@@ -57,26 +57,19 @@ export default function UploadInput({
       >
         <div
           className="col-8"
-          style={{ textAlign: "center", minHeight: "200px", cursor: "copy" }}
+          style={{ textAlign: "center", minHeight: "200px" }}
           title="Tải ảnh lên"
         >
           <input
-            className="form-control"
+            className="form-control input-upload"
             type="file"
             id="outlined-error"
             onChange={handleChange}
-            style={{
-              padding: "5px",
-              height: "100%",
-              position: "absolute",
-              opacity: 0,
-            }}
-            // onChange={(e) => change(formatString(e.target.value))
           />
           <Image
             alt="Hình ảnh"
-            layout="fill"
-            objectFit="contain"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             src={
               preview !== "/static/image/download.png"
                 ? preview

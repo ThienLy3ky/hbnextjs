@@ -4,6 +4,10 @@ import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
 import GroupService from "@/src/controller/api/group.api";
 import {
+  showNotificationError,
+  showNotificationSuccess,
+} from "@/src/component/notification/notificationFc";
+import {
   FormatData,
   removeVietnameseTones,
   validateForm,
@@ -35,13 +39,14 @@ export default function GroupModal(props: any) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (err || loading) {
-      console.log("validate fail");
+      showNotificationError("validate fail");
       return;
     }
     setLoading(true);
     if (!data) {
       const res = await GroupService.create({ name, code, description });
       refetch();
+      if (res) showNotificationSuccess("Thêm mới thành công");
       setLoading(false);
       initData();
       onclose(false);
@@ -53,6 +58,7 @@ export default function GroupModal(props: any) {
       code,
       description,
     });
+    if (res) showNotificationSuccess("Thay đổi thành công");
     refetch();
     setLoading(false);
     initData();

@@ -3,6 +3,10 @@ import UploadInput from "@/src/component/input/input.upload";
 import ModalAdmin from "@/src/component/modal/modal.addUpdate";
 import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
+import {
+  showNotificationError,
+  showNotificationSuccess,
+} from "@/src/component/notification/notificationFc";
 import CategoryService from "@/src/controller/api/categories.api";
 import {
   FormatData,
@@ -34,7 +38,7 @@ export default function CategoryModal(props: any) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (err || loading) {
-      console.log("validate fail");
+      showNotificationError("validate fail");
       return;
     }
     const formData = new FormData();
@@ -45,6 +49,7 @@ export default function CategoryModal(props: any) {
     formData.append("description", description);
     if (!data) {
       const res = await CategoryService.create(formData, code);
+      if (res) showNotificationSuccess("Thêm mới thành công");
       refetch();
       setLoading(false);
       onclose(false);
@@ -52,6 +57,7 @@ export default function CategoryModal(props: any) {
       return;
     }
     const res = await CategoryService.update(data._id, formData, code);
+    if (res) showNotificationSuccess("Thay đổi thành công");
     refetch();
     setLoading(false);
     onclose(false);

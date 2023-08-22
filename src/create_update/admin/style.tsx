@@ -4,6 +4,10 @@ import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
 import StyleService from "@/src/controller/api/style.api";
 import {
+  showNotificationError,
+  showNotificationSuccess,
+} from "@/src/component/notification/notificationFc";
+import {
   FormatData,
   removeVietnameseTones,
   validateForm,
@@ -32,7 +36,7 @@ export default function StyleModal(props: any) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (err || loading) {
-      console.log("validate fail");
+      showNotificationError("validate fail");
       return;
     }
     setLoading(true);
@@ -41,7 +45,7 @@ export default function StyleModal(props: any) {
       refetch();
       setLoading(false);
       onclose(false);
-
+      if (res) showNotificationSuccess("Thêm mới thành công");
       return;
     }
     const res = await StyleService.update(data._id, {
@@ -49,6 +53,7 @@ export default function StyleModal(props: any) {
       code,
       description,
     });
+    if (res) showNotificationSuccess("Thay đổi thành công");
     refetch();
     setLoading(false);
     onclose(false);

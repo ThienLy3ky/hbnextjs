@@ -55,6 +55,11 @@ export default class APIService {
         return response.data;
       })
       .catch(function (error) {
+        console.log("🚀 ~ file: index.ts:113 ~ axiosFormData ~ error:");
+        if (!error.response) {
+          showNotificationError("Lỗi kết nối mạng");
+          return;
+        }
         if (error?.response?.status === 403) {
           showNotificationError(
             "Your session has expired. Please sign in again to continue"
