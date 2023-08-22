@@ -94,11 +94,14 @@ export default function ProductModal(props: any) {
     setLoading(true);
     //upload
 
+    const formData = new FormData();
     console.log("delete", imagesDelete);
 
     console.log("upload", imagesUpload);
-
-    const formData = new FormData();
+    imagesUpload.map((images: any, index: number) => {
+      formData.append("images", images.file, images.name + ".jpeg");
+    });
+    await ProductService.uploadImage(formData, "testupload");
     // formData.append("images", file);
     // const image = file
     //   ? await ProductService.uploadImage(formData, code)
