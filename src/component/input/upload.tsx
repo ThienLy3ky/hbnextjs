@@ -21,6 +21,8 @@ export default function Upload({
           return null;
         }
         setPreview(URL.createObjectURL(file));
+        file.name = "abc" + file.type;
+        console.log("🚀 ~ file: upload.tsx:25 ~ Array.from ~ file:", file);
         change(file, URL.createObjectURL(file));
         return null;
       });

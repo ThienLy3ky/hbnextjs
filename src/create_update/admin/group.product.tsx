@@ -149,6 +149,7 @@ export default function ProductGroup(props: IGroupProps) {
                               : `${group?._id || group}-${size?._id || size}-${
                                   style?._id || style
                                 }`,
+                            index,
                             file: e,
                           },
                         ]);

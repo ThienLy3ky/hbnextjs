@@ -92,7 +92,10 @@ export default function ProductModal(props: any) {
       return;
     }
     setLoading(true);
+    //upload
+
     console.log("delete", imagesDelete);
+
     console.log("upload", imagesUpload);
 
     const formData = new FormData();
