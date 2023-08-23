@@ -4,13 +4,14 @@ import Upload from "@/src/component/input/upload";
 import ModalAdmin from "@/src/component/modal/modal.addUpdate";
 import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
+import { showNotificationError } from "@/src/component/notification/notificationFc";
 import { useEffect, useState } from "react";
 interface IGroupconst {
-  size: string;
-  style: string;
+  size: any;
+  style: any;
   priceNew: number;
   priceOlder: number;
-  group: string;
+  group?: any;
   image?: string;
 }
 interface IOptionconst {
@@ -22,7 +23,7 @@ interface IGroupProps {
   options: IOptionconst;
   openModal: boolean;
   onclose: any;
-  groups: IGroupconst[];
+  groups?: IGroupconst[];
   onSave: any;
   setImageUpload: any;
   setImageDelete: any;
@@ -48,14 +49,21 @@ export default function ProductGroup(props: IGroupProps) {
   const [groupPrice, setGroupPrice] = useState<Array<IGroupconst>>([]);
   const [imagesUpload, setImageUploadC] = useState<Array<Object>>([]);
   const [imagesDelete, setImageDeleteC] = useState<Array<String>>([]);
+  const [check, setCheck] = useState<Array<Object>>([]);
   useEffect(() => {
+    setCheck([]);
     setImageDeleteC([]);
     setImageUploadC([]);
-    setGroupPrice(groups);
+    setGroupPrice([]);
+    if (groups) setGroupPrice(groups);
   }, [groups, openModal]);
   const err = false;
 
   const handleSubmit = () => {
+    if (checkExit()) {
+      showNotificationError("Dữ liệu trùng lặp");
+      return;
+    }
     onSave(groupPrice);
     setImageDelete(imagesDelete);
     setImageUpload(imagesUpload);
@@ -64,15 +72,42 @@ export default function ProductGroup(props: IGroupProps) {
   const add = () => {
     setGroupPrice([...groupPrice, GroupPrice]);
   };
-  const handleUpload = () => {};
+  const nameFile = (name?: string, Group = "", size = "", style = "") => {
+    const date = new Date();
+    if (name) {
+      const data = name.split("/");
+      const names = data[data.length - 1].split(".jpeg")[0];
+      return names.split("_")[names.split("_").length - 1];
+    }
+    return `${date.toISOString()}-${Group}-${size}-${style}`;
+  };
+  const checkExit = () => {
+    let Check = false;
+    for (let x = 0; x < groupPrice.length; x++) {
+      for (let y = x + 1; y < groupPrice.length; y++) {
+        if (
+          (groupPrice[x].group?._id || groupPrice[x].group) ==
+            (groupPrice[y].group?._id || groupPrice[y].group) &&
+          (groupPrice[x].size?._id || groupPrice[x].size) ==
+            (groupPrice[y].size?._id || groupPrice[y].size) &&
+          (groupPrice[x].style?._id || groupPrice[x].style) ==
+            (groupPrice[y].style?._id || groupPrice[y].style)
+        ) {
+          Check = true;
+          break;
+        }
+      }
+      if (Check) break;
+    }
+    return Check;
+  };
   const remove = (Item: number) => {
+    const data = groupPrice[Item]?.image?.split("/") || "";
+    const names = data[data.length - 1].split(".jpeg")[0];
+    const file = names.split("_")[names.split("_").length - 1];
     let group = groupPrice.filter((e, index) => index !== Item);
-    setImageDeleteC([
-      ...imagesDelete,
-      groupPrice[Item]?.image?.split("/")[
-        (groupPrice[Item]?.image?.split("/").length || 1) - 1
-      ] || "",
-    ]);
+    if (file && file !== "")
+      setImageDeleteC([...imagesDelete, file + ".jpeg" || ""]);
     setGroupPrice(group);
   };
   return (
@@ -142,13 +177,12 @@ export default function ProductGroup(props: IGroupProps) {
                         setImageUploadC([
                           ...imagesUpload,
                           {
-                            name: image
-                              ? image.split("/")[
-                                  (image?.split("/").length || 1) - 1
-                                ]
-                              : `${group?._id || group}-${size?._id || size}-${
-                                  style?._id || style
-                                }`,
+                            name: nameFile(
+                              image,
+                              group?._id || group,
+                              size?._id || size,
+                              style?._id || style
+                            ),
                             index,
                             file: e,
                           },

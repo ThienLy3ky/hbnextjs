@@ -49,7 +49,7 @@ export default function ProductAdmin() {
   const [status, setStatus] = useState({ status: "error", message: "" });
   const [alert, setAlert] = useState(false);
   const [query, setQuery] = useState({
-    limit: 0,
+    limit: 20,
     page: 1,
     order: "desc",
     orderBy: "createdAt",

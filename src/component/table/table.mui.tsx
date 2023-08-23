@@ -222,7 +222,7 @@ export default function EnhancedTable(props: IProps) {
         {isPagination ? (
           <TablePagination
             className="m-0"
-            rowsPerPageOptions={[1, 5, 10, 20]}
+            rowsPerPageOptions={[1, 5, 10, 20, 50, 100]}
             component="div"
             count={pageSum || 0}
             rowsPerPage={limit || 0}

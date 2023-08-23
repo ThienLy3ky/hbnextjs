@@ -10,7 +10,7 @@ const getData = async ({ queryKey }: any) => {
     totalPages: res?.totalPages || 0,
     page: res?.page || 1,
     total: res?.total || 0,
-    limit: res?.limit || 25,
+    limit: res?.limit || 20,
   };
 };
 
@@ -26,7 +26,7 @@ const useCompanyHook = (query: any) => {
       totalPages: data?.totalPages || 0,
       page: data?.page || 1,
       total: data?.total || 0,
-      limit: data?.limit || 25,
+      limit: data?.limit || 20,
     },
     refetch,
   };

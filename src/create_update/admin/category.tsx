@@ -48,7 +48,7 @@ export default function CategoryModal(props: any) {
     formData.append("code", code);
     formData.append("description", description);
     if (!data) {
-      const res = await CategoryService.create(formData, code);
+      const res = await CategoryService.create(formData, data.code);
       if (res) showNotificationSuccess("Thêm mới thành công");
       refetch();
       setLoading(false);

@@ -65,6 +65,7 @@ export default function ProductModal(props: any) {
     setCompany("");
     setImageDelete([]);
     setImageUpload([]);
+    setLoading(false);
   };
   useEffect(() => {
     initData();
@@ -91,62 +92,59 @@ export default function ProductModal(props: any) {
       showNotificationError("validate fail");
       return;
     }
-    setLoading(true);
-    //upload
 
     const formData = new FormData();
-    console.log("delete", imagesDelete);
-
-    console.log("upload", imagesUpload);
-    imagesUpload.map((images: any, index: number) => {
-      formData.append("images", images.file, images.name + ".jpeg");
+    if (
+      imagesDelete.length > 1 ||
+      (imagesDelete.length === 1 && imagesDelete[0] !== "")
+    )
+      ProductService.deletedFile(imagesDelete);
+    imagesUpload.map(async (images: any) => {
+      if (images !== "") {
+        formData.append("images", images.file, images.name + ".jpeg");
+        const listImage = await ProductService.uploadImage(formData, "");
+        groupPrice[images.index].image = listImage[0];
+      }
     });
-    await ProductService.uploadImage(formData, "testupload");
-    // formData.append("images", file);
-    // const image = file
-    //   ? await ProductService.uploadImage(formData, code)
-    //   : undefined;
-    // if (image) {
-    //   groupPrice[0].image = image[0];
-    // }
-    // if (!data) {
-    //   const res = await ProductService.create({
-    //     name,
-    //     code,
-    //     summary,
-    //     keyWord,
-    //     company,
-    //     description,
-    //     type,
-    //     expirationDate,
-    //     dateOfProduction,
-    //     price: groupPrice,
-    //     categories,
-    //   });
-    //   if (res) showNotificationSuccess("Cập nhật thành công");
-    //   refetch();
-    //   setLoading(false);
-    //   onclose(false);
-    //   return;
-    // }
-    // const res = await ProductService.update(data._id, {
-    //   name,
-    //   code,
-    //   summary,
-    //   keyWord,
-    //   company,
-    //   description,
-    //   type,
-    //   expirationDate,
-    //   dateOfProduction,
-    //   price: groupPrice,
-    //   categories,
-    // });
-    // if (res) showNotificationSuccess("Thay đổi thành công");
-    // refetch();
+
+    if (!data) {
+      const res = await ProductService.create({
+        name,
+        code,
+        summary,
+        keyWord,
+        company,
+        description,
+        type,
+        expirationDate,
+        dateOfProduction,
+        price: groupPrice,
+        categories,
+      });
+      if (res) showNotificationSuccess("Cập nhật thành công");
+      refetch();
+      setLoading(false);
+      onclose(false);
+      return;
+    }
+    const res = await ProductService.update(data._id, {
+      name,
+      code,
+      summary,
+      keyWord,
+      company,
+      description,
+      type,
+      expirationDate,
+      dateOfProduction,
+      price: groupPrice,
+      categories,
+    });
+    if (res) showNotificationSuccess("Thay đổi thành công");
+    refetch();
     setLoading(false);
-    // onclose(false);
-    // return;
+    onclose(false);
+    return;
   };
 
   return (
@@ -231,15 +229,10 @@ export default function ProductModal(props: any) {
                   <div className="col-12 p-0 d-flex justify-content-between align-items-center">
                     <h5>Nhóm sản phẩm</h5>
                     <div style={{ fontSize: " xx-large" }}>
-                      <i className="mdi mdi-plus-box" />
-                      {data?.price?.length > 0 ? (
-                        <i
-                          className="mdi mdi-settings-box"
-                          onClick={() => setOpenGroup(true)}
-                        />
-                      ) : (
-                        ""
-                      )}
+                      <i
+                        className="mdi mdi-settings-box"
+                        onClick={() => setOpenGroup(true)}
+                      />
                     </div>
                   </div>
                 }

@@ -44,7 +44,7 @@ export default function TypeModal(props: any) {
       formData.append("images", file);
       formData.append("name", name);
       formData.append("code", code);
-      const res = await TypeService.create(formData, code);
+      const res = await TypeService.create(formData, data.code);
       refetch();
       setLoading(false);
       onclose(false);

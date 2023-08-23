@@ -46,6 +46,17 @@ const StyleService = {
       payload
     );
   },
+  checkCode(payload: object, code: string) {
+    return APIService.request(
+      METHOD_TYPE.POST,
+      `${apiUrl}/check/${code}`,
+      this.checkCode.name,
+      cancelTokenHandlerObject,
+      null,
+      payload,
+      null
+    );
+  },
 };
 
 const cancelTokenHandlerObject = createCancelTokenHandler(StyleService);

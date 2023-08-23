@@ -59,6 +59,28 @@ const ProductService = {
       { "Content-Type": "multipart/form-data" }
     );
   },
+  checkCode(payload: object, code: string) {
+    return APIService.request(
+      METHOD_TYPE.POST,
+      `${apiUrl}/check/${code}`,
+      this.checkCode.name,
+      cancelTokenHandlerObject,
+      null,
+      payload,
+      null
+    );
+  },
+  deletedFile(payload: object) {
+    return APIService.request(
+      METHOD_TYPE.POST,
+      `${apiUrl}/deletedFile`,
+      this.deletedFile.name,
+      cancelTokenHandlerObject,
+      null,
+      payload,
+      null
+    );
+  },
 };
 
 const cancelTokenHandlerObject = createCancelTokenHandler(ProductService);
