@@ -47,10 +47,6 @@ export default function TypeProduct() {
   const handleDeleted = async (data: string) => {
     await TypeService.delete(data);
     refetch();
-    console.log(
-      "🚀 ~ file: index.tsx:57 ~ handleDeleted ~ data deleted:",
-      data
-    );
   };
   return (
     <AdminLayout title="Loại mặt hàng">

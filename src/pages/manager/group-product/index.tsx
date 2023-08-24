@@ -1,5 +1,6 @@
 import AdminLayout from "@/src/component/layout/client.admin";
 import EnhancedTable from "@/src/component/table/table.mui";
+import GroupService from "@/src/controller/api/group.api";
 import { hederTable } from "@/src/controller/constant/interface";
 import useGroupHook from "@/src/controller/hooks/group.hook";
 import GroupModal from "@/src/create_update/admin/group";
@@ -43,11 +44,9 @@ export default function GroupProduct() {
   });
   const [dataEd, setDataEd] = useState();
   const { data, isLoading, refetch } = useGroupHook(query);
-  const handleDeleted = (data: string) => {
-    console.log(
-      "🚀 ~ file: index.tsx:57 ~ handleDeleted ~ data deleted:",
-      data
-    );
+  const handleDeleted = async (data: string) => {
+    await GroupService.delete(data);
+    refetch();
   };
   return (
     <AdminLayout title="Nhóm mặt hàng">

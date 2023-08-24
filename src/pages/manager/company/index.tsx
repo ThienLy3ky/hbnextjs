@@ -1,5 +1,6 @@
 import AdminLayout from "@/src/component/layout/client.admin";
 import EnhancedTable from "@/src/component/table/table.mui";
+import CompanyService from "@/src/controller/api/company.api";
 import { hederTable } from "@/src/controller/constant/interface";
 import useCompanyHook from "@/src/controller/hooks/company.hook";
 import CompanyModal from "@/src/create_update/admin/company";
@@ -44,11 +45,9 @@ export default function CompanyProduct() {
   });
   const [dataEd, setDataEd] = useState();
   const { data, isLoading, refetch } = useCompanyHook(query);
-  const handleDeleted = (data: string) => {
-    console.log(
-      "🚀 ~ file: index.tsx:57 ~ handleDeleted ~ data deleted:",
-      data
-    );
+  const handleDeleted = async (data: string) => {
+    await CompanyService.delete(data);
+    refetch();
   };
   return (
     <AdminLayout title="Công ty">

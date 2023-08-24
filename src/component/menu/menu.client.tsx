@@ -18,7 +18,35 @@ const MenuClient = (props: any) => {
                   href="#/"
                   className="text-decoration-none d-block d-lg-none"
                 />
-
+                <div className="navbar-nav ml-auto py-0 navbar-toggler">
+                  <div className="btn px-0 ml-3 no-padding no-margin">
+                    <a href="#/" className="btn px-0">
+                      <i className="fas fa-heart text-primary"></i>
+                    </a>
+                    <span
+                      className="badge number-noti rounded-circle"
+                      style={{ paddingBottom: "2px" }}
+                    >
+                      0
+                    </span>
+                  </div>
+                  <div className="btn px-0 ml-3 no-padding no-margin">
+                    <a
+                      className="btn px-0 ml-3 no-padding no-margin"
+                      data-toggle="collapse"
+                      href="#cart-dropdown"
+                    >
+                      <i className="fas fa-shopping-cart text-primary"></i>
+                    </a>
+                    <span
+                      className="badge number-noti rounded-circle"
+                      style={{ paddingBottom: "2px" }}
+                    >
+                      {carts && carts?.length ? <b>{carts?.length}</b> : ""}
+                    </span>
+                    <CartDropdown />
+                  </div>
+                </div>
                 <button
                   type="button"
                   className="navbar-toggler"
@@ -44,10 +72,7 @@ const MenuClient = (props: any) => {
                       </Link>
                     </div>
                   </div>
-                  <div
-                    className="navbar-nav ml-auto py-0 d-none d-lg-block"
-                    style={{ display: "block !important" }}
-                  >
+                  <div className="navbar-nav ml-auto py-0 d-none d-lg-block">
                     <div className="btn px-0 ml-3 no-padding no-margin">
                       <a href="#/" className="btn px-0">
                         <i className="fas fa-heart text-primary"></i>

@@ -9,6 +9,11 @@ export function MenuAdmin() {
       icon: <i className="mdi mdi-file-document"></i>,
     },
     {
+      name: "Slide",
+      link: "/manager/banner",
+      icon: <i className="mdi mdi-film"></i>,
+    },
+    {
       name: "Mặt hàng",
       link: "/manager/products",
       icon: <i className="mdi mdi-pharmacy"></i>,

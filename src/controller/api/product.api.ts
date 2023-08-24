@@ -30,7 +30,7 @@ const ProductService = {
     return APIService.request(
       METHOD_TYPE.DELETE,
       `${apiUrl}/${id}`,
-      this.update.name,
+      this.delete.name,
       cancelTokenHandlerObject,
       null,
       null
@@ -40,7 +40,7 @@ const ProductService = {
     return APIService.request(
       METHOD_TYPE.POST,
       `${apiUrl}`,
-      this.update.name,
+      this.create.name,
       cancelTokenHandlerObject,
       null,
       payload,
@@ -51,7 +51,7 @@ const ProductService = {
     return APIService.request(
       METHOD_TYPE.POST,
       `${apiUrl}/upload`,
-      this.update.name,
+      this.uploadImage.name,
       cancelTokenHandlerObject,
       { code },
       payload,

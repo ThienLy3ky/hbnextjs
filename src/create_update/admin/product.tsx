@@ -92,7 +92,27 @@ export default function ProductModal(props: any) {
       showNotificationError("validate fail");
       return;
     }
-
+    const chek = await ProductService.checkCode(
+      {
+        name,
+        code,
+        summary,
+        keyWord,
+        company,
+        description,
+        type,
+        expirationDate,
+        dateOfProduction,
+        price: groupPrice,
+        categories,
+      },
+      data.code || code
+    );
+    if (chek) {
+      showNotificationError("Code đã tồn tại");
+      return;
+    }
+    setLoading(true);
     const formData = new FormData();
     if (
       imagesDelete.length > 1 ||
@@ -110,7 +130,7 @@ export default function ProductModal(props: any) {
     if (!data) {
       const res = await ProductService.create({
         name,
-        code,
+        code: data.code,
         summary,
         keyWord,
         company,

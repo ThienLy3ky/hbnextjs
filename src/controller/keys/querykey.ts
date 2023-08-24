@@ -7,4 +7,5 @@ export const QUERY_KEY = {
   SaleProduct: "SaleProduct",
   TypeProduct: "TypeProduct",
   Categories: "Categories",
+  Banner: "banner",
 };

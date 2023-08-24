@@ -39,6 +39,17 @@ export default function TypeModal(props: any) {
       showNotificationError("validate fail");
       return;
     }
+    const chek = await TypeService.checkCode(
+      {
+        name,
+        code,
+      },
+      data.code || code
+    );
+    if (chek) {
+      showNotificationError("Code đã tồn tại");
+      return;
+    }
     setLoading(true);
     if (!data) {
       formData.append("images", file);

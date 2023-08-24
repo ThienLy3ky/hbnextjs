@@ -1,5 +1,6 @@
 import AdminLayout from "@/src/component/layout/client.admin";
 import EnhancedTable from "@/src/component/table/table.mui";
+import SizeService from "@/src/controller/api/size.api";
 import { hederTable } from "@/src/controller/constant/interface";
 import useSizeHook from "@/src/controller/hooks/size.hook";
 import SizeModal from "@/src/create_update/admin/size";
@@ -43,11 +44,9 @@ export default function SizeProduct() {
   });
   const [dataEd, setDataEd] = useState();
   const { data, isLoading, refetch } = useSizeHook(query);
-  const handleDeleted = (data: string) => {
-    console.log(
-      "🚀 ~ file: index.tsx:57 ~ handleDeleted ~ data deleted:",
-      data
-    );
+  const handleDeleted = async (data: string) => {
+    await SizeService.delete(data);
+    refetch();
   };
   return (
     <AdminLayout title="Kích Thước mặt hàng">

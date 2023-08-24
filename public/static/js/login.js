@@ -1,11 +1,18 @@
-const signUpButton = document.getElementById("signUp");
-const signInButton = document.getElementById("signIn");
-const container = document.getElementById("container");
+(function ($) {
+  "use strict";
 
-signUpButton.addEventListener("click", () => {
-  container.classList.add("right-panel-active");
-});
+  // Dropdown on mouse hover
+  $(document).ready(function () {
+    $(document).on("click", "#signUp", () => {
+      $(".container-login").addClass("right-panel-active");
+    });
+    $(document).on("click", "#signIn", () => {
+      $(".container-login").removeClass("right-panel-active");
+    });
+    $(document).on("click", ".forgot", () => {
+      $(".forgot-password").toggleClass("active");
+    });
+  });
 
-signInButton.addEventListener("click", () => {
-  container.classList.remove("right-panel-active");
-});
+  // Ba
+})(jQuery);

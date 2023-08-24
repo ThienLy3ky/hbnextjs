@@ -32,7 +32,7 @@ const categoriesService = {
     return APIService.request(
       METHOD_TYPE.DELETE,
       `${apiUrl}/${id}`,
-      this.update.name,
+      this.delete.name,
       cancelTokenHandlerObject,
       null,
       null
@@ -42,7 +42,7 @@ const categoriesService = {
     return APIService.request(
       METHOD_TYPE.POST,
       `${apiUrl}`,
-      this.update.name,
+      this.create.name,
       cancelTokenHandlerObject,
       { code },
       payload,

@@ -5,6 +5,7 @@ import useCategoryHook from "@/src/controller/hooks/category.hook";
 import CategoryModal from "@/src/create_update/admin/category";
 import { Button } from "@mui/material";
 import { useState } from "react";
+import categoriesService from "@/src/controller/api/categories.api";
 
 const Head: hederTable[] = [
   {
@@ -51,11 +52,9 @@ export default function CategoryProduct() {
   });
   const [dataEd, setDataEd] = useState();
   const { data, isLoading, refetch } = useCategoryHook(query);
-  const handleDeleted = (data: string) => {
-    console.log(
-      "🚀 ~ file: index.tsx:57 ~ handleDeleted ~ data deleted:",
-      data
-    );
+  const handleDeleted = async (data: string) => {
+    await categoriesService.delete(data);
+    refetch();
   };
   return (
     <AdminLayout title="Danh mục mặt hàng">

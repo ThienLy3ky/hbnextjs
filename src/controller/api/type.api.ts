@@ -30,7 +30,7 @@ const TypeService = {
     return APIService.request(
       METHOD_TYPE.DELETE,
       `${apiUrl}/${id}`,
-      this.update.name,
+      this.delete.name,
       cancelTokenHandlerObject,
       null,
       null
@@ -40,12 +40,23 @@ const TypeService = {
     return APIService.request(
       METHOD_TYPE.POST,
       `${apiUrl}`,
-      this.update.name,
+      this.create.name,
       cancelTokenHandlerObject,
       { code },
       payload,
       null,
       { "Content-Type": "multipart/form-data" }
+    );
+  },
+  checkCode(payload: object, code: string) {
+    return APIService.request(
+      METHOD_TYPE.POST,
+      `${apiUrl}/check/${code}`,
+      this.checkCode.name,
+      cancelTokenHandlerObject,
+      null,
+      payload,
+      null
     );
   },
 };

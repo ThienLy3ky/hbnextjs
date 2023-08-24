@@ -1,32 +1,41 @@
 import AdminLayout from "@/src/component/layout/client.admin";
 import EnhancedTable from "@/src/component/table/table.mui";
-import StyleService from "@/src/controller/api/style.api";
+import BannerService from "@/src/controller/api/banner.api";
 import { hederTable } from "@/src/controller/constant/interface";
-import useStyleHook from "@/src/controller/hooks/style.hook";
-import StyleModal from "@/src/create_update/admin/style";
+import useBannerHook from "@/src/controller/hooks/banner.hook";
+import BannerModal from "@/src/create_update/admin/banner";
 import { Button } from "@mui/material";
 import { useState } from "react";
 
 const Head: hederTable[] = [
   {
-    id: "name",
-    label: "Tên",
+    id: "title",
+    label: "Tiêu đề",
     sort: true,
     align: "left",
     numeric: false,
     disablePadding: false,
   },
   {
-    id: "code",
-    label: "Mã",
+    id: "type",
+    label: "Loại",
     align: "left",
     sort: true,
     numeric: true,
     disablePadding: false,
   },
   {
-    id: "description",
-    label: "Mô tả",
+    id: "product",
+    idChil: "name",
+    label: "Sản phẩm",
+    align: "left",
+    sort: true,
+    numeric: true,
+    disablePadding: false,
+  },
+  {
+    id: "image",
+    label: "Hình",
     align: "right",
     sort: true,
     numeric: false,
@@ -34,7 +43,7 @@ const Head: hederTable[] = [
   },
 ];
 type Order = "asc" | "desc";
-export default function StyleProduct() {
+export default function BannerProduct() {
   const [modal, setModal] = useState(false);
   const [query, setQuery] = useState({
     limit: 0,
@@ -43,13 +52,13 @@ export default function StyleProduct() {
     orderBy: "createdAt",
   });
   const [dataEd, setDataEd] = useState();
-  const { data, isLoading, refetch } = useStyleHook(query);
+  const { data, isLoading, refetch } = useBannerHook(query);
   const handleDeleted = async (data: string) => {
-    await StyleService.delete(data);
+    await BannerService.delete(data);
     refetch();
   };
   return (
-    <AdminLayout title="Kiểu dáng mặt hàng">
+    <AdminLayout title="Quản lý Banner">
       <div className="col p-0">
         <div className="col d-flex justify-content-between p-2 ">
           <input
@@ -99,10 +108,10 @@ export default function StyleProduct() {
           limit={parseInt(data.limit)}
         />
       </div>
-      <StyleModal
+      <BannerModal
         refetch={refetch}
         data={dataEd}
-        title="Kiểu dáng mặt hàng"
+        title="Quản lý Banner"
         openModal={modal}
         onclose={setModal}
       />

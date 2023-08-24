@@ -41,6 +41,17 @@ export default function CategoryModal(props: any) {
       showNotificationError("validate fail");
       return;
     }
+    const chek = await CategoryService.checkCode(
+      {
+        name,
+        code,
+      },
+      data.code || code
+    );
+    if (chek) {
+      showNotificationError("Code đã tồn tại");
+      return;
+    }
     const formData = new FormData();
     setLoading(true);
     formData.append("images", file);

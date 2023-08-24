@@ -1,54 +1,80 @@
 import InputRow from "@/src/component/input/input.row";
+import UploadInput from "@/src/component/input/input.upload";
 import ModalAdmin from "@/src/component/modal/modal.addUpdate";
 import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
-import EnhancedTable from "@/src/component/table/table.mui";
-import TypeService from "@/src/controller/api/type.api";
+import InputSelect from "@/src/component/input/select.mui";
+import BannerService from "@/src/controller/api/banner.api";
+import {
+  showNotificationError,
+  showNotificationSuccess,
+} from "@/src/component/notification/notificationFc";
 import {
   FormatData,
   removeVietnameseTones,
   validateForm,
 } from "@/src/utils/action.helper";
-import { Box, Button, Fade, Modal, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-
-export default function TypeModal(props: any) {
+const option = [
+  {
+    _id: "pannerProduct",
+    name: "Banner Chữ",
+  },
+  {
+    _id: "pannerCode",
+    name: "Banner Sale",
+  },
+];
+export default function BannerModal(props: any) {
   const { title, openModal, onclose, data, refetch } = props;
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
-  const [code, setCode] = useState("");
-  const [file, setFile] = useState();
-  const err = validateForm.notNull(name) || validateForm.notNull(code);
+  const [content, setContent] = useState("");
+  const [product, setProduct] = useState("");
+  const [type, setType] = useState("");
+  const [file, setFile] = useState("");
+  const err = validateForm.notNull(name) || validateForm.notNull(content);
   useEffect(() => {
     if (data) {
-      setCode(data.code);
+      setContent(data.content);
       setName(data.name);
       return;
     }
-    setCode("");
+    setContent("");
     setName("");
   }, [data]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    const formData = new FormData();
     if (err || loading) {
-      // showNotificationError("validate fail");
+      showNotificationError("validate fail");
       return;
     }
-    // setLoading(true);
-    // if (!data) {
-    //   const res = await TypeService.create({ name, code });
-    //   refetch();
-    //   setLoading(false);
-    //   onclose(false);
+    formData.append("images", file);
+    formData.append("title", name);
+    formData.append("content", content);
+    formData.append("type", type);
+    formData.append("product", product);
+    setLoading(true);
+    if (!data) {
+      const res = await BannerService.create(formData);
+      refetch();
+      setLoading(false);
+      onclose(false);
+      if (res) showNotificationSuccess("Thêm mới thành công");
+      return;
+    }
 
-    //   return;
-    // }
-    // const res = await TypeService.update(data._id, { name, code });
-    // refetch();
-    // setLoading(false);
-    // onclose(false);
-    // return;
+    const res = await BannerService.update(data._id, formData);
+    if (res) showNotificationSuccess("Thay đổi thành công");
+    refetch();
+    setContent("");
+    setName("");
+    setFile("");
+    setLoading(false);
+    onclose(false);
+    return;
   };
 
   return (
@@ -63,31 +89,49 @@ export default function TypeModal(props: any) {
               name="name"
               type="text"
               value={name}
-              placeholder="Tên"
-              label="Tên"
+              placeholder="Tiêu đề"
+              label="Tiêu đề"
               change={(e: any) => {
                 setName(FormatData.iName(e));
-                setCode(removeVietnameseTones(FormatData.iName(e || "")));
               }}
             />
             <InputRow
               row={true}
-              error={code === "" ? "not null" : false}
-              type="code"
-              value={code}
-              name="code"
-              placeholder="Mã"
-              label="Mã"
-              change={(e: any) =>
-                setCode(removeVietnameseTones(FormatData.iName(e || "")))
-              }
+              error={content === "" ? "not null" : false}
+              type="content"
+              value={content}
+              name="content"
+              placeholder="Nội dung"
+              label="Nội dung"
+              change={(e: any) => setContent(FormatData.iName(e || ""))}
+            />
+            <InputSelect
+              options={option}
+              row={true}
+              // error={content === "" ? "not null" : false}
+              value={type}
+              placeholder="Loại Banner"
+              label="Loại Banner"
+              change={(e: any) => setType(e)}
             />
             <InputRow
+              row={true}
+              // error={content === "" ? "not null" : false}
+              type="content"
+              value={product}
+              name="content"
+              placeholder="Sản phẩm"
+              label="Sản phẩm"
+              change={(e: any) => setProduct(e)}
+            />
+            <UploadInput
               name="image"
               type="file"
+              content={content}
+              older={data?.image}
               placeholder=""
               label="Hình ảnh"
-              // change={setFile}
+              change={(e: any) => setFile(e)}
             />
           </div>
         </div>
