@@ -4,10 +4,17 @@ import { MenuAdmin } from "@/src/component/menu/index.admin";
 import ReduxService from "@/src/controller/redux";
 import { useEffect } from "react";
 import ToastProvider from "../notification";
+import { useSelector } from "react-redux";
 export default function AdminLayout({ children, title }: any) {
   useEffect(() => {
     Promise.all([ReduxService.getGroupPrice()]);
   }, []);
+  const Roler = useSelector(({ app }) => app.adminRole);
+  console.log(
+    "🚀 ~ file: client.admin.tsx:13 ~ AdminLayout ~ dataSelect:",
+    Roler !== "admin",
+    Roler
+  );
   return (
     <div className="container-scroller">
       <ToastProvider>

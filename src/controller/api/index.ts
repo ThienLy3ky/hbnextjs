@@ -3,9 +3,8 @@ import QueryString from "query-string";
 // import { showNotificationError } from "@/common/function";
 import axiosInstance from "./axios";
 import { METHOD_TYPE } from "../keys/method";
-import {
-  showNotificationError,
-} from "@/src/component/notification/notificationFc";
+import { showNotificationError } from "@/src/component/notification/notificationFc";
+import ReduxService from "../redux";
 
 export default class APIService {
   static async request(
@@ -18,7 +17,8 @@ export default class APIService {
     token = null,
     header = {}
   ) {
-    const AUTH_TOKEN = token; /* || ReduxService.getBearerToken(); */
+    const AUTH_TOKEN = token || ReduxService.getBearerToken();
+    // const AUTH_TOKEN = token; /* || ReduxService.getBearerToken(); */
     let url = apiUrl;
     if (query) {
       url = url + "?" + QueryString.stringify(query);

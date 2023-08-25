@@ -7,7 +7,10 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { setRole, setUserData } from "@/src/controller/redux/slice";
 import UserAdminService from "@/src/controller/api/login.api";
-import { showNotificationError } from "@/src/component/notification/notificationFc";
+import {
+  showNotificationError,
+  showNotificationSuccess,
+} from "@/src/component/notification/notificationFc";
 export default function Login() {
   const [userName, setUserName] = useState("");
   const [validatErr, setValidatErr] = useState(false);
@@ -31,16 +34,19 @@ export default function Login() {
       setValidateEmails(!email || validateEmails);
       setValidatePassword(!password || validatePassword);
       showNotificationError("Email or password incorect");
+      setLoading(false);
       return;
     }
     const res = await UserAdminService.login({ email, password });
-    const { data } = res;
-    if (data) {
+    console.log("🚀 ~ file: index.tsx:37 ~ handleLogin ~ res:", res);
+    const { access_token, role, refreshToken } = res;
+    if (res) {
       dispatch(
-        setUserData({ token: data.token, refreshToken: data.refreshToken })
+        setUserData({ token: access_token, refreshToken: refreshToken })
       );
-      dispatch(setRole(data.roler));
-      url.replace(data.roler === "admin" ? "./manager" : "./");
+      dispatch(setRole(role));
+      showNotificationSuccess("Đăng nhập thành công ");
+      url.replace(role === "admin" ? "./manager" : "./");
 
       //
     } else {

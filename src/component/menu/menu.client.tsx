@@ -18,7 +18,10 @@ const MenuClient = (props: any) => {
                   href="#/"
                   className="text-decoration-none d-block d-lg-none"
                 />
-                <div className="navbar-nav ml-auto py-0 navbar-toggler">
+                <div
+                  className="navbar-nav ml-auto py-0 navbar-toggler"
+                  style={{ flexDirection: "row" }}
+                >
                   <div className="btn px-0 ml-3 no-padding no-margin">
                     <a href="#/" className="btn px-0">
                       <i className="fas fa-heart text-primary"></i>

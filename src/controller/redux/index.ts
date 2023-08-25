@@ -15,6 +15,19 @@ export default class ReduxService {
     const res = await TemplateService.getForAdmin();
     ReduxService.callDispatchAction(setPriceGroup(res));
   }
+  static getUserAdmin() {
+    const { app } = store.getState();
+    const { userData } = app;
+    return userData;
+  }
+  static getBearerToken(tokenUserData = false) {
+    const userAdmin = ReduxService.getUserAdmin();
+    if (userAdmin && !tokenUserData) {
+      return `Bearer ${userAdmin}`;
+    } else {
+      return null;
+    }
+  }
 }
 // export const useAppDispatch = () => useDispatch<AppDispatch>();
 // export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
