@@ -6,7 +6,7 @@ const getData = async ({ queryKey }: any) => {
   const query = queryKey[1];
   const res = await BannerService.getAll(query);
   return {
-    items: res?.items || [],
+    items: res || [],
     totalPages: res?.totalPages || 0,
     page: res?.page || 1,
     total: res?.total || 0,

@@ -17,11 +17,11 @@ import {
 import { useEffect, useState } from "react";
 const option = [
   {
-    _id: "pannerProduct",
+    _id: 1,
     name: "Banner Chữ",
   },
   {
-    _id: "pannerCode",
+    _id: 2,
     name: "Banner Sale",
   },
 ];

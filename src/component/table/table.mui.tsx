@@ -146,7 +146,7 @@ export default function EnhancedTable(props: IProps) {
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.name}
+                    key={row.name | index}
                     selected={isItemSelected}
                     sx={{ cursor: "pointer" }}
                   >
