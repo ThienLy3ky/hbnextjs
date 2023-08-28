@@ -7,6 +7,7 @@ import Feature from "../component/header/feature";
 import TestProduct from "./home/test.component";
 import HomeSlide from "../component/slide/slide.home";
 import ListProduct from "../component/list-product-client/list.product";
+import HomeModal from "../create_update/client/home";
 export default function home() {
   return (
     <ClientLayout>
@@ -29,6 +30,7 @@ export default function home() {
         <ListProduct />
       </div>
       <Sale />
+      <HomeModal />
     </ClientLayout>
   );
 }
