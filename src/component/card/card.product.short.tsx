@@ -8,13 +8,14 @@ import Link from "next/link";
 interface propsIF {
   product: any;
   setCart: any;
+  openModal: any;
 }
 export default function CardProductShort(props: propsIF) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
-  const { product, setCart } = props;
+  const { product, setCart, openModal } = props;
 
   function RateShow() {
     return;
@@ -26,17 +27,7 @@ export default function CardProductShort(props: propsIF) {
         <div className="btn-groups">
           <button
             className="btn btn-slide btn-square btn-cart"
-            onClick={() => {
-              product.setCarts(
-                addCart({
-                  name: product.name,
-                  image: product.image,
-                  code: product.name,
-                  price: product.newPrice,
-                  id: product.id,
-                })
-              );
-            }}
+            onClick={openModal}
           ></button>
           <a className="btn btn-slide btn-square btn-heart" href="#/"></a>
         </div>
@@ -45,7 +36,7 @@ export default function CardProductShort(props: propsIF) {
         <Link
           title={product.name}
           className="h6 text-decoration-none text-truncate"
-          href={"/products/" + name}
+          href={"/products/" + product.name}
         >
           {product.name.slice(0, 30)}
         </Link>

@@ -1,17 +1,12 @@
 import GroupAddCart from "@/src/component/group/modal.cart";
-import {
-  Modal,
-} from "@mui/material";
+import { Modal } from "@mui/material";
 import Image from "next/image";
 
 export default function HomeModal(props: any) {
   return (
     <Modal
       style={{ overflow: "auto" }}
-      open={
-        true
-        /* props.openModal */
-      }
+      open={props.show}
       onClose={props.onclose}
       aria-labelledby="parent-modal-title"
       aria-describedby="parent-modal-description"

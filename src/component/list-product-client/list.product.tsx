@@ -7,6 +7,7 @@ export default function ListProduct(props: any) {
         <div className="col-lg-3 col-md-4 col-sm-6 pb-1" key={index}>
           <CardProductShort
             product={product}
+            openModal={props.openModal}
             setCart={() => props.addProduct()}
             key={product.id}
           />

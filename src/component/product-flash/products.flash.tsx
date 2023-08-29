@@ -28,6 +28,7 @@ export default function FlashProducts(props: any) {
           <div className="owl-carousel related-carousel">
             {products.slice(0, 10).map((product) => (
               <CardProductShort
+                openModal={() => props.openModal()}
                 product={product}
                 key={product.id}
                 setCart={() => props.addProduct()}

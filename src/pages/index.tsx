@@ -19,21 +19,34 @@ export default function Home() {
       <HomeSlide />
       <Categories />
       {/* <TestProduct /> */}
-      <FlashProducts />
+      <FlashProducts
+        addProduct={(e: any) => setProduct(e)}
+        openModal={() => setShowmodal(!showmodal)}
+      />
       <div className="container-fluid pt-5 pb-3">
         <h2 className="section-title position-relative text-uppercase mx-xl-5 mb-4">
           <span className="bg-secondary pr-3">Sản phẩm mới</span>
         </h2>
-        <ListProduct addProduct={(e: any) => setProduct(e)} />
+        <ListProduct
+          addProduct={(e: any) => setProduct(e)}
+          openModal={() => setShowmodal(!showmodal)}
+        />
       </div>
       <div className="container-fluid pt-5 pb-3">
         <h2 className="section-title position-relative text-uppercase mx-xl-5 mb-4">
           <span className="bg-secondary pr-3">Sản phẩm tin dùng</span>
         </h2>
-        <ListProduct addProduct={(e: any) => setProduct(e)} />
+        <ListProduct
+          addProduct={(e: any) => setProduct(e)}
+          openModal={() => setShowmodal(!showmodal)}
+        />
       </div>
       <Sale />
-      <HomeModal show={showmodal} data={product} />
+      <HomeModal
+        show={showmodal}
+        data={product}
+        onclose={() => setShowmodal(!showmodal)}
+      />
     </ClientLayout>
   );
 }

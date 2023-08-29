@@ -1,4 +1,4 @@
-export default function HomeSlide() {
+export default function HomeSlide(props: any) {
   return (
     <div className="container-fluid mb-3">
       <div className="row px-xl-5">

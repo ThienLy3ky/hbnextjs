@@ -163,13 +163,13 @@ export const removeItem = (arr: string[], value: string) => {
   }
   return arr;
 };
-export const formatMoney = (money: number) => {
+export const formatMoney = (money = 0) => {
   return money.toLocaleString("zh-HK", {
     style: "currency",
     currency: "VND",
   });
 };
-export const formatNumber = (value: string) => {
+export const formatNumber = (value = "0") => {
   return parseInt(value.replace(/([\Wa-zA-Z])/g, "")) > 0
     ? parseInt(value.replace(/([\Wa-zA-Z])/g, ""))
     : 0;
