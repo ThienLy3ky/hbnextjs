@@ -6743,9 +6743,10 @@ button.bg-primary:focus {
 }
 
 .bg-secondary {
-  background: -webkit-linear-gradient(45deg, #d4f329, #0ac579 80%);
+  background: -webkit-linear-gradient(45deg, #d00578, #1402d3 80%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-weight: bolder;
 }
 
 a.bg-secondary:hover,
@@ -11275,4 +11276,20 @@ body #root {
 }
 #__next {
   background: aliceblue;
+}
+.head-group {
+  min-height: 30px !important;
+  border: 1px outset !important;
+}
+.head-group div {
+  margin: 0 !important;
+}
+.group-radio span {
+  font-size: smaller !important;
+}
+.group-radio {
+  display: -webkit-inline-box !important;
+}
+.group-radio .col-md-6 {
+  flex: unset;
 }

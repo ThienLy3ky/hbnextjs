@@ -39,11 +39,10 @@ export default function Login() {
     }
     const res = await UserAdminService.login({ email, password });
     console.log("🚀 ~ file: index.tsx:37 ~ handleLogin ~ res:", res);
-    const { access_token, role, refreshToken } = res;
+    const { access_token, role } = res;
+    const { accessToken, refreshToken } = access_token;
     if (res) {
-      dispatch(
-        setUserData({ token: access_token, refreshToken: refreshToken })
-      );
+      dispatch(setUserData({ token: accessToken, refreshToken: refreshToken }));
       dispatch(setRole(role));
       showNotificationSuccess("Đăng nhập thành công ");
       url.replace(role === "admin" ? "./manager" : "./");

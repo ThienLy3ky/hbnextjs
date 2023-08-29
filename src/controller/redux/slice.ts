@@ -1,3 +1,4 @@
+import { setToken } from "@/src/utils/action.helper";
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   template: {},
@@ -17,6 +18,7 @@ export const appSlice = createSlice({
       state.priceGroup = action.payload;
     },
     setUserData: (state, action) => {
+      setToken(action.payload);
       state.userData = action.payload;
     },
     setRole: (state, action) => {

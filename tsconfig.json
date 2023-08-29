@@ -34,7 +34,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "src/component/layout/client.admintsx"  ],
+, "src/component/layout/client.admintsx", "src/utils/utils.js"  ],
   "exclude": [
     "node_modules"
   ]

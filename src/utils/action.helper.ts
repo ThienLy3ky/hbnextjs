@@ -184,3 +184,26 @@ export const formatString = (str: string) => {
   );
   return str;
 };
+export const setToken = (access_token: string) =>
+  localStorage.setItem("Access_Token", access_token);
+export const setReToken = (Re_token: string) =>
+  localStorage.setItem("Refresh_Token", Re_token);
+export const getToken = () => {
+  try {
+    return localStorage.getItem("Access_Token") || "";
+  } catch (error) {
+    console.log(error);
+    return "";
+  }
+};
+export const getReToken = () => {
+  try {
+    return localStorage.getItem("Refresh_Token") || "";
+  } catch (error) {
+    console.log(error);
+    return "";
+  }
+};
+
+export const clearToken = () => localStorage.removeItem("Access_Token");
+export const clearReToken = () => localStorage.removeItem("Refresh_Token");

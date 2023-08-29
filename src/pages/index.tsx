@@ -8,7 +8,10 @@ import TestProduct from "./home/test.component";
 import HomeSlide from "../component/slide/slide.home";
 import ListProduct from "../component/list-product-client/list.product";
 import HomeModal from "../create_update/client/home";
+import { useEffect, useState } from "react";
 export default function home() {
+  const [showmodal, setShowmodal] = useState(false)
+  const [products, setProducts] = useState({})
   return (
     <ClientLayout>
       <BannerClient />
@@ -30,7 +33,7 @@ export default function home() {
         <ListProduct />
       </div>
       <Sale />
-      <HomeModal />
+      <HomeModal show={ showmodal} />
     </ClientLayout>
   );
 }

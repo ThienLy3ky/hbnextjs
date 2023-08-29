@@ -2,6 +2,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { store } from "../store";
 import TemplateService from "../api/template.api";
 import { setPriceGroup, setTemplate } from "./slice";
+import { getToken } from "@/src/utils/action.helper";
 export default class ReduxService {
   static async callDispatchAction(action: any) {
     store.dispatch(action);
@@ -16,7 +17,7 @@ export default class ReduxService {
     ReduxService.callDispatchAction(setPriceGroup(res));
   }
   static getUserAdmin() {
-    const { app } = store.getState();
+    const { app } = store.getState() || getToken();
     const { userData } = app;
     return userData;
   }
