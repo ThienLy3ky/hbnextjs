@@ -9,9 +9,9 @@ import HomeSlide from "../component/slide/slide.home";
 import ListProduct from "../component/list-product-client/list.product";
 import HomeModal from "../create_update/client/home";
 import { useEffect, useState } from "react";
-export default function home() {
-  const [showmodal, setShowmodal] = useState(false)
-  const [products, setProducts] = useState({})
+export default function Home() {
+  const [showmodal, setShowmodal] = useState(false);
+  const [product, setProduct] = useState({});
   return (
     <ClientLayout>
       <BannerClient />
@@ -24,16 +24,16 @@ export default function home() {
         <h2 className="section-title position-relative text-uppercase mx-xl-5 mb-4">
           <span className="bg-secondary pr-3">Sản phẩm mới</span>
         </h2>
-        <ListProduct />
+        <ListProduct addProduct={(e: any) => setProduct(e)} />
       </div>
       <div className="container-fluid pt-5 pb-3">
         <h2 className="section-title position-relative text-uppercase mx-xl-5 mb-4">
           <span className="bg-secondary pr-3">Sản phẩm tin dùng</span>
         </h2>
-        <ListProduct />
+        <ListProduct addProduct={(e: any) => setProduct(e)} />
       </div>
       <Sale />
-      <HomeModal show={ showmodal} />
+      <HomeModal show={showmodal} data={product} />
     </ClientLayout>
   );
 }

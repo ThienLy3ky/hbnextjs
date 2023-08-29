@@ -1,7 +1,7 @@
 import CardProductShort from "@/src/component/card/card.product.short";
 import products from "@/src/config/MOCK_DATA.product.json";
 import Script from "next/script";
-export default function FlashProducts() {
+export default function FlashProducts(props: any) {
   return (
     <div className="container-fluid pt-5 pb-3">
       <div
@@ -28,14 +28,9 @@ export default function FlashProducts() {
           <div className="owl-carousel related-carousel">
             {products.slice(0, 10).map((product) => (
               <CardProductShort
-                name={product.name}
-                image={product.image}
-                rate={3.3}
-                oldPrice={product.priceOlder}
-                newPrice={product.priceNew}
-                totalRate={40}
-                id={product.id.toString()}
+                product={product}
                 key={product.id}
+                setCart={() => props.addProduct()}
               />
             ))}
           </div>
