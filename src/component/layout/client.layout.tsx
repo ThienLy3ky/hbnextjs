@@ -5,16 +5,8 @@ import Header from "@/src/component/header/index.client";
 import "@/public/static/library/css/style.css";
 import Script from "next/script";
 import Footer from "../footer/footer";
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import UserAdminService from "@/src/controller/api/login.api";
 import useUserHook from "@/src/controller/hooks/user.hook";
 export default function ClientLayout({ children }: any) {
-  const router = useRouter();
-  const Roler = useSelector(({ app }) => app.adminRole);
-  const isLogin = useSelector(({ app }) => app.userData);
-
   const { data, isLoading, refetch } = useUserHook();
   return (
     <CartProvider>

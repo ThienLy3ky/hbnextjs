@@ -4,63 +4,62 @@ import { METHOD_TYPE } from "../keys/method";
 
 const apiUrl = `/client`;
 const categoriesService = {
-  getToHome(query: any) {
+  getToHome() {
     return APIService.request(
       METHOD_TYPE.GET,
       apiUrl,
       this.getToHome.name,
       cancelTokenHandlerObject,
-      query,
+      null,
       null,
       null
     );
   },
-  getDetail(id: string, payload: object, code: string) {
+  getDetail(id: string) {
     return APIService.request(
-      METHOD_TYPE.PUT,
+      METHOD_TYPE.GET,
       `${apiUrl}/${id}`,
       this.getDetail.name,
       cancelTokenHandlerObject,
-      { code },
-      payload,
+      null,
+      null
+    );
+  },
+  getListSearch(query: any) {
+    return APIService.request(
+      METHOD_TYPE.GET,
+      `${apiUrl}/list-search`,
+      this.getDetail.name,
+      cancelTokenHandlerObject,
+      query,
+      null,
       null,
       { "Content-Type": "multipart/form-data" }
     );
   },
-  getListSearch(id: string, payload: object, code: string) {
+  addCart(payload: any) {
     return APIService.request(
       METHOD_TYPE.PUT,
-      `${apiUrl}/${id}`,
-      this.getDetail.name,
-      cancelTokenHandlerObject,
-      { code },
-      payload,
-      null,
-      { "Content-Type": "multipart/form-data" }
-    );
-  },
-  addCart(id: string) {
-    return APIService.request(
-      METHOD_TYPE.DELETE,
-      `${apiUrl}/${id}`,
+      `${apiUrl}/cart`,
       this.addCart.name,
       cancelTokenHandlerObject,
       null,
       null
     );
   },
-  payment(payload: object, code: string) {
+  payment(payload: object) {
     return APIService.request(
       METHOD_TYPE.POST,
-      `${apiUrl}`,
+      `${apiUrl}/payment`,
       this.payment.name,
       cancelTokenHandlerObject,
-      { code },
+      null,
       payload,
       null,
       { "Content-Type": "multipart/form-data" }
     );
   },
+  //
   getProfile(payload: object, code: string) {
     return APIService.request(
       METHOD_TYPE.POST,

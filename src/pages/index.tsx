@@ -18,7 +18,6 @@ export default function Home() {
       <Feature />
       <HomeSlide />
       <Categories />
-      {/* <TestProduct /> */}
       <FlashProducts
         addProduct={(e: any) => setProduct(e)}
         openModal={() => setShowmodal(!showmodal)}
