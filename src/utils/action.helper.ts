@@ -185,25 +185,53 @@ export const formatString = (str: string) => {
   return str;
 };
 export const setToken = (access_token: string) =>
-  localStorage.setItem("Access_Token", access_token);
+  localStorage.setItem("Access_Token", JSON.stringify(access_token));
 export const setReToken = (Re_token: string) =>
-  localStorage.setItem("Refresh_Token", Re_token);
+  localStorage.setItem("Refresh_Token", JSON.stringify(Re_token));
 export const getToken = () => {
   try {
-    return localStorage.getItem("Access_Token") || "";
+    return JSON.parse(localStorage.getItem("Access_Token") || "");
   } catch (error) {
-    console.log(error);
     return "";
   }
 };
 export const getReToken = () => {
   try {
-    return localStorage.getItem("Refresh_Token") || "";
+    return JSON.parse(localStorage.getItem("Refresh_Token") || "");
   } catch (error) {
-    console.log(error);
     return "";
   }
 };
 
-export const clearToken = () => localStorage.removeItem("Access_Token");
-export const clearReToken = () => localStorage.removeItem("Refresh_Token");
+export const clearToken = () => {
+  try {
+    return localStorage.removeItem("Access_Token");
+  } catch (error) {
+    return "";
+  }
+};
+export const clearReToken = () => {
+  try {
+    return localStorage.removeItem("Refresh_Token");
+  } catch (error) {
+    return "";
+  }
+};
+
+export const setRoler = (Re_token: string) =>
+  localStorage.setItem("role", Re_token);
+export const getRoler = () => {
+  try {
+    return localStorage.getItem("role") || "";
+  } catch (error) {
+    return "";
+  }
+};
+
+export const clearRoler = () => {
+  try {
+    return localStorage.removeItem("role");
+  } catch (error) {
+    return "";
+  }
+};

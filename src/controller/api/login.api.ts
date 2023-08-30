@@ -13,6 +13,16 @@ const UserAdminService = {
       payload
     );
   },
+  getName() {
+    return APIService.request(
+      METHOD_TYPE.GET,
+      `${apiUrl}/profile`,
+      this.getName.name,
+      cancelTokenHandlerObject,
+      null,
+      null
+    );
+  },
   signup(payload: object) {
     return APIService.request(
       METHOD_TYPE.POST,

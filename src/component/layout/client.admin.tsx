@@ -5,16 +5,19 @@ import ReduxService from "@/src/controller/redux";
 import { useEffect } from "react";
 import ToastProvider from "../notification";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { showNotificationError } from "../notification/notificationFc";
 export default function AdminLayout({ children, title }: any) {
+  const router = useRouter();
+  const Roler = useSelector(({ app }) => app.adminRole);
   useEffect(() => {
     Promise.all([ReduxService.getGroupPrice()]);
+    if (Roler !== "admin") {
+      showNotificationError("Bạn không có quyền truy cập");
+      router.replace("./");
+    }
   }, []);
-  const Roler = useSelector(({ app }) => app.adminRole);
-  console.log(
-    "🚀 ~ file: client.admin.tsx:13 ~ AdminLayout ~ dataSelect:",
-    Roler !== "admin",
-    Roler
-  );
+
   return (
     <div className="container-scroller">
       <ToastProvider>

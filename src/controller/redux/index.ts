@@ -3,6 +3,7 @@ import { store } from "../store";
 import TemplateService from "../api/template.api";
 import { setPriceGroup, setTemplate } from "./slice";
 import { getToken } from "@/src/utils/action.helper";
+import UserAdminService from "../api/login.api";
 export default class ReduxService {
   static async callDispatchAction(action: any) {
     store.dispatch(action);
@@ -17,14 +18,16 @@ export default class ReduxService {
     ReduxService.callDispatchAction(setPriceGroup(res));
   }
   static getUserAdmin() {
-    const { app } = store.getState() || getToken();
+    const { app } = store.getState();
     const { userData } = app;
-    return userData;
+    return userData || getToken();
   }
   static getBearerToken(tokenUserData = false) {
     const userAdmin = ReduxService.getUserAdmin();
+    
+
     if (userAdmin && !tokenUserData) {
-      return `Bearer ${userAdmin}`;
+      return `Bearer ${userAdmin.token}`;
     } else {
       return null;
     }

@@ -1,4 +1,4 @@
-import ClientLayout from "../component/layout/client.layout";
+import ClientLayout from "@/src/component/layout/client.layout";
 import BannerClient from "@/src/component/banner/banner.client";
 import Categories from "../component/categories/categori";
 import FlashProducts from "../component/product-flash/products.flash";

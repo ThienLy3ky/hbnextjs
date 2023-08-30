@@ -49,6 +49,46 @@ const MenuClient = (props: any) => {
                     </span>
                     <CartDropdown />
                   </div>
+                  <div className="btn px-0 ml-3">
+                    <a
+                      className="btn px-0 ml-3 no-padding no-margin"
+                      data-toggle="collapse"
+                      href="#user-dropdown"
+                    >
+                      <i className="fas fa-user text-primary"></i>
+                    </a>
+                    <nav
+                      className="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"
+                      id="user-dropdown"
+                      style={{ zIndex: "999", width: "max-content" }}
+                    >
+                      <div
+                        className="navbar-nav w-100"
+                        style={{
+                          color: "black !important",
+                          flexDirection: "column",
+                        }}
+                      >
+                        {!(data && data !== "") ? (
+                          <a
+                            href={`/login`}
+                            className="nav-item nav-link"
+                            style={{ color: "black !important" }}
+                          >
+                            Đăng nhập
+                          </a>
+                        ) : (
+                          <a
+                            href={`/login`}
+                            className="nav-item nav-link "
+                            style={{ color: "black !important" }}
+                          >
+                            Đăng xuất
+                          </a>
+                        )}
+                      </div>
+                    </nav>
+                  </div>
                 </div>
                 <button
                   type="button"
@@ -102,6 +142,46 @@ const MenuClient = (props: any) => {
                         {carts && carts?.length ? <b>{carts?.length}</b> : ""}
                       </span>
                       <CartDropdown />
+                    </div>
+                    <div className="btn px-0 ml-3">
+                      <a
+                        className="btn px-0 ml-3 no-padding no-margin"
+                        data-toggle="collapse"
+                        href="#user-dropdown"
+                      >
+                        <i className="fas fa-user text-primary"></i>
+                      </a>
+                      <nav
+                        className="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"
+                        id="user-dropdown"
+                        style={{ zIndex: "999", width: "max-content" }}
+                      >
+                        <div
+                          className="navbar-nav w-100"
+                          style={{
+                            color: "black !important",
+                            flexDirection: "column",
+                          }}
+                        >
+                          {!(data && data !== "") ? (
+                            <a
+                              href={`/login`}
+                              className="nav-item nav-link"
+                              style={{ color: "black !important" }}
+                            >
+                              Đăng nhập
+                            </a>
+                          ) : (
+                            <a
+                              href={`/login`}
+                              className="nav-item nav-link "
+                              style={{ color: "black !important" }}
+                            >
+                              Đăng xuất
+                            </a>
+                          )}
+                        </div>
+                      </nav>
                     </div>
                   </div>
                 </div>

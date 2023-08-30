@@ -1,10 +1,15 @@
-import { setToken } from "@/src/utils/action.helper";
+import {
+  setToken,
+  setRoler,
+  getRoler,
+  getToken,
+} from "@/src/utils/action.helper";
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   template: {},
   priceGroup: {},
-  userData: null,
-  adminRole: null,
+  userData: getToken(),
+  adminRole: getRoler(),
 };
 export const appSlice = createSlice({
   name: "templates",
@@ -22,6 +27,7 @@ export const appSlice = createSlice({
       state.userData = action.payload;
     },
     setRole: (state, action) => {
+      setRoler(action.payload);
       state.adminRole = action.payload;
     },
   },

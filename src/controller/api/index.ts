@@ -5,6 +5,8 @@ import axiosInstance from "./axios";
 import { METHOD_TYPE } from "../keys/method";
 import { showNotificationError } from "@/src/component/notification/notificationFc";
 import ReduxService from "../redux";
+import { setRole, setUserData } from "@/src/controller/redux/slice";
+import { clearRoler, clearToken } from "@/src/utils/action.helper";
 
 export default class APIService {
   static async request(
@@ -43,7 +45,7 @@ export default class APIService {
       config.data = body;
     }
     if (header) {
-      config.headers = header;
+      config.headers = { ...config.headers, header };
     }
 
     return axiosInstance
@@ -62,6 +64,14 @@ export default class APIService {
             "Your session has expired. Please sign in again to continue"
           );
           // ReduxService.resetApp();
+        } else if (error?.response?.status === 401) {
+          showNotificationError(
+            "Your session has expired. Please sign in again to continue"
+          );
+          // setUserData("");
+          // setRole("");
+          // clearRoler();
+          // clearToken();
         } else if (!error?.message?.includes("canceled")) {
           showNotificationError(error?.response?.data?.message);
 
