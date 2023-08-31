@@ -11296,3 +11296,32 @@ body #root {
 .group-radio .col-md-6 {
   flex: unset;
 }
+@media (max-width: 576px) {
+  .col-sm-6 {
+    flex: 0 0 50%;
+    max-width: 33.33%;
+    padding: 0.5% !important;
+  }
+  .product-item {
+    margin-bottom: 1% !important;
+  }
+  .product-img {
+    height: 100px;
+  }
+  .col {
+    padding: 2px;
+  }
+}
+@media (max-width: 576px) {
+  .col-sm-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0.5% !important;
+  }
+  .product-img {
+    height: 150px;
+  }
+  .col {
+    padding: 5px;
+  }
+}

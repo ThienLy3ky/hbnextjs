@@ -42,11 +42,11 @@ jQuery(document).ready(function ($) {
       autoplayTimeout: 6000,
       responsive: {
         0: {
-          items: 1,
+          items: 2,
           margin: 0,
         },
         460: {
-          items: 1,
+          items: 3,
           margin: 0,
         },
         576: {

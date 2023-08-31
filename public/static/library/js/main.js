@@ -30,7 +30,7 @@
       slideBy: "page",
       responsive: {
         0: {
-          items: 1,
+          items: 2,
         },
         576: {
           items: 2,
