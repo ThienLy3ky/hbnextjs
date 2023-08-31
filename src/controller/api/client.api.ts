@@ -28,7 +28,7 @@ const categoriesService = {
   getListSearch(query: any) {
     return APIService.request(
       METHOD_TYPE.GET,
-      `${apiUrl}/list-search`,
+      `${apiUrl}/search`,
       this.getDetail.name,
       cancelTokenHandlerObject,
       query,
@@ -44,7 +44,7 @@ const categoriesService = {
       this.addCart.name,
       cancelTokenHandlerObject,
       null,
-      null
+      payload
     );
   },
   payment(payload: object) {

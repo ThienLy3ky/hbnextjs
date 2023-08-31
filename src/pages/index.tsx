@@ -9,9 +9,12 @@ import HomeSlide from "../component/slide/slide.home";
 import ListProduct from "../component/list-product-client/list.product";
 import HomeModal from "../create_update/client/home";
 import { useEffect, useState } from "react";
+import useHomeHook from "../controller/hooks/home.client.hook";
 export default function Home() {
   const [showmodal, setShowmodal] = useState(false);
   const [product, setProduct] = useState({});
+  const { data, isLoading } = useHomeHook();
+  console.log("🚀 ~ file: index.tsx:17 ~ Home ~ data:", data);
   return (
     <ClientLayout>
       <BannerClient />

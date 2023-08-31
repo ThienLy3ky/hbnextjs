@@ -10351,6 +10351,9 @@ button.bg-dark:focus {
   color: blue;
   font-weight: bolder;
   font-size: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .text-left {

@@ -7,18 +7,12 @@ const getData = async () => {
   return res;
 };
 
-const useHomeHook = () => {
+const useDetailHook = () => {
   const { data, isLoading } = useQuery([QUERY_KEY.Banner], getData);
   return {
     isLoading,
-    data: {
-      bannerText: data?.bannerText || [],
-      bannerImage: data?.bannerImage || [],
-      flashProduct: data?.flashProduct || [],
-      newProduct: data?.newProduct || [],
-      saleProduct: data?.saleProduct || [],
-    },
+    data: data,
   };
 };
 
-export default useHomeHook;
+export default useDetailHook;

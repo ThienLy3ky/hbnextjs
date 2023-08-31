@@ -7,7 +7,7 @@ const getData = async () => {
   return res;
 };
 
-const useHomeHook = () => {
+const usePaymentHook = () => {
   const { data, isLoading } = useQuery([QUERY_KEY.Banner], getData);
   return {
     isLoading,
@@ -21,4 +21,4 @@ const useHomeHook = () => {
   };
 };
 
-export default useHomeHook;
+export default usePaymentHook;
