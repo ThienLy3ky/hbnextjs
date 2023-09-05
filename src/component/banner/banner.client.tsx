@@ -1,7 +1,12 @@
 import DropdownMenu from "@/src/component/dropdown/categori.menu";
-import categories from "@/src/config/MOCK_DATA.categori.json";
 import Image from "next/image";
-export default function BannerClient() {
+import Script from "next/script";
+import { useSelector } from "react-redux";
+export default function BannerClient(props: any) {
+  const dataSelect = useSelector(
+    (state: any) => state.app?.template?.categories
+  );
+  const { data } = props;
   return (
     <div className="container-fluid">
       <div className="banner_bg_main" style={{ marginBottom: "20px" }}>
@@ -35,16 +40,16 @@ export default function BannerClient() {
                   href="#navbar-vertical"
                   style={{ borderRadius: "0.25rem" }}
                 >
-                  Nhóm sản phẩm
+                  Danh mục sản phẩm
                 </a>
-                <DropdownMenu data={categories} />
+                <DropdownMenu data={dataSelect} />
               </div>
               <div className="main col-6">
                 <div className="input-group">
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Search this blog"
+                    placeholder="Tim kiem"
                     style={{ borderRadius: "0.25rem" }}
                   />
                   <div className="input-group-append">
@@ -67,47 +72,26 @@ export default function BannerClient() {
         </div>
         <div className="banner_section layout_padding">
           <div className="container">
-            <div id="my_slider" className="carousel slide" data-ride="carousel">
-              <div className="carousel-inner">
-                <div className="carousel-item">
-                  <div className="row">
-                    <div className="col-sm-12">
-                      <h1 className="banner_taital">
-                        Get Start <br />
-                        Your favriot shoping
-                      </h1>
-                      <div className="buynow_bt">
-                        <a href="#/">Buy Now</a>
+            <div className="carousel slide" data-ride="carousel">
+              <div className="carousel-inner carousel-text">
+                {data
+                  ? data.map((item: any) => (
+                      <div key={item._id} className="carousel-item active">
+                        <div className="row">
+                          <div className="col-sm-12">
+                            <h1 className="banner_taital">
+                              {item.title}
+                              <br />
+                              {item.content}
+                            </h1>
+                            <div className="buynow_bt">
+                              <a href="#/">Buy Now</a>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="carousel-item active">
-                  <div className="row">
-                    <div className="col-sm-12">
-                      <h1 className="banner_taital">
-                        Get Start <br />
-                        Your favriot shoping
-                      </h1>
-                      <div className="buynow_bt">
-                        <a href="#/">Buy Now</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="carousel-item">
-                  <div className="row">
-                    <div className="col-sm-12">
-                      <h1 className="banner_taital">
-                        Get Start <br />
-                        Your favriot shoping
-                      </h1>
-                      <div className="buynow_bt">
-                        <a href="#/">Buy Now</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                    ))
+                  : ""}
               </div>
               <a
                 className="carousel-control-prev"

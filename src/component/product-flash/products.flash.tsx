@@ -1,7 +1,7 @@
 import CardProductShort from "@/src/component/card/card.product.short";
-import products from "@/src/config/MOCK_DATA.product.json";
-import Script from "next/script";
 export default function FlashProducts(props: any) {
+  const { data } = props;
+
   return (
     <div className="container-fluid pt-5 pb-3">
       <div
@@ -26,12 +26,12 @@ export default function FlashProducts(props: any) {
       <div className="row px-xl-5">
         <div className="col" id="my_slider1">
           <div className="owl-carousel related-carousel">
-            {products.slice(0, 10).map((product) => (
+            {data.slice(0, 10).map(({ product }: any) => (
               <CardProductShort
-                openModal={() => props.openModal()}
+                openModal={props.openModal}
                 product={product}
-                key={product.id}
-                setCart={() => props.addProduct()}
+                key={product._id}
+                setCart={() => props.addProduct(product)}
               />
             ))}
           </div>

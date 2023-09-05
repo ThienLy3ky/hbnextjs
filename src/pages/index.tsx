@@ -4,26 +4,26 @@ import Categories from "../component/categories/categori";
 import FlashProducts from "../component/product-flash/products.flash";
 import Sale from "../component/sale/sale";
 import Feature from "../component/header/feature";
-import TestProduct from "./home/test.component";
 import HomeSlide from "../component/slide/slide.home";
 import ListProduct from "../component/list-product-client/list.product";
 import HomeModal from "../create_update/client/home";
 import { useEffect, useState } from "react";
 import useHomeHook from "../controller/hooks/home.client.hook";
+import Script from "next/script";
 export default function Home() {
   const [showmodal, setShowmodal] = useState(false);
   const [product, setProduct] = useState({});
   const { data, isLoading } = useHomeHook();
-  console.log("🚀 ~ file: index.tsx:17 ~ Home ~ data:", data);
   return (
     <ClientLayout>
-      <BannerClient />
+      <BannerClient data={data?.bannerText} />
       <Feature />
-      <HomeSlide />
+      <HomeSlide data={data?.bannerImage} />
       <Categories />
       <FlashProducts
         addProduct={(e: any) => setProduct(e)}
         openModal={() => setShowmodal(!showmodal)}
+        data={data?.flashProduct}
       />
       <div className="container-fluid pt-5 pb-3">
         <h2 className="section-title position-relative text-uppercase mx-xl-5 mb-4">
@@ -32,6 +32,7 @@ export default function Home() {
         <ListProduct
           addProduct={(e: any) => setProduct(e)}
           openModal={() => setShowmodal(!showmodal)}
+          data={data?.newProduct}
         />
       </div>
       <div className="container-fluid pt-5 pb-3">
@@ -41,14 +42,19 @@ export default function Home() {
         <ListProduct
           addProduct={(e: any) => setProduct(e)}
           openModal={() => setShowmodal(!showmodal)}
+          data={data.saleProduct}
         />
       </div>
-      <Sale />
+      <Sale data={data.bannerImage} />
       <HomeModal
         show={showmodal}
         data={product}
         onclose={() => setShowmodal(!showmodal)}
       />
+      <Script
+        src="/static/library/js/custom.js"
+        type="text/javascript"
+      ></Script>
     </ClientLayout>
   );
 }

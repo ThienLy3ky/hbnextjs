@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useSelector } from "react-redux";
 
 export default function Footer() {
@@ -14,66 +15,29 @@ export default function Footer() {
             <i className="fa fa-map-marker-alt text-primary mr-3"></i>
             {Settings?.address}
           </p>
-          <p className="mb-2">
+          <Link href={"mailto:" + Settings?.email} className="mb-2">
             <i className="fa fa-envelope text-primary mr-3"></i>
             {Settings?.email}
-          </p>
+          </Link>
           <p className="mb-0">
-            <i className="fa fa-phone-alt text-primary mr-3"></i>
-            {Settings?.SDT}
+            <Link href={"tel:+84-" + Settings?.SDT} className="mb-0">
+              <i className="fa fa-phone-alt text-primary mr-3"></i>
+              {Settings?.SDT}
+            </Link>
           </p>
         </div>
         <div className="col-lg-8 col-md-12">
           <div className="row">
-            <div className="col-md-4 mb-5">
-              <h5 className="text-secondary text-uppercase mb-4">Quick Shop</h5>
-              <div className="d-flex flex-column justify-content-start">
-                <a className="text-secondary mb-2" href="#">
-                  <i className="fa fa-angle-right mr-2"></i>Home
-                </a>
-                <a className="text-secondary mb-2" href="#">
-                  <i className="fa fa-angle-right mr-2"></i>Our Shop
-                </a>
-                <a className="text-secondary mb-2" href="#">
-                  <i className="fa fa-angle-right mr-2"></i>Shop Detail
-                </a>
-                <a className="text-secondary mb-2" href="#">
-                  <i className="fa fa-angle-right mr-2"></i>Shopping Cart
-                </a>
-                <a className="text-secondary mb-2" href="#">
-                  <i className="fa fa-angle-right mr-2"></i>Checkout
-                </a>
-                <a className="text-secondary" href="#">
-                  <i className="fa fa-angle-right mr-2"></i>Contact Us
-                </a>
-              </div>
+            <div className="col-md-8 mb-5">
+              <h5 className="text-secondary text-uppercase mb-4">Gợi ý</h5>
             </div>
+
             <div className="col-md-4 mb-5">
-              <h5 className="text-secondary text-uppercase mb-4">My Account</h5>
-              <div className="d-flex flex-column justify-content-start">
-                <a className="text-secondary mb-2" href="#">
-                  <i className="fa fa-angle-right mr-2"></i>Home
-                </a>
-                <a className="text-secondary mb-2" href="#">
-                  <i className="fa fa-angle-right mr-2"></i>Our Shop
-                </a>
-                <a className="text-secondary mb-2" href="#">
-                  <i className="fa fa-angle-right mr-2"></i>Shop Detail
-                </a>
-                <a className="text-secondary mb-2" href="#">
-                  <i className="fa fa-angle-right mr-2"></i>Shopping Cart
-                </a>
-                <a className="text-secondary mb-2" href="#">
-                  <i className="fa fa-angle-right mr-2"></i>Checkout
-                </a>
-                <a className="text-secondary" href="#">
-                  <i className="fa fa-angle-right mr-2"></i>Contact Us
-                </a>
-              </div>
-            </div>
-            <div className="col-md-4 mb-5">
-              <h5 className="text-secondary text-uppercase mb-4">Newsletter</h5>
-              <p>Duo stet tempor ipsum sit amet magna ipsum tempor est</p>
+              <h5 className="text-secondary text-uppercase mb-4">Phản hồi</h5>
+              <p>
+                Giải đáp mọi thông tin, phản ánh của quý khách trong thời gian
+                nhanh nhất
+              </p>
               <form action="">
                 <div className="input-group">
                   <input
@@ -82,12 +46,17 @@ export default function Footer() {
                     placeholder="Your Email Address"
                   />
                   <div className="input-group-append">
-                    <button className="btn btn-primary">Sign Up</button>
+                    <Link
+                      href={"mailto:" + Settings?.email}
+                      className="btn btn-primary"
+                    >
+                      Gửi
+                    </Link>
                   </div>
                 </div>
               </form>
               <h6 className="text-secondary text-uppercase mt-4 mb-3">
-                Follow Us
+                Tìm hiểu thêm về chúng tôi
               </h6>
               <div className="d-flex">
                 <a className="btn btn-primary btn-square mr-2" href="#">

@@ -2,6 +2,7 @@ import * as React from "react";
 import CartContext from "@/src/component/context/client.context";
 import { formatMoney } from "@/src/utils/action.helper";
 import Link from "next/link";
+import Image from "next/image";
 export default function CartDropdown(props: any) {
   const { carts, setCarts } = React.useContext(CartContext);
 
@@ -33,7 +34,8 @@ export default function CartDropdown(props: any) {
                     {carts ? (
                       carts?.map(
                         (cart: any, index: number) => (
-                          (sumPrice = sumPrice + cart?.quanlity * cart?.price),
+                          (sumPrice =
+                            sumPrice + cart?.quanlity * cart?.priceNew),
                           (
                             <div className="card mb-3" key={index}>
                               <div
@@ -43,11 +45,12 @@ export default function CartDropdown(props: any) {
                                 <div className="d-flex justify-content-between">
                                   <div className="d-flex flex-row align-items-center">
                                     <div style={{ width: "50px" }}>
-                                      <img
+                                      <Image
                                         src={cart.image}
                                         className="img-fluid rounded-3"
                                         alt="Shopping item"
-                                        style={{ height: "65px" }}
+                                        width={65}
+                                        height="65"
                                       />
                                     </div>
                                     <div className="ms-3 col">
@@ -57,7 +60,8 @@ export default function CartDropdown(props: any) {
                                           : cart.name}
                                       </h6>
                                       <p className="small mb-0">
-                                        256GB, Navy Blue
+                                        {cart.group?.name},{cart?.style?.name},
+                                        {cart?.size?.name}
                                       </p>
                                     </div>
                                   </div>
@@ -69,7 +73,9 @@ export default function CartDropdown(props: any) {
                                     </div>
                                     <div style={{ width: "80px" }}>
                                       <h5 className="mb-0">
-                                        {formatMoney(cart.price)}
+                                        {formatMoney(
+                                          cart.priceNew * cart?.quanlity
+                                        )}
                                       </h5>
                                     </div>
                                     <a href="#!" style={{ color: "#cecece " }}>

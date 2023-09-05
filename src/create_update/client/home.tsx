@@ -1,8 +1,24 @@
+import CartContext from "@/src/component/context/client.context";
 import GroupAddCart from "@/src/component/group/modal.cart";
+import { formatMoney, formatNumber } from "@/src/utils/action.helper";
+import { addCart } from "@/src/utils/cart.client";
 import { Modal } from "@mui/material";
 import Image from "next/image";
+import { useContext, useEffect, useState } from "react";
 
 export default function HomeModal(props: any) {
+  useEffect(() => {
+    setPricePr(price ? price[0] : {});
+    setQuanlityPr(1);
+  }, [props]);
+  const product = useContext(CartContext);
+  const [pricePr, setPricePr] = useState<any>({});
+  const [quanlityPr, setQuanlityPr] = useState(1);
+  const { data } = props;
+  const { price, name, code, summary, _id } = data;
+  price?.forEach(({ priceNew }: any, index: number) => {
+    if (priceNew < pricePr?.priceNew) setPricePr(price[index]);
+  });
   return (
     <Modal
       style={{ overflow: "auto" }}
@@ -19,7 +35,11 @@ export default function HomeModal(props: any) {
         <div className="modal-content">
           <div
             className="modal-body"
-            style={{ minHeight: "500px", background: "#edeef6" }}
+            style={{
+              minHeight: "500px",
+              background: "#edeef6",
+              borderRadius: "10px",
+            }}
           >
             <div
               className="col-12 p-0"
@@ -31,7 +51,7 @@ export default function HomeModal(props: any) {
               >
                 <Image
                   alt="Hình ảnh"
-                  src={"/static/image/noImage.jpeg"}
+                  src={pricePr?.image ?? "/static/image/noImage.jpeg"}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
@@ -44,85 +64,72 @@ export default function HomeModal(props: any) {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  <Image
-                    src={"/static/image/noImage.jpeg"}
-                    height={60}
-                    width={60}
-                    className="mr-2"
-                    alt="sanr pham"
-                  />
-                  <Image
-                    src={"/static/image/noImage.jpeg"}
-                    height={60}
-                    width={60}
-                    className="mr-2"
-                    alt="sanr pham"
-                  />
-                  <Image
-                    src={"/static/image/noImage.jpeg"}
-                    height={60}
-                    width={60}
-                    className="mr-2"
-                    alt="sanr pham"
-                  />
-                  <Image
-                    src={"/static/image/noImage.jpeg"}
-                    height={60}
-                    width={60}
-                    className="mr-2"
-                    alt="sanr pham"
-                  />
-                  <Image
-                    src={"/static/image/noImage.jpeg"}
-                    height={60}
-                    width={60}
-                    className="mr-2"
-                    alt="sanr pham"
-                  />
-                  <Image
-                    src={"/static/image/noImage.jpeg"}
-                    height={60}
-                    width={60}
-                    className="mr-2"
-                    alt="sanr pham"
-                  />
+                  {price?.map((element: any, index: number) =>
+                    element.image ? (
+                      <Image
+                        key={index}
+                        src={element?.image ?? "/static/image/noImage.jpeg"}
+                        // fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="mr-2"
+                        width={90}
+                        height={90}
+                        alt={name}
+                        onClick={() => setPricePr(element)}
+                      />
+                    ) : (
+                      ""
+                    )
+                  )}
                 </div>
               </div>
-              <GroupAddCart />
+              <GroupAddCart data={price} value={pricePr} />
             </div>
             <h3
               className="col-12 "
               style={{ display: "inline-flex", background: "white" }}
             >
-              name
+              {name}
             </h3>
             <div
               className="col-12 "
               style={{ display: "inline-flex", background: "white" }}
             >
               <div className="col-8 slide ">
-                <h6 className="col mb-3 p-0">decription</h6>
+                <h6 className="col mb-3 p-0">{summary}</h6>
                 <div className="d-flex align-items-center">
                   <div
                     className="input-group quantity mr-3"
                     style={{ width: "130px" }}
                   >
                     <div className="input-group-btn">
-                      <button className="btn btn-primary btn-minus">
+                      <button
+                        className="btn btn-primary btn-minus"
+                        onClick={() => setQuanlityPr(quanlityPr - 1)}
+                      >
                         <i className="fa fa-minus"></i>
                       </button>
                     </div>
                     <input
                       type="number"
                       className="form-control bg-secondary border-0 text-center"
+                      value={quanlityPr}
+                      onChange={({ target }) =>
+                        setQuanlityPr(formatNumber(target.value))
+                      }
                     />
                     <div className="input-group-btn">
-                      <button className="btn btn-primary btn-plus">
+                      <button
+                        className="btn btn-primary btn-plus"
+                        onClick={() => setQuanlityPr(quanlityPr + 1)}
+                      >
                         <i className="fa fa-plus"></i>
                       </button>
                     </div>
                   </div>
-                  <h4 style={{ color: "red" }}>Gia</h4>
+                  <h4 style={{ color: "red" }}>
+                    {formatMoney(pricePr.priceNew * quanlityPr)}
+                  </h4>
                 </div>
               </div>
               <div className="col-4 d-flex align-items-center align-self-center flex-column">
@@ -136,6 +143,22 @@ export default function HomeModal(props: any) {
                 <button
                   className="col-8 btn btn-outline-warning"
                   style={{ borderRadius: "10px", whiteSpace: "normal" }}
+                  onClick={() => {
+                    product.setCarts(
+                      addCart({
+                        _id,
+                        name,
+                        code,
+                        quanlity: quanlityPr,
+                        size: pricePr.size,
+                        style: pricePr.style,
+                        group: pricePr.group,
+                        priceNew: pricePr.priceNew,
+                        image: pricePr.image,
+                      })
+                    ),
+                      props.onclose();
+                  }}
                 >
                   Thêm vào giỏ
                   <i className="fas fa-shopping-cart" />

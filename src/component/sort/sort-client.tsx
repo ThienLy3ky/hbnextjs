@@ -16,37 +16,17 @@ export default function SortClient() {
             className="btn btn-sm btn-light dropdown-toggle"
             data-toggle="dropdown"
           >
-            Sorting
+            Sắp Xếp
           </button>
           <div className="dropdown-menu dropdown-menu-right">
             <a className="dropdown-item" href="#">
-              Latest
+              Mới nhất
             </a>
             <a className="dropdown-item" href="#">
-              Popularity
+              Bán chạy nhất
             </a>
             <a className="dropdown-item" href="#">
-              Best Rating
-            </a>
-          </div>
-        </div>
-        <div className="btn-group ml-2">
-          <button
-            type="button"
-            className="btn btn-sm btn-light dropdown-toggle"
-            data-toggle="dropdown"
-          >
-            Showing
-          </button>
-          <div className="dropdown-menu dropdown-menu-right">
-            <a className="dropdown-item" href="#">
-              10
-            </a>
-            <a className="dropdown-item" href="#">
-              20
-            </a>
-            <a className="dropdown-item" href="#">
-              30
+              Phổ biến nhất
             </a>
           </div>
         </div>

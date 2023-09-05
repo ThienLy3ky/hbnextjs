@@ -11297,7 +11297,7 @@ body #root {
   flex: unset;
 }
 @media (max-width: 576px) {
-  .col-sm-6 {
+  .card-product {
     flex: 0 0 50%;
     max-width: 33.33%;
     padding: 0.5% !important;
@@ -11313,7 +11313,7 @@ body #root {
   }
 }
 @media (max-width: 576px) {
-  .col-sm-6 {
+  .card-product {
     flex: 0 0 50%;
     max-width: 50%;
     padding: 0.5% !important;
@@ -11324,4 +11324,7 @@ body #root {
   .col {
     padding: 5px;
   }
+}
+.card-product h5 {
+  font-size: medium !important;
 }

@@ -21,7 +21,6 @@ export default function Categories() {
                 </div>
                 <div className="flex-fill pl-3">
                   <h6>{category?.name}</h6>
-                  <small className="text-body">100 sản phẩm</small>
                 </div>
               </div>
             </a>

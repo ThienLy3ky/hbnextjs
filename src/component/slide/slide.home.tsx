@@ -1,4 +1,7 @@
+import Image from "next/image";
+
 export default function HomeSlide(props: any) {
+  const { data } = props;
   return (
     <div className="container-fluid mb-3">
       <div className="row px-xl-5">
@@ -19,39 +22,45 @@ export default function HomeSlide(props: any) {
               <li data-target="#header-carousel" data-slide-to="3"></li>
             </ol>
             <div className="carousel-inner">
-              <div
-                className="carousel-item position-relative active"
-                style={{ height: "430px" }}
-              >
-                <img
-                  className="position-absolute w-100 h-100"
-                  src="https://highlandsoncology.com/wp-content/uploads/Highlands_PharmacyBanner-1536x576.jpg"
-                  style={{ objectFit: "cover" }}
-                  alt=""
-                />
-                <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                  <div className="p-3" style={{ maxWidth: "700px" }}>
-                    <h1 className="display-4 text-white mb-3 animate__animated animate__fadeInDown">
-                      Men Fashion
-                    </h1>
-                    <p className="mx-md-5 px-5 animate__animated animate__bounceIn">
-                      Lorem rebum magna amet lorem magna erat diam stet. Sadips
-                      duo stet amet amet ndiam elitr ipsum diam
-                    </p>
-                    <a
-                      className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
-                      href="#/"
-                    >
-                      Shop Now
-                    </a>
+              {data?.map((item: any) => (
+                <div
+                  key={item._id}
+                  className="carousel-item position-relative active"
+                  style={{ height: "430px" }}
+                >
+                  <Image
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="position-absolute w-100 h-100"
+                    src="https://highlandsoncology.com/wp-content/uploads/Highlands_PharmacyBanner-1536x576.jpg"
+                    style={{ objectFit: "cover" }}
+                    alt=""
+                  />
+                  <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div className="p-3" style={{ maxWidth: "700px" }}>
+                      <h1 className="display-4 text-white mb-3 animate__animated animate__fadeInDown">
+                        Men Fashion
+                      </h1>
+                      <p className="mx-md-5 px-5 animate__animated animate__bounceIn">
+                        Lorem rebum magna amet lorem magna erat diam stet.
+                        Sadips duo stet amet amet ndiam elitr ipsum diam
+                      </p>
+                      <a
+                        className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
+                        href="#/"
+                      >
+                        Shop Now
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
               <div
                 className="carousel-item position-relative"
                 style={{ height: "430px" }}
               >
                 <img
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="position-absolute w-100 h-100"
                   src="https://media.istockphoto.com/id/1049599704/vi/anh/d%C6%B0%E1%BB%A3c-s%C4%A9-s%E1%BB%AD-d%E1%BB%A5ng-m%C3%A1y-t%C3%ADnh-x%C3%A1ch-tay-t%E1%BA%A1i-nh%C3%A0-thu%E1%BB%91c.jpg?s=612x612&w=0&k=20&c=BH1R9h5yPBb9owbXk3xcbGQf7WAkoA_Ezhm93876Zbk="
                   style={{ objectFit: "cover" }}

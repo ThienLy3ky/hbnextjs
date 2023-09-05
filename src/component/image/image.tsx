@@ -1,7 +1,3 @@
-import CartContext from "@/src/component/context/client.context";
-import { useState, useEffect, useContext } from "react";
-import { addCart } from "@/src/utils/cart.client";
-import { formatMoney } from "@/src/utils/action.helper";
 import Image from "next/image";
 
 interface propsIF {
@@ -16,13 +12,12 @@ interface propsIF {
 export default function CardImage(props: any) {
   return (
     <div className="product-img position-relative overflow-hidden d-flex justify-content-center">
-      <img
+      <Image
         className="img-fluid"
-        style={{ width: "unset" }}
-        src={props.src}
+        src={props.src ?? "/static/image/noImage.jpeg"}
         alt=""
-        width={10}
-        height={10}
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
     </div>
   );

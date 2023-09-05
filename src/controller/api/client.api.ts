@@ -15,10 +15,10 @@ const categoriesService = {
       null
     );
   },
-  getDetail(id: string) {
+  getDetail(code: string) {
     return APIService.request(
       METHOD_TYPE.GET,
-      `${apiUrl}/${id}`,
+      `${apiUrl}/${code}`,
       this.getDetail.name,
       cancelTokenHandlerObject,
       null,

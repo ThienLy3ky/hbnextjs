@@ -1,16 +1,26 @@
+import CartContext from "@/src/component/context/client.context";
 import ClientLayout from "@/src/component/layout/client.layout";
 import Title from "@/src/component/title";
+import useUserHook from "@/src/controller/hooks/user.hook";
+import { formatMoney } from "@/src/utils/action.helper";
+import { getCart } from "@/src/utils/cart.client";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function CheckOut() {
+  const [carts, setCarts] = useState([]);
+  useEffect(() => {
+    setCarts(getCart());
+  }, []);
+  const { data, isLoading, refetch } = useUserHook();
+  let sumPrice = 0,
+    ship = 20000;
   return (
     <ClientLayout>
       <Title
         nameLink={{ name: "Trang Chủ", link: "/" }}
         namePage="Thanh toán"
       />
-      {/* <!-- Breadcrumb End --> */}
-
-      {/* <!-- Checkout Start --> */}
       <div className="container-fluid">
         <div className=" px-xl-5">
           <h5 className="section-title position-relative text-uppercase mb-3">
@@ -18,34 +28,75 @@ export default function CheckOut() {
           </h5>
           <div className="bg-light p-30 mb-5">
             <div className="border-bottom">
-              <h6 className="mb-3">Products</h6>
-              <div className="d-flex justify-content-between">
-                <p>Product Name 1</p>
-                <p>$150</p>
-              </div>
-              <div className="d-flex justify-content-between">
-                <p>Product Name 2</p>
-                <p>$150</p>
-              </div>
-              <div className="d-flex justify-content-between">
-                <p>Product Name 3</p>
-                <p>$150</p>
-              </div>
+              <h6 className="mb-3">Sản phẩm</h6>
+              {carts ? (
+                carts.map(
+                  (cart: any, index: number) => (
+                    (sumPrice = sumPrice + cart?.quanlity * cart?.priceNew),
+                    (
+                      <div
+                        key={index}
+                        className="d-flex justify-content-between"
+                      >
+                        <div className="d-flex flex-row align-items-center">
+                          <div style={{ width: "50px" }}>
+                            <Image
+                              src={cart.image}
+                              className="img-fluid rounded-3"
+                              alt="Shopping item"
+                              width={65}
+                              height="65"
+                            />
+                          </div>
+                          <div className="ms-3 col">
+                            <h6 title={cart?.name}>
+                              {cart.name?.length > 20
+                                ? cart.name?.slice(0, 20) + ".."
+                                : cart.name}
+                            </h6>
+                            <p className="small mb-0">
+                              {cart.group?.name},{cart?.style?.name},
+                              {cart?.size?.name}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="d-flex flex-row align-items-center">
+                          <div style={{ width: "50px" }}>
+                            <h5 className="fw-normal mb-0">{cart.quanlity}</h5>
+                          </div>
+                          <div style={{ width: "80px" }}>
+                            <h5 className="mb-0">
+                              {formatMoney(cart.priceNew * cart?.quanlity)}
+                            </h5>
+                          </div>
+                          <a href="#!" style={{ color: "#cecece " }}>
+                            <i className="fas fa-trash-alt"></i>
+                          </a>
+                        </div>
+                      </div>
+                    )
+                  )
+                )
+              ) : (
+                <div>
+                  <b>Khong co san pham</b>
+                </div>
+              )}
             </div>
             <div className="border-bottom pt-3 pb-2">
               <div className="d-flex justify-content-between mb-3">
-                <h6>Subtotal</h6>
-                <h6>$150</h6>
+                <h6>Tiền sản phẩm</h6>
+                <h6>{formatMoney(sumPrice)}</h6>
               </div>
               <div className="d-flex justify-content-between">
-                <h6 className="font-weight-medium">Shipping</h6>
-                <h6 className="font-weight-medium">$10</h6>
+                <h6 className="font-weight-medium">Phí giao hàng</h6>
+                <h6 className="font-weight-medium">{formatMoney(ship)}</h6>
               </div>
             </div>
             <div className="pt-2">
               <div className="d-flex justify-content-between mt-2">
-                <h5>Total</h5>
-                <h5>$160</h5>
+                <h5>Tổng tiền:</h5>
+                <h5>{formatMoney(sumPrice + ship)}</h5>
               </div>
             </div>
           </div>
@@ -78,16 +129,16 @@ export default function CheckOut() {
                   <input
                     className="form-control"
                     type="text"
-                    placeholder="123 Street"
+                    placeholder=".."
                   />
                 </div>
                 <div className="col-md-6 form-group">
                   <label>Thành phố</label>
                   <select className="custom-select">
-                    <option>United States</option>
-                    <option>Afghanistan</option>
-                    <option>Albania</option>
-                    <option>Algeria</option>
+                    <option>Tp Hồ chí minh</option>
+                    <option>Đà nẵng</option>
+                    <option>Hà nội</option>
+                    <option>Hải phòng</option>
                   </select>
                 </div>
                 <div className="col-md-6 form-group">
@@ -95,7 +146,7 @@ export default function CheckOut() {
                   <input
                     className="form-control"
                     type="text"
-                    placeholder="New York"
+                    placeholder=".."
                   />
                 </div>
                 <div className="col-md-6 form-group">
@@ -103,7 +154,7 @@ export default function CheckOut() {
                   <input
                     className="form-control"
                     type="text"
-                    placeholder="New York"
+                    placeholder=".."
                   />
                 </div>
                 <div className="col-md-12 form-group">
@@ -117,24 +168,7 @@ export default function CheckOut() {
                       className="custom-control-label"
                       htmlFor="newaccount"
                     >
-                      Create an account
-                    </label>
-                  </div>
-                </div>
-                <div className="col-md-12">
-                  <div className="custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      className="custom-control-input"
-                      id="shipto"
-                    />
-                    <label
-                      className="custom-control-label"
-                      htmlFor="shipto"
-                      data-toggle="collapse"
-                      data-target="#shipping-address"
-                    >
-                      Ship to different address
+                      Tạo tài khoản
                     </label>
                   </div>
                 </div>

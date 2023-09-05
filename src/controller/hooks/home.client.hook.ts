@@ -8,7 +8,7 @@ const getData = async () => {
 };
 
 const useHomeHook = () => {
-  const { data, isLoading } = useQuery([QUERY_KEY.Banner], getData);
+  const { data, isLoading } = useQuery([QUERY_KEY.home], getData);
   return {
     isLoading,
     data: {

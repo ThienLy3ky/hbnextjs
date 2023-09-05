@@ -9,4 +9,8 @@ export const QUERY_KEY = {
   Categories: "Categories",
   Banner: "banner",
   user: "user",
+  home: "Home",
+  detailProduct: "detailProduct",
+  searchPr: "searchPr",
+  profile: "profile",
 };

@@ -1,6 +1,6 @@
 import CardProductShort from "@/src/component/card/card.product.short";
 
-export default function SlideIF({ products }: any) {
+export default function SlideIF({ products, openModal, addProduct }: any) {
   return (
     <div className="container-fluid py-5">
       <h2 className="section-title position-relative text-uppercase mx-xl-5 mb-4">
@@ -11,14 +11,8 @@ export default function SlideIF({ products }: any) {
           <div className="owl-carousel related-carousel">
             {products?.slice(0, 10).map((product: any) => (
               <CardProductShort
-                name={product.name}
-                image={product.image}
-                rate={3.3}
-                oldPrice={product.priceOlder}
-                newPrice={product.priceNew}
-                totalRate={40}
-                id={product.id.toString()}
-                key={product.id}
+                key={product._id}
+                product={product.product ?? product}
               />
             ))}
           </div>

@@ -54,7 +54,6 @@ export default class APIService {
         return response.data;
       })
       .catch(function (error) {
-        console.log("🚀 ~ file: index.ts:113 ~ axiosFormData ~ error:");
         if (!error.response) {
           showNotificationError("Lỗi kết nối mạng");
           return;
