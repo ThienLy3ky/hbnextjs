@@ -3,6 +3,15 @@
 
   // Dropdown on mouse hover
   $(window).ready(function () {
+    $(document).on("click", ".btn-product-short", function () {
+      $(".product-short").addClass("show active");
+      $(".product-long").removeClass("show active");
+    });
+
+    $(document).on("click", ".btn-product-long", function () {
+      $(".product-short").removeClass("show active");
+      $(".product-long").addClass("show active");
+    });
     function toggleNavbarMethod() {
       if ($(window).width() > 992) {
         $(".navbar .dropdown")

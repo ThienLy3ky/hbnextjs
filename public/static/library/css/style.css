@@ -11328,3 +11328,11 @@ body #root {
 .card-product h5 {
   font-size: medium !important;
 }
+
+.product-short,
+.product-long {
+  display: none;
+}
+.show {
+  display: block;
+}
