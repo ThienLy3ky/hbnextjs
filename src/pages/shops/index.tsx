@@ -20,6 +20,7 @@ export default function Shops() {
     order: "desc",
     orderBy: "createdAt",
   });
+  console.log("🚀 ~ file: index.tsx:23 ~ Shops ~ query:", query);
   const { data, refetch, isLoading } = useSearchHook(query);
   return (
     <ClientLayout>

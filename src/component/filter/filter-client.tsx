@@ -2,9 +2,9 @@ import { Slider } from "@mui/material";
 import { useState } from "react";
 
 export default function FilterClient({ option, query, setQuery }: any) {
-  const [type, setType] = useState<string[]>([]);
-  const [category, setCategory] = useState<string[]>([]);
-  const [price, setPrice] = useState([1000, 1000000]);
+  let type: string[] = query?.type ?? [];
+  let category: string[] = query?.categories ?? [];
+  const [price, setPrice] = useState(query?.price ?? [1000, 1000000]);
   const { types, categories } = option;
   function valueLabelFormat(value: number) {
     const units = ["Đ", "K", "M"];
@@ -19,6 +19,19 @@ export default function FilterClient({ option, query, setQuery }: any) {
 
     return `${scaledValue} ${units[unitIndex]}`;
   }
+  const handleChangeType = (checked: boolean, value: string) => {
+    type = checked
+      ? [...type, value]
+      : type?.filter((type: string) => value !== type);
+
+    setQuery({ ...query, type });
+  };
+  const handleChangeCategories = (checked: boolean, value: string) => {
+    category = checked
+      ? [...category, value]
+      : category?.filter((category: string) => value !== category);
+    setQuery({ ...query, categories: category });
+  };
   return (
     <div
       className="col-lg-3 col-md-4"
@@ -40,7 +53,7 @@ export default function FilterClient({ option, query, setQuery }: any) {
             max={5000000}
             valueLabelFormat={valueLabelFormat}
             onChange={({ target }: any) => setPrice(target.value)}
-            onChangeCommitted={() => console.log(price)}
+            onChangeCommitted={() => setQuery({ ...query, price })}
             valueLabelDisplay="on"
           />
         </div>
@@ -55,7 +68,7 @@ export default function FilterClient({ option, query, setQuery }: any) {
             className="custom-control-input"
             id="type-all"
             checked={!(type && type.length > 0)}
-            onChange={() => setType([])}
+            onChange={() => (type = [])}
           />
           <label className="custom-control-label" htmlFor="type-all">
             Tất cả
@@ -71,11 +84,9 @@ export default function FilterClient({ option, query, setQuery }: any) {
               type="checkbox"
               className="custom-control-input"
               id={item?._id}
-              checked={type?.includes(item.code)}
+              // defaultChecked={type?.includes(item.code)}
               onChange={({ target }) =>
-                target.checked
-                  ? setType([...type, item.code])
-                  : setType(type?.filter((type: string) => item.code !== type))
+                handleChangeType(target?.checked, item.code)
               }
             />
             <label className="custom-control-label" htmlFor={item._id}>
@@ -94,7 +105,7 @@ export default function FilterClient({ option, query, setQuery }: any) {
             className="custom-control-input"
             id="category-all"
             checked={!(category && category.length > 0)}
-            onChange={() => setCategory([])}
+            onChange={() => (category = [])}
           />
           <label className="custom-control-label" htmlFor="category-all">
             Tất cả
@@ -112,13 +123,7 @@ export default function FilterClient({ option, query, setQuery }: any) {
               id={item?._id}
               checked={category?.includes(item.code)}
               onChange={({ target }) =>
-                target.checked
-                  ? setCategory([...category, item.code])
-                  : setCategory(
-                      category?.filter(
-                        (category: string) => item.code !== category
-                      )
-                    )
+                handleChangeCategories(target?.checked, item.code)
               }
             />
             <label className="custom-control-label" htmlFor={item._id}>
