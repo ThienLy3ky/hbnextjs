@@ -8,6 +8,7 @@ import useSearchHook from "@/src/controller/hooks/search.client.hook";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import HomeModal from "@/src/create_update/client/home";
+import CardProductLong from "@/src/component/card/card.product.long";
 export default function Shops() {
   const dataSelect = useSelector((state: any) => state.app?.template);
 
@@ -28,7 +29,11 @@ export default function Shops() {
       />
       <div className="container-fluid">
         <div className="row px-xl-5">
-          <FilterClient option={dataSelect} />
+          <FilterClient
+            option={dataSelect}
+            query={query}
+            setQuery={(e: any) => setQuery(e)}
+          />
           <div className="col-lg-9 col-md-8">
             <div className="row pb-3">
               <div className="col-12 pb-1">
@@ -44,7 +49,7 @@ export default function Shops() {
                   <SortClient />
                 </div>
               </div>
-              <div className="col-12 p-0 m-0 product-short">
+              <div className="col-12 p-0 m-0 d-flex align-items-center product-short show">
                 {data?.items?.map((product: any) => (
                   <div
                     className="col-lg-3 col-md-4 col-sm-6 pb-1"
@@ -58,8 +63,28 @@ export default function Shops() {
                   </div>
                 ))}
               </div>
-              <div className="col-12 p-0 m-0 product-long"> advas</div>
-              <Pagination />
+              <div className="col-12 p-0 m-0 product-long">
+                {data?.items?.map((product: any) => (
+                  <div className="col-12 pb-1" key={product._id}>
+                    <CardProductLong
+                      setCart={(e: any) => setProducts(product)}
+                      openModal={() => setModal(!modal)}
+                      product={product}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="col-12 load-more">
+                <button
+                  className="col-12 btn btn-info"
+                  style={{ borderRadius: "10px" }}
+                >
+                  Tai them...
+                </button>
+              </div>
+              <div className="col-12 pagination-page">
+                <Pagination />
+              </div>
             </div>
           </div>
           {/* <!-- Shop Product End --> */}

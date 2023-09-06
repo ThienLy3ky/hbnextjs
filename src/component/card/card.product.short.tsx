@@ -11,11 +11,12 @@ interface propsIF {
 export default function CardProductShort(props: propsIF) {
   const [mounted, setMounted] = useState(false);
   const [price, setPrice] = useState<any>({});
+
+  const { product, setCart, openModal } = props;
   useEffect(() => {
     setMounted(true);
     setPrice(product?.price[0]);
-  }, []);
-  const { product, setCart, openModal } = props;
+  }, [product]);
   product?.price?.forEach(({ priceNew }: any, index: number) => {
     if (priceNew < price?.priceNew) setPrice(product.price[index]);
   });

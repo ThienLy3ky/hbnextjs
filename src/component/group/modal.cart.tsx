@@ -22,7 +22,7 @@ export default function GroupAddCart(props: any) {
         overflow: "auto",
       }}
     >
-      <Accordion>
+      <Accordion defaultExpanded={true}>
         <AccordionSummary
           expandIcon={<i className="fas fa-sort-down" />}
           aria-controls="panel1a-content"
@@ -57,7 +57,7 @@ export default function GroupAddCart(props: any) {
           </RadioGroup>
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      <Accordion defaultExpanded={true}>
         <AccordionSummary
           expandIcon={<i className="fas fa-sort-down" />}
           aria-controls="panel1a-content"
@@ -89,7 +89,7 @@ export default function GroupAddCart(props: any) {
           </RadioGroup>
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      <Accordion defaultExpanded={true}>
         <AccordionSummary
           expandIcon={<i className="fas fa-sort-down" />}
           aria-controls="panel1a-content"

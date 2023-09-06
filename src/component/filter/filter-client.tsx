@@ -1,11 +1,10 @@
 import { Slider } from "@mui/material";
 import { useState } from "react";
 
-export default function FilterClient({ option }: any) {
+export default function FilterClient({ option, query, setQuery }: any) {
   const [type, setType] = useState<string[]>([]);
   const [category, setCategory] = useState<string[]>([]);
   const [price, setPrice] = useState([1000, 1000000]);
-  console.log("🚀 ~ file: filter-client.tsx:8 ~ FilterClient ~ price:", price);
   const { types, categories } = option;
   function valueLabelFormat(value: number) {
     const units = ["Đ", "K", "M"];
@@ -40,7 +39,8 @@ export default function FilterClient({ option }: any) {
             step={1000}
             max={5000000}
             valueLabelFormat={valueLabelFormat}
-            onChange={({ target }: any) => setPrice(target?.value)}
+            onChange={({ target }: any) => setPrice(target.value)}
+            onChangeCommitted={() => console.log(price)}
             valueLabelDisplay="on"
           />
         </div>

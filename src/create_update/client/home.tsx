@@ -7,15 +7,15 @@ import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 
 export default function HomeModal(props: any) {
-  useEffect(() => {
-    setPricePr(price ? price[0] : {});
-    setQuanlityPr(1);
-  }, [props]);
   const product = useContext(CartContext);
   const [pricePr, setPricePr] = useState<any>({});
   const [quanlityPr, setQuanlityPr] = useState(1);
   const { data } = props;
   const { price, name, code, summary, _id } = data;
+  useEffect(() => {
+    setPricePr(price ? price[0] : {});
+    setQuanlityPr(1);
+  }, [price]);
   price?.forEach(({ priceNew }: any, index: number) => {
     if (priceNew < pricePr?.priceNew) setPricePr(price[index]);
   });
