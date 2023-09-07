@@ -10,7 +10,7 @@ export default function DropdownMenu(props: any) {
         {data?.map((category: any) => (
           <a
             key={category._id}
-            href={`/shops?group=${category.name}`}
+            href={`/shops?categories=%5B"${category._id}"%5D`}
             className="nav-item nav-link dropdown-item-a"
           >
             {category.name}

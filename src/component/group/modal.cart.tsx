@@ -40,19 +40,20 @@ export default function GroupAddCart(props: any) {
             className="group-radio"
           >
             {data?.map((element: any, index: number) =>
-              element.size
-                ? console.log(
-                    element?.size?._id,
-                    value?.size?._id,
-                    element?.size?._id === value?.size?._id
-                  )
-                : // <FormControlLabel
-                  //   key={index}
-                  //   value={element?.size?._id}
-                  //   control={<Radio className="p-0 pl-3" />}
-                  //   label={element?.size?.name}
-                  // />
-                  ""
+              element.size ? (
+                console.log(
+                  element?.size?._id,
+                  value?.size?._id,
+                  element?.size?._id === value?.size?._id
+                )
+              ) : (
+                <FormControlLabel
+                  key={index}
+                  value={element?.size?._id}
+                  control={<Radio className="p-0 pl-3" />}
+                  label={element?.size?.name}
+                />
+              )
             )}
           </RadioGroup>
         </AccordionDetails>

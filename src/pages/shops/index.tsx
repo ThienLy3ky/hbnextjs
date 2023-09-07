@@ -14,6 +14,7 @@ export default function Shops() {
   const searchParams = useSearchParams();
   const type = searchParams?.get("type");
   const categories = searchParams?.get("categories");
+  const company = searchParams?.get("company");
   const price = searchParams?.get("price");
   const dataSelect = useSelector((state: any) => state.app?.template);
 
@@ -24,11 +25,23 @@ export default function Shops() {
     page: 1,
     order: "desc",
     orderBy: "createdAt",
+    type: [],
+    company: [],
+    categories: [],
+    price: [1000, 1000000],
   });
   useEffect(() => {
-    // setQuery({ ...query, type })
-  }, []);
-  console.log("🚀 ~ file: index.tsx:23 ~ Shops ~ query:", query);
+    setQuery({
+      limit: 30,
+      page: 1,
+      order: "desc",
+      orderBy: "createdAt",
+      type: type ? JSON.parse(type) : [],
+      company: company ? JSON.parse(company) : [],
+      categories: categories ? JSON.parse(categories) : [],
+      price: price ? JSON.parse(price) : [],
+    });
+  }, [categories, type, price, company]);
   const { data, refetch, isLoading } = useSearchHook(query);
   return (
     <ClientLayout>
@@ -83,16 +96,23 @@ export default function Shops() {
                   </div>
                 ))}
               </div>
-              <div className="col-12 load-more">
-                <button
-                  className="col-12 btn btn-info"
-                  style={{ borderRadius: "10px" }}
-                >
-                  Tai them...
-                </button>
-              </div>
+              {data?.total / data.limit > 1 ? (
+                <div className="col-12 load-more">
+                  <button
+                    className="col-12 btn btn-info"
+                    style={{ borderRadius: "10px" }}
+                    onClick={() =>
+                      setQuery({ ...query, limit: (query?.limit ?? 0) + 30 })
+                    }
+                  >
+                    Tải thêm...
+                  </button>
+                </div>
+              ) : (
+                ""
+              )}
               <div className="col-12 pagination-page">
-                <Pagination />
+                <Pagination data={data} />
               </div>
             </div>
           </div>

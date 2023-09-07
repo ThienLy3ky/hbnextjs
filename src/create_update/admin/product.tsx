@@ -235,7 +235,7 @@ export default function ProductModal(props: any) {
               change={(e: any) => setType(e)}
             />
             <InputSelect
-              options={options?.priceGroup?.companies}
+              options={options?.template?.companies}
               row={true}
               // error={code === "" ? "not null" : false}
               value={company}
