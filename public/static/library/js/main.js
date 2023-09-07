@@ -27,31 +27,31 @@
     }
     toggleNavbarMethod();
     $(window).resize(toggleNavbarMethod);
-
-    $(".related-carousel").owlCarousel({
-      loop: true,
-      margin: 29,
-      nav: false,
-      autoplay: true,
-      smartSpeed: 800,
-      navSpeed: 500,
-      autoplayTimeout: 10000,
-      slideBy: "page",
-      responsive: {
-        0: {
-          items: 2,
+    if ($(".vendor-carousel")?.length)
+      $(".related-carousel").owlCarousel({
+        loop: true,
+        margin: 29,
+        nav: false,
+        autoplay: true,
+        smartSpeed: 800,
+        navSpeed: 500,
+        autoplayTimeout: 10000,
+        slideBy: "page",
+        responsive: {
+          0: {
+            items: 2,
+          },
+          576: {
+            items: 2,
+          },
+          768: {
+            items: 3,
+          },
+          992: {
+            items: 5,
+          },
         },
-        576: {
-          items: 2,
-        },
-        768: {
-          items: 3,
-        },
-        992: {
-          items: 5,
-        },
-      },
-    });
+      });
 
     $(".carousel-next").click(function () {
       $(".related-carousel").trigger("next.owl.carousel");
@@ -127,30 +127,31 @@
   });
 
   // Vendor carousel
-  $(".vendor-carousel").owlCarousel({
-    loop: true,
-    margin: 29,
-    nav: false,
-    autoplay: true,
-    smartSpeed: 1000,
-    responsive: {
-      0: {
-        items: 2,
+  if ($(".vendor-carousel")?.length)
+    $(".vendor-carousel").owlCarousel({
+      loop: true,
+      margin: 29,
+      nav: false,
+      autoplay: true,
+      smartSpeed: 1000,
+      responsive: {
+        0: {
+          items: 2,
+        },
+        576: {
+          items: 3,
+        },
+        768: {
+          items: 4,
+        },
+        992: {
+          items: 5,
+        },
+        1200: {
+          items: 6,
+        },
       },
-      576: {
-        items: 3,
-      },
-      768: {
-        items: 4,
-      },
-      992: {
-        items: 5,
-      },
-      1200: {
-        items: 6,
-      },
-    },
-  });
+    });
 
   // Related carousel
 

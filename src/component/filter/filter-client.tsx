@@ -1,7 +1,9 @@
 import { Slider } from "@mui/material";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 export default function FilterClient({ option, query, setQuery }: any) {
+  const router = useRouter();
   let type: string[] = query?.type ?? [];
   let category: string[] = query?.categories ?? [];
   const [price, setPrice] = useState(query?.price ?? [1000, 1000000]);
@@ -23,8 +25,9 @@ export default function FilterClient({ option, query, setQuery }: any) {
     type = checked
       ? [...type, value]
       : type?.filter((type: string) => value !== type);
-
-    setQuery({ ...query, type });
+    router.replace({
+      query: { ...router.query, type: type },
+    });
   };
   const handleChangeCategories = (checked: boolean, value: string) => {
     category = checked

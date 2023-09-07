@@ -5,11 +5,16 @@ import SortClient from "@/src/component/sort/sort-client";
 import FilterClient from "@/src/component/filter/filter-client";
 import ClientLayout from "@/src/component/layout/client.layout";
 import useSearchHook from "@/src/controller/hooks/search.client.hook";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import HomeModal from "@/src/create_update/client/home";
 import CardProductLong from "@/src/component/card/card.product.long";
+import { useSearchParams } from "next/navigation";
 export default function Shops() {
+  const searchParams = useSearchParams();
+  const type = searchParams?.get("type");
+  const categories = searchParams?.get("categories");
+  const price = searchParams?.get("price");
   const dataSelect = useSelector((state: any) => state.app?.template);
 
   const [modal, setModal] = useState(false);
@@ -20,6 +25,9 @@ export default function Shops() {
     order: "desc",
     orderBy: "createdAt",
   });
+  useEffect(() => {
+    // setQuery({ ...query, type })
+  }, []);
   console.log("🚀 ~ file: index.tsx:23 ~ Shops ~ query:", query);
   const { data, refetch, isLoading } = useSearchHook(query);
   return (
