@@ -8,7 +8,7 @@ export default function FilterClient({ option, query, setQuery }: any) {
   let category: string[] = query?.categories ?? [];
   let company: string[] = query?.company ?? [];
   const [price, setPrice] = useState(query?.price ?? [1000, 1000000]);
-  const { types, categories, companies } = option;
+  const { types = [], categories = [], companies = [] } = option ?? {};
   function valueLabelFormat(value: number) {
     const units = ["Đ", "K", "M"];
 

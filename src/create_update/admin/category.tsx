@@ -46,7 +46,7 @@ export default function CategoryModal(props: any) {
         name,
         code,
       },
-      data.code || code
+      data?.code || code
     );
     if (chek) {
       showNotificationError("Code đã tồn tại");
@@ -59,7 +59,7 @@ export default function CategoryModal(props: any) {
     formData.append("code", code);
     formData.append("description", description);
     if (!data) {
-      const res = await CategoryService.create(formData, data.code);
+      const res = await CategoryService.create(formData, code);
       if (res) showNotificationSuccess("Thêm mới thành công");
       refetch();
       setLoading(false);
@@ -67,7 +67,7 @@ export default function CategoryModal(props: any) {
 
       return;
     }
-    const res = await CategoryService.update(data._id, formData, code);
+    const res = await CategoryService.update(data._id, formData, data.code);
     if (res) showNotificationSuccess("Thay đổi thành công");
     refetch();
     setLoading(false);

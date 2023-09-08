@@ -13,12 +13,14 @@ export default function HomeModal(props: any) {
   const { data } = props;
   const { price, name, code, summary, _id } = data;
   useEffect(() => {
-    setPricePr(price ? price[0] : {});
+    let max = price ? price[0] : {};
+    price?.forEach(({ priceNew }: any, index: number) => {
+      if (priceNew < max?.priceNew) max = price[index];
+    });
+    setPricePr(max);
     setQuanlityPr(1);
   }, [price]);
-  price?.forEach(({ priceNew }: any, index: number) => {
-    if (priceNew < pricePr?.priceNew) setPricePr(price[index]);
-  });
+
   return (
     <Modal
       style={{ overflow: "auto" }}
@@ -51,7 +53,11 @@ export default function HomeModal(props: any) {
               >
                 <Image
                   alt="Hình ảnh"
-                  src={pricePr?.image ?? "/static/image/noImage.jpeg"}
+                  src={
+                    pricePr?.image === ""
+                      ? "/static/image/noImage.jpeg"
+                      : pricePr?.image ?? "/static/image/noImage.jpeg"
+                  }
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
@@ -83,7 +89,11 @@ export default function HomeModal(props: any) {
                   )}
                 </div>
               </div>
-              <GroupAddCart data={price} value={pricePr} />
+              <GroupAddCart
+                data={price}
+                value={pricePr}
+                setValue={setPricePr}
+              />
             </div>
             <h3
               className="col-12 "
@@ -97,73 +107,83 @@ export default function HomeModal(props: any) {
             >
               <div className="col-8 slide ">
                 <h6 className="col mb-3 p-0">{summary}</h6>
-                <div className="d-flex align-items-center">
-                  <div
-                    className="input-group quantity mr-3"
-                    style={{ width: "130px" }}
-                  >
-                    <div className="input-group-btn">
-                      <button
-                        className="btn btn-primary btn-minus"
-                        onClick={() => setQuanlityPr(quanlityPr - 1)}
-                      >
-                        <i className="fa fa-minus"></i>
-                      </button>
+                {pricePr ? (
+                  <div className="d-flex align-items-center">
+                    <div
+                      className="input-group quantity mr-3"
+                      style={{ width: "130px" }}
+                    >
+                      <div className="input-group-btn">
+                        <button
+                          className="btn btn-primary btn-minus"
+                          onClick={() => setQuanlityPr(quanlityPr - 1)}
+                        >
+                          <i className="fa fa-minus"></i>
+                        </button>
+                      </div>
+                      <input
+                        type="number"
+                        className="form-control bg-secondary border-0 text-center"
+                        value={quanlityPr}
+                        onChange={({ target }) =>
+                          setQuanlityPr(formatNumber(target.value))
+                        }
+                      />
+                      <div className="input-group-btn">
+                        <button
+                          className="btn btn-primary btn-plus"
+                          onClick={() => setQuanlityPr(quanlityPr + 1)}
+                        >
+                          <i className="fa fa-plus"></i>
+                        </button>
+                      </div>
                     </div>
-                    <input
-                      type="number"
-                      className="form-control bg-secondary border-0 text-center"
-                      value={quanlityPr}
-                      onChange={({ target }) =>
-                        setQuanlityPr(formatNumber(target.value))
-                      }
-                    />
-                    <div className="input-group-btn">
-                      <button
-                        className="btn btn-primary btn-plus"
-                        onClick={() => setQuanlityPr(quanlityPr + 1)}
-                      >
-                        <i className="fa fa-plus"></i>
-                      </button>
-                    </div>
+                    <h4 style={{ color: "red" }}>
+                      {formatMoney(pricePr?.priceNew * quanlityPr)}
+                    </h4>
                   </div>
-                  <h4 style={{ color: "red" }}>
-                    {formatMoney(pricePr.priceNew * quanlityPr)}
-                  </h4>
+                ) : (
+                  ""
+                )}
+              </div>
+              {pricePr ? (
+                <div className="col-4 d-flex align-items-center align-self-center flex-column">
+                  <button
+                    className="col-8 btn btn-danger mb-3 border-success"
+                    style={{ borderRadius: "10px", height: "20%" }}
+                  >
+                    {"Mua ngay "}
+                    <i className="fas fa-calculator" />
+                  </button>
+                  <button
+                    className="col-8 btn btn-outline-warning"
+                    style={{ borderRadius: "10px", whiteSpace: "normal" }}
+                    onClick={() => {
+                      product.setCarts(
+                        addCart({
+                          _id,
+                          name,
+                          code,
+                          quanlity: quanlityPr,
+                          size: pricePr.size,
+                          style: pricePr.style,
+                          group: pricePr.group,
+                          priceNew: pricePr.priceNew,
+                          image: pricePr.image,
+                        })
+                      ),
+                        props.onclose();
+                    }}
+                  >
+                    Thêm vào giỏ
+                    <i className="fas fa-shopping-cart" />
+                  </button>
                 </div>
-              </div>
-              <div className="col-4 d-flex align-items-center align-self-center flex-column">
-                <button
-                  className="col-8 btn btn-danger mb-3 border-success"
-                  style={{ borderRadius: "10px", height: "20%" }}
-                >
-                  {"Mua ngay "}
-                  <i className="fas fa-calculator" />
-                </button>
-                <button
-                  className="col-8 btn btn-outline-warning"
-                  style={{ borderRadius: "10px", whiteSpace: "normal" }}
-                  onClick={() => {
-                    product.setCarts(
-                      addCart({
-                        _id,
-                        name,
-                        code,
-                        quanlity: quanlityPr,
-                        size: pricePr.size,
-                        style: pricePr.style,
-                        group: pricePr.group,
-                        priceNew: pricePr.priceNew,
-                        image: pricePr.image,
-                      })
-                    ),
-                      props.onclose();
-                  }}
-                >
-                  Thêm vào giỏ
-                  <i className="fas fa-shopping-cart" />
-                </button>
-              </div>
+              ) : (
+                <div className="col-4 d-flex align-items-center align-self-center flex-column">
+                  <button className="btn btn-inverse-primary">Hết hàng</button>
+                </div>
+              )}
             </div>
           </div>
         </div>

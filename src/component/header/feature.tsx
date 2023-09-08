@@ -26,7 +26,7 @@ export default function Feature() {
             style={{ padding: "30px" }}
           >
             <h1 className="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
-            <h5 className="font-weight-semi-bold m-0">Hoàn tiền miễn phí</h5>
+            <h5 className="font-weight-semi-bold m-0">Đổi trả dễ dàng</h5>
           </div>
         </div>
         <div className="col-lg-3 col-md-6 col-sm-12 pb-1">
@@ -35,7 +35,7 @@ export default function Feature() {
             style={{ padding: "30px" }}
           >
             <h1 className="fa fa-phone-volume text-primary m-0 mr-3"></h1>
-            <h5 className="font-weight-semi-bold m-0">Hỗ trọ 24/7</h5>
+            <h5 className="font-weight-semi-bold m-0">Hỗ trợ 24/7</h5>
           </div>
         </div>
       </div>

@@ -14,7 +14,11 @@ export default function CardImage(props: any) {
     <div className="product-img position-relative overflow-hidden d-flex justify-content-center">
       <Image
         className="img-fluid"
-        src={props.src ?? "/static/image/noImage.jpeg"}
+        src={
+          props.src !== ""
+            ? props.src ?? "/static/image/noImage.jpeg"
+            : "/static/image/noImage.jpeg"
+        }
         alt=""
         fill
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

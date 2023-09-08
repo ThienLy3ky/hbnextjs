@@ -71,6 +71,13 @@ export default class APIService {
           // setRole("");
           // clearRoler();
           // clearToken();
+        } else if (error?.response?.status === 500) {
+          showNotificationError("Lỗi Cập nhật");
+          showNotificationError(error?.response?.data?.message);
+          // setUserData("");
+          // setRole("");
+          // clearRoler();
+          // clearToken();
         } else if (!error?.message?.includes("canceled")) {
           showNotificationError(error?.response?.data?.message);
 

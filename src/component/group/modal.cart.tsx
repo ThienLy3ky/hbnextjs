@@ -8,12 +8,70 @@ import {
   FormControlLabel,
   Radio,
 } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 export default function GroupAddCart(props: any) {
-  const { data, value } = props;
-  console.log("🚀 ~ file: modal.cart.tsx:13 ~ GroupAddCart ~ value:", value);
-  useEffect(() => {}, [props]);
+  const { data, value, setValue } = props;
+  const [List, setList] = useState(data);
+  const [Groups, setGroups] = useState<object[]>([]);
+  const [Styles, setStyles] = useState<object[]>([]);
+  const [Sizes, setSizes] = useState<object[]>([]);
+  const [groups, setGroup] = useState<string>();
+  const [styles, setStyle] = useState<string>();
+  const [sizes, setSize] = useState<string>();
+  useEffect(() => {
+    setSizes([]);
+    setStyles([]);
+    setGroups([]);
+    let sizes: object[] = [],
+      styles: object[] = [],
+      groups: object[] = [];
+    data?.map(({ size, style, group }: any) => {
+      sizes = [...sizes, size];
+      styles = [...styles, style];
+      groups = [...groups, group];
+    });
+    setSizes([
+      ...Sizes,
+      ...sizes.filter(
+        (v: any, i, a) => a.findIndex((v2: any) => v2._id === v._id) === i
+      ),
+    ]);
+    setStyles([
+      ...Styles,
+      ...styles.filter(
+        (v: any, i, a) => a.findIndex((v2: any) => v2._id === v._id) === i
+      ),
+    ]);
+    setGroups([
+      ...Groups,
+      ...groups.filter(
+        (v: any, i, a) => a.findIndex((v2: any) => v2._id === v._id) === i
+      ),
+    ]);
+  }, []);
 
+  const handleChange = ({
+    sizeI,
+    styleI,
+    groupI,
+  }: {
+    sizeI?: string;
+    styleI?: string;
+    groupI?: string;
+  }) => {
+    if (sizeI) setSize(sizeI);
+    if (styleI) setStyle(styleI);
+    if (groupI) setGroup(groupI);
+    if ((sizeI ?? sizes) && (styleI ?? styles) && (groupI ?? groups))
+      setValue(
+        data.filter(
+          ({ size, style, group }: any) =>
+            size._id === (sizeI ?? sizes) &&
+            (styleI ?? styles) === style._id &&
+            (groupI ?? groups) === group._id
+        )[0]
+      );
+  };
   return (
     <div
       className="col-4 p-0 "
@@ -35,24 +93,23 @@ export default function GroupAddCart(props: any) {
         <AccordionDetails className="col pl-2">
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue={value?.size?._id}
+            // defaultValue={value?.size?._id}
             name="radio-buttons-group"
             className="group-radio"
           >
-            {data?.map((element: any, index: number) =>
-              element.size ? (
-                console.log(
-                  element?.size?._id,
-                  value?.size?._id,
-                  element?.size?._id === value?.size?._id
-                )
-              ) : (
+            {Sizes?.map((element: any, index: number) =>
+              element ? (
                 <FormControlLabel
                   key={index}
-                  value={element?.size?._id}
+                  value={element?._id}
                   control={<Radio className="p-0 pl-3" />}
-                  label={element?.size?.name}
+                  label={element?.name}
+                  onChange={() => {
+                    handleChange({ sizeI: element._id });
+                  }}
                 />
+              ) : (
+                ""
               )
             )}
           </RadioGroup>
@@ -71,17 +128,20 @@ export default function GroupAddCart(props: any) {
         <AccordionDetails className="col pl-2">
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue={value?.style?._id}
+            // defaultValue={value?.style?._id}
             name="radio-buttons-group"
             className="group-radio"
           >
-            {data?.map((element: any, index: number) =>
-              element.style ? (
+            {Styles?.map((element: any, index: number) =>
+              element ? (
                 <FormControlLabel
                   key={index}
-                  value={element?.style?._id}
+                  value={element?._id}
                   control={<Radio className="p-0 pl-3" />}
-                  label={element?.style?.name}
+                  label={element?.name}
+                  onChange={() => {
+                    handleChange({ styleI: element?._id });
+                  }}
                 />
               ) : (
                 ""
@@ -106,17 +166,20 @@ export default function GroupAddCart(props: any) {
         >
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue={value?.group?._id}
+            // defaultValue={value?.group?._id}
             name="radio-buttons-group"
             className="group-radio "
           >
-            {data?.map((element: any, index: number) =>
-              element.group ? (
+            {Groups?.map((element: any, index: number) =>
+              element ? (
                 <FormControlLabel
                   key={index}
-                  value={element?.style?._id}
+                  value={element?._id}
                   control={<Radio className="p-0 pl-3" />}
-                  label={element?.group?.name}
+                  label={element?.name}
+                  onChange={() => {
+                    handleChange({ groupI: element?._id });
+                  }}
                 />
               ) : (
                 ""

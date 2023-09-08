@@ -44,7 +44,7 @@ export default function TypeModal(props: any) {
         name,
         code,
       },
-      data.code || code
+      data?.code || code
     );
     if (chek) {
       showNotificationError("Code đã tồn tại");
@@ -55,7 +55,7 @@ export default function TypeModal(props: any) {
       formData.append("images", file);
       formData.append("name", name);
       formData.append("code", code);
-      const res = await TypeService.create(formData, data.code);
+      const res = await TypeService.create(formData, code);
       refetch();
       setLoading(false);
       onclose(false);
@@ -66,7 +66,7 @@ export default function TypeModal(props: any) {
     formData.append("images", file);
     formData.append("name", name);
     formData.append("code", code);
-    const res = await TypeService.update(data._id, formData, code);
+    const res = await TypeService.update(data._id, formData, data.code);
     if (res) showNotificationSuccess("Thay đổi thành công");
     refetch();
     setCode("");

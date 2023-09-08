@@ -88,6 +88,18 @@ export default function ProductModal(props: any) {
   }, [data, openModal]);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    const PriceUpdate = groupPrice?.map(
+      ({ size, style, priceNew, priceOlder, group, image }: any) => {
+        return {
+          size: size._id ?? size,
+          style: style._id ?? style,
+          priceNew,
+          priceOlder,
+          group: group._id ?? group,
+          image,
+        };
+      }
+    );
     if (err || loading) {
       showNotificationError("validate fail");
       return;
@@ -108,7 +120,7 @@ export default function ProductModal(props: any) {
       },
       data.code || code
     );
-    if (chek) {
+    if (chek && !data) {
       showNotificationError("Code đã tồn tại");
       return;
     }
@@ -138,7 +150,7 @@ export default function ProductModal(props: any) {
         type,
         expirationDate,
         dateOfProduction,
-        price: groupPrice,
+        price: PriceUpdate,
         categories,
       });
       if (res) showNotificationSuccess("Cập nhật thành công");
@@ -157,7 +169,7 @@ export default function ProductModal(props: any) {
       type,
       expirationDate,
       dateOfProduction,
-      price: groupPrice,
+      price: PriceUpdate,
       categories,
     });
     if (res) showNotificationSuccess("Thay đổi thành công");
