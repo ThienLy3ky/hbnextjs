@@ -33,7 +33,7 @@ export default function CategoryModal(props: any) {
     setCode("");
     setName("");
     setDescription("");
-  }, [data]);
+  }, [data, openModal]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -46,7 +46,7 @@ export default function CategoryModal(props: any) {
         name,
         code,
       },
-      data?.code || code
+      code || data.code
     );
     if (chek) {
       showNotificationError("Code đã tồn tại");

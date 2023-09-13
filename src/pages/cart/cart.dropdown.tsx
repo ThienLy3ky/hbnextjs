@@ -7,7 +7,7 @@ export default function CartDropdown(props: any) {
   const { carts, setCarts } = React.useContext(CartContext);
 
   let sumPrice = 0,
-    ship = 20;
+    ship = 20000;
   return (
     <nav
       id="cart-dropdown"
@@ -46,7 +46,12 @@ export default function CartDropdown(props: any) {
                                   <div className="d-flex flex-row align-items-center">
                                     <div style={{ width: "50px" }}>
                                       <Image
-                                        src={cart.image}
+                                        src={
+                                          cart.image !== ""
+                                            ? cart.image ??
+                                              "/static/image/noImage.jpeg"
+                                            : "/static/image/noImage.jpeg"
+                                        }
                                         className="img-fluid rounded-3"
                                         alt="Shopping item"
                                         width={65}
@@ -105,7 +110,7 @@ export default function CartDropdown(props: any) {
                         </div>
                         <div className="d-flex justify-content-between">
                           <p className="mb-2">Ship</p>
-                          <p className="mb-2">{ship}</p>
+                          <p className="mb-2">{formatMoney(ship)}</p>
                         </div>
                         <div className="d-flex justify-content-between mb-4">
                           <p className="mb-2">Tổng số tiền</p>

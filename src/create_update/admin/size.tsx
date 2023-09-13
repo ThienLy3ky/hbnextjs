@@ -31,7 +31,7 @@ export default function SizeModal(props: any) {
     setCode("");
     setName("");
     setDescription("");
-  }, [data]);
+  }, [data, openModal]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

@@ -38,7 +38,6 @@ export default function Login() {
       return;
     }
     const res = await UserAdminService.login({ email, password });
-    console.log("🚀 ~ file: index.tsx:37 ~ handleLogin ~ res:", res);
     const { access_token, role } = res;
 
     if (res) {
@@ -56,8 +55,33 @@ export default function Login() {
     }
     setLoading(false);
   };
-  const handleSingUp = () => {
-    redirect("/manager");
+  const handleSingUp = async () => {
+    if (
+      !emailSG ||
+      !passwordSG ||
+      !userName ||
+      validateEmailsSG ||
+      validatePasswordSG ||
+      validatePasswordRSG ||
+      validatErr
+    ) {
+      setValidateEmailsSG(!email || validateEmails);
+      setValidatePasswordSG(!password || validatePassword);
+      showNotificationError("Email or password incorect");
+      setLoading(false);
+      return;
+    }
+    const res = await UserAdminService.signup({
+      emailSG,
+      passwordSG,
+      userName,
+    });
+    if (res) {
+      showNotificationError("tài khoản của bạn đã được tạo thành công");
+      setTimeout(() => {}, 3000);
+      url.reload();
+    }
+    // redirect("/manager");
   };
   const handleForgotPass = () => {
     redirect("/manager");
@@ -77,7 +101,7 @@ export default function Login() {
       <div className="container-login" id="container">
         {/* sigup */}
         <div className="form-container sign-up-container">
-          <form action="#">
+          <form>
             <h1>Tạo Tài khoản</h1>
             <div className="social-container">
               <a href="#" className="social">
@@ -103,6 +127,7 @@ export default function Login() {
               type="email"
               placeholder="Email"
               onBlur={({ target }) => {
+                setEmailSG(target.value);
                 setValidateEmailsSG(!validateEmail(target.value));
               }}
             />
@@ -170,7 +195,7 @@ export default function Login() {
         </div>
         {/* login */}
         <div className="form-container sign-in-container">
-          <form action="#">
+          <form>
             <h1>Đăng nhập</h1>
             <div className="social-container">
               <a href="#" className="social">
@@ -263,7 +288,7 @@ export default function Login() {
         </div>
         {/* forgot pass */}
         <div className="forgot-password d-flex align-items-center justify-content-center">
-          <form action="#">
+          <form>
             <h1>Quên mật khẩu</h1>
             <span>Nhập email của bạn</span>
             <input

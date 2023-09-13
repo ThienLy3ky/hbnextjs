@@ -1,20 +1,60 @@
 import CartContext from "@/src/component/context/client.context";
 import ClientLayout from "@/src/component/layout/client.layout";
+import { showNotificationSuccess } from "@/src/component/notification/notificationFc";
 import Title from "@/src/component/title";
+import ClientService from "@/src/controller/api/client.api";
 import useUserHook from "@/src/controller/hooks/user.hook";
 import { formatMoney } from "@/src/utils/action.helper";
-import { getCart } from "@/src/utils/cart.client";
+import { clearCartFromLS } from "@/src/utils/cart";
+import { getCart, productcart } from "@/src/utils/cart.client";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function CheckOut() {
   const [carts, setCarts] = useState([]);
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState({
+    provice: "",
+    ditrict: "",
+    ward: "",
+    street: "",
+  });
+  const [typePayment, settypePayment] = useState<number>();
+  const [phone, setPhone] = useState("");
   useEffect(() => {
     setCarts(getCart());
   }, []);
   const { data, isLoading, refetch } = useUserHook();
   let sumPrice = 0,
     ship = 20000;
+  const payment = async () => {
+    const product = carts.map(
+      ({ _id, group, name, size, style, priceNew, quanlity }: productcart) => {
+        return {
+          _id,
+          group: group._id,
+          name,
+          size: size._id,
+          style: style._id,
+          price: priceNew,
+          quanlity,
+        };
+      }
+    );
+    const res = await ClientService.payment({
+      name,
+      phone,
+      address,
+      typePayment,
+      product,
+      sumPrice,
+    });
+    if (res) {
+      showNotificationSuccess("Thanh toán thành công");
+      clearCartFromLS();
+    }
+  };
   return (
     <ClientLayout>
       <Title
@@ -41,7 +81,11 @@ export default function CheckOut() {
                         <div className="d-flex flex-row align-items-center">
                           <div style={{ width: "50px" }}>
                             <Image
-                              src={cart.image}
+                              src={
+                                cart.image !== ""
+                                  ? cart.image ?? "/static/image/noImage.jpeg"
+                                  : "/static/image/noImage.jpeg"
+                              }
                               className="img-fluid rounded-3"
                               alt="Shopping item"
                               width={65}
@@ -79,7 +123,7 @@ export default function CheckOut() {
                 )
               ) : (
                 <div>
-                  <b>Khong co san pham</b>
+                  <b>Không có sản phẩm</b>
                 </div>
               )}
             </div>
@@ -114,6 +158,8 @@ export default function CheckOut() {
                     className="form-control"
                     type="text"
                     placeholder="John"
+                    value={name}
+                    onChange={({ target }) => setName(target.value)}
                   />
                 </div>
                 <div className="col-md-6 form-group">
@@ -122,6 +168,7 @@ export default function CheckOut() {
                     className="form-control"
                     type="text"
                     placeholder="+123 456 789"
+                    onChange={({ target }) => setPhone(target.value)}
                   />
                 </div>
                 <div className="col-md-6 form-group">
@@ -130,6 +177,10 @@ export default function CheckOut() {
                     className="form-control"
                     type="text"
                     placeholder=".."
+                    value={address.street}
+                    onChange={({ target }) =>
+                      setAddress({ ...address, street: target.value })
+                    }
                   />
                 </div>
                 <div className="col-md-6 form-group">
@@ -147,6 +198,10 @@ export default function CheckOut() {
                     className="form-control"
                     type="text"
                     placeholder=".."
+                    value={address.ward}
+                    onChange={({ target }) =>
+                      setAddress({ ...address, ward: target.value })
+                    }
                   />
                 </div>
                 <div className="col-md-6 form-group">
@@ -155,22 +210,11 @@ export default function CheckOut() {
                     className="form-control"
                     type="text"
                     placeholder=".."
+                    value={address.ditrict}
+                    onChange={({ target }) =>
+                      setAddress({ ...address, ditrict: target.value })
+                    }
                   />
-                </div>
-                <div className="col-md-12 form-group">
-                  <div className="custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      className="custom-control-input"
-                      id="newaccount"
-                    />
-                    <label
-                      className="custom-control-label"
-                      htmlFor="newaccount"
-                    >
-                      Tạo tài khoản
-                    </label>
-                  </div>
                 </div>
               </div>
             </div>
@@ -188,6 +232,9 @@ export default function CheckOut() {
                       className="custom-control-input"
                       name="payment"
                       id="paypal"
+                      onChange={({ target }) =>
+                        target.checked ? settypePayment(1) : ""
+                      }
                     />
                     <label className="custom-control-label" htmlFor="paypal">
                       Chuyển khoản
@@ -201,6 +248,9 @@ export default function CheckOut() {
                       className="custom-control-input"
                       name="payment"
                       id="directcheck"
+                      onChange={({ target }) =>
+                        target.checked ? settypePayment(2) : ""
+                      }
                     />
                     <label
                       className="custom-control-label"
@@ -211,9 +261,21 @@ export default function CheckOut() {
                   </div>
                 </div>
               </div>
-              <button className="btn btn-block btn-primary font-weight-bold py-3">
-                Xác nhận
-              </button>
+              {data ? (
+                <button
+                  className="btn btn-block btn-primary font-weight-bold py-3"
+                  onClick={() => payment()}
+                >
+                  Xác nhận
+                </button>
+              ) : (
+                <Link
+                  href="/login"
+                  className="btn btn-block btn-primary font-weight-bold py-3"
+                >
+                  Đăng nhập
+                </Link>
+              )}
             </div>
           </div>
         </div>

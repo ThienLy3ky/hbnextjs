@@ -19,7 +19,7 @@ export default function HomeModal(props: any) {
     });
     setPricePr(max);
     setQuanlityPr(1);
-  }, [price]);
+  }, [price, props.show]);
 
   return (
     <Modal

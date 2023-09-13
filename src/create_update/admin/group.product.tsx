@@ -11,7 +11,7 @@ interface IGroupconst {
   style: any;
   priceNew: number;
   priceOlder: number;
-  group?: any;
+  group: any;
   image?: string;
 }
 interface IOptionconst {
@@ -70,7 +70,17 @@ export default function ProductGroup(props: IGroupProps) {
     onclose(false);
   };
   const add = () => {
-    setGroupPrice([...groupPrice, GroupPrice]);
+    setGroupPrice([
+      ...groupPrice,
+      {
+        size: "",
+        style: "",
+        priceNew: 0,
+        priceOlder: 0,
+        group: "",
+        image: "",
+      },
+    ]);
   };
   const nameFile = (name?: string, Group = "", size = "", style = "") => {
     const date = new Date();

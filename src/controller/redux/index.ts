@@ -24,10 +24,18 @@ export default class ReduxService {
   }
   static getBearerToken(tokenUserData = false) {
     const userAdmin = ReduxService.getUserAdmin();
-    
 
     if (userAdmin && !tokenUserData) {
       return `Bearer ${userAdmin.token}`;
+    } else {
+      return null;
+    }
+  }
+  static getBearerReToken(tokenUserData = false) {
+    const userAdmin = ReduxService.getUserAdmin();
+
+    if (userAdmin && !tokenUserData) {
+      return `Bearer ${userAdmin.refreshToken}`;
     } else {
       return null;
     }

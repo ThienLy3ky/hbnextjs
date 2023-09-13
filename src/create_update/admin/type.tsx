@@ -30,7 +30,7 @@ export default function TypeModal(props: any) {
     }
     setCode("");
     setName("");
-  }, [data]);
+  }, [data, openModal]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -44,7 +44,7 @@ export default function TypeModal(props: any) {
         name,
         code,
       },
-      data?.code || code
+      code || data?.code
     );
     if (chek) {
       showNotificationError("Code đã tồn tại");

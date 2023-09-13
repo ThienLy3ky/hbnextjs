@@ -1,12 +1,12 @@
 import { setCartToLS, getCartFromLS } from "./cart";
-interface productcart {
+export interface productcart {
   _id: string;
   name: string;
   code: string;
   image: string;
-  size: string;
-  group: string;
-  style: string;
+  size: any;
+  group: any;
+  style: any;
   quanlity: number;
   priceNew: number;
 }
@@ -18,7 +18,12 @@ export const addCart = (productAdd: productcart) => {
   let isProduct = false;
   if (products && products.length > 0) {
     products?.find((product: productcart, i: number) => {
-      if (product._id === productAdd._id) {
+      if (
+        product._id === productAdd._id &&
+        product.group._id === productAdd.group?._id &&
+        product.size._id === productAdd.size._id &&
+        product.style._id === productAdd.style._id
+      ) {
         products[i].name = productAdd?.name;
         products[i].code = productAdd?.code;
         products[i].image = productAdd?.image;

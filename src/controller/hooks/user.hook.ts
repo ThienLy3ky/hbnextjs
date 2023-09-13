@@ -1,10 +1,10 @@
 import { useQuery } from "react-query";
 import { QUERY_KEY } from "../keys/querykey";
 import auther from "../api/login.api";
-import { getToken } from "@/src/utils/action.helper";
+import { getRoler, getToken } from "@/src/utils/action.helper";
 
 const getData = async () => {
-  if (getToken()) {
+  if (getToken() && getRoler() !== "admin") {
     const res = await auther.getName();
     return res;
   }

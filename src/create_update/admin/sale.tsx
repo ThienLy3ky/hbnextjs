@@ -27,7 +27,7 @@ export default function TypeModal(props: any) {
     }
     setCode("");
     setName("");
-  }, [data]);
+  }, [data, openModal]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

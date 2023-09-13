@@ -29,7 +29,7 @@ export default function GroupModal(props: any) {
       return;
     }
     initData();
-  }, [data]);
+  }, [data, openModal]);
 
   const initData = () => {
     setCode("");

@@ -31,6 +31,11 @@ export default function CompanyModal(props: any) {
     validateForm.notNull(email) ||
     validateForm.notNull(address);
   useEffect(() => {
+    setCode("");
+    setName("");
+    setAddress("");
+    setPhone("");
+    setEmail("");
     if (data) {
       setCode(data.code);
       setName(data.name);
@@ -39,12 +44,7 @@ export default function CompanyModal(props: any) {
       setAddress(data.address);
       return;
     }
-    setCode("");
-    setName("");
-    setAddress("");
-    setPhone("");
-    setEmail("");
-  }, [data]);
+  }, [data, openModal]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

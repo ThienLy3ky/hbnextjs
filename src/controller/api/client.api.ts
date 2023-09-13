@@ -3,7 +3,7 @@ import APIService from "./index";
 import { METHOD_TYPE } from "../keys/method";
 
 const apiUrl = `/client`;
-const categoriesService = {
+const ClientService = {
   getToHome() {
     return APIService.request(
       METHOD_TYPE.GET,
@@ -73,6 +73,6 @@ const categoriesService = {
   },
 };
 
-const cancelTokenHandlerObject = createCancelTokenHandler(categoriesService);
+const cancelTokenHandlerObject = createCancelTokenHandler(ClientService);
 
-export default categoriesService;
+export default ClientService;

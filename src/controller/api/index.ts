@@ -7,6 +7,7 @@ import { showNotificationError } from "@/src/component/notification/notification
 import ReduxService from "../redux";
 import { setRole, setUserData } from "@/src/controller/redux/slice";
 import { clearRoler, clearToken } from "@/src/utils/action.helper";
+import { store } from "../store";
 
 export default class APIService {
   static async request(
@@ -64,13 +65,34 @@ export default class APIService {
           );
           // ReduxService.resetApp();
         } else if (error?.response?.status === 401) {
-          showNotificationError(
-            "Your session has expired. Please sign in again to continue"
-          );
-          // setUserData("");
-          // setRole("");
-          // clearRoler();
-          // clearToken();
+          const reToken = ReduxService.getBearerReToken();
+          axiosInstance
+            .request({
+              method: "post",
+              url: "/auth/refresh-token",
+              headers: { Authorization: reToken },
+            })
+            .then(({ data }) => {
+              console.log(
+                "🚀 ~ file: index.ts:92 ~ APIService ~ .then ~ data:",
+                data
+              );
+              store.dispatch(
+                setUserData({
+                  token: data,
+                  refreshToken: reToken?.replace("Bearer", "").trim(),
+                })
+              );
+            })
+            .catch(() => {
+              showNotificationError(
+                "Your session has expired. Please sign in again to continue"
+              );
+              setUserData("");
+              setRole("");
+              clearRoler();
+              clearToken();
+            });
         } else if (error?.response?.status === 500) {
           showNotificationError("Lỗi Cập nhật");
           showNotificationError(error?.response?.data?.message);

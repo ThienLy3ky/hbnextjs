@@ -42,7 +42,7 @@ export default function BannerModal(props: any) {
     }
     setContent("");
     setName("");
-  }, [data]);
+  }, [data, openModal]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

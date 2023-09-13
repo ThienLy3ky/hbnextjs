@@ -118,7 +118,7 @@ export default function ProductModal(props: any) {
         price: groupPrice,
         categories,
       },
-      data.code || code
+      data?.code || code
     );
     if (chek && !data) {
       showNotificationError("Code đã tồn tại");
@@ -142,7 +142,7 @@ export default function ProductModal(props: any) {
     if (!data) {
       const res = await ProductService.create({
         name,
-        code: data.code,
+        code: code,
         summary,
         keyWord,
         company,
@@ -161,7 +161,7 @@ export default function ProductModal(props: any) {
     }
     const res = await ProductService.update(data._id, {
       name,
-      code,
+      code: data?.code,
       summary,
       keyWord,
       company,
