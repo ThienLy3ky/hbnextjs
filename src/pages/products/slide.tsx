@@ -8,7 +8,7 @@ export default function SlideIF({ products, openModal, addProduct }: any) {
       </h2>
       <div className="row px-xl-5">
         <div className="col">
-          <div className="owl-carousel related-carousel">
+          <div className="owl-carousel related-detail-carousel">
             {products?.slice(0, 10).map((product: any) => (
               <CardProductShort
                 key={product._id}

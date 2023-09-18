@@ -3,7 +3,7 @@ import ModalAdmin from "@/src/component/modal/modal.addUpdate";
 import FooterModal from "@/src/component/modal/modal.footer";
 import HeadModal from "@/src/component/modal/modal.head";
 import EnhancedTable from "@/src/component/table/table.mui";
-import TypeService from "@/src/controller/api/type.api";
+import BillService from "@/src/controller/api/banner.api";
 import {
   FormatData,
   removeVietnameseTones,

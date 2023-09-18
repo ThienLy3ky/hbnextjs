@@ -1591,12 +1591,14 @@ p {
   margin: 0 !important;
 }
 .btn-edit {
+  min-width: 25px;
   border-radius: 20px;
   border-right: 1px darkblue solid;
   background-color: white;
   color: blue;
 }
 .btn-delete {
+  min-width: 25px;
   border-radius: 20px;
   border-right: 1px darkblue solid;
   background-color: white;

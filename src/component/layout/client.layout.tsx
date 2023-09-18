@@ -9,7 +9,7 @@ import useUserHook from "@/src/controller/hooks/user.hook";
 export default function ClientLayout({ children }: any) {
   const { data, isLoading, refetch } = useUserHook();
   return (
-    <CartProvider>
+    <CartProvider value="any">
       <Header />
       <MenuClient data={data} />
       {children}

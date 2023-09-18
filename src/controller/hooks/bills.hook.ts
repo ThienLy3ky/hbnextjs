@@ -1,21 +1,25 @@
 import { useQuery } from "react-query";
 import { QUERY_KEY } from "../keys/querykey";
-import TypeService from "../api/type.api";
+import BillService from "../api/bills.api";
 
 const getData = async ({ queryKey }: any) => {
   const query = queryKey[1];
-  const res = await TypeService.getAll(query);
+  const res = await BillService.getAll(query);
+  console.log("🚀 ~ file: bills.hook.ts:8 ~ getData ~ res:", res);
   return {
-    items: res?.data?.items || [],
-    totalPages: res?.data?.totalPages || 0,
-    page: res?.data?.page || 1,
-    total: res?.data?.total || 0,
-    limit: res?.data?.limit || 20,
+    items: res?.items || [],
+    totalPages: res?.totalPages || 0,
+    page: res?.page || 1,
+    total: res?.total || 0,
+    limit: res?.limit || 20,
   };
 };
 
 const useTypeHook = (query: any) => {
-  const { data, isLoading } = useQuery([QUERY_KEY.TypeProduct, query], getData);
+  const { data, isLoading, refetch } = useQuery(
+    [QUERY_KEY.TypeProduct, query],
+    getData
+  );
   return {
     isLoading,
     data: {
@@ -25,6 +29,7 @@ const useTypeHook = (query: any) => {
       total: data?.total || 0,
       limit: data?.limit || 20,
     },
+    refetch,
   };
 };
 

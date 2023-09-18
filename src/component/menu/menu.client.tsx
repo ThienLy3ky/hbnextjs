@@ -15,7 +15,7 @@ const MenuClient = (props: any) => {
             <div className="col-lg-12" style={{ padding: "0 5%" }}>
               <nav className="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
                 <NameShop
-                  href="#/"
+                  href="/"
                   className="text-decoration-none d-block d-lg-none"
                 />
                 <div

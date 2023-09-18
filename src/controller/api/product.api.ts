@@ -81,6 +81,16 @@ const ProductService = {
       null
     );
   },
+  flashSale(payload: object) {
+    return APIService.request(
+      METHOD_TYPE.PUT,
+      `${apiUrl}/sale`,
+      this.flashSale.name,
+      cancelTokenHandlerObject,
+      null,
+      payload
+    );
+  },
 };
 
 const cancelTokenHandlerObject = createCancelTokenHandler(ProductService);

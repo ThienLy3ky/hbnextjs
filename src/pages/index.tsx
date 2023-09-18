@@ -23,7 +23,7 @@ export default function Home() {
       <FlashProducts
         addProduct={(e: any) => setProduct(e)}
         openModal={() => setShowmodal(!showmodal)}
-        data={data?.flashProduct}
+        data={data?.flashProduct?.product}
       />
       <div className="container-fluid pt-5 pb-3">
         <h2 className="section-title position-relative text-uppercase mx-xl-5 mb-4">

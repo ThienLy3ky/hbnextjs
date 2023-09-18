@@ -26,13 +26,14 @@ export default function FlashProducts(props: any) {
       <div className="row px-xl-5">
         <div className="col" id="my_slider1">
           <div className="owl-carousel related-carousel">
-            {data.slice(0, 10).map(({ product }: any) => (
-              <CardProductShort
-                openModal={props.openModal}
-                product={product}
-                key={product._id}
-                setCart={() => props.addProduct(product)}
-              />
+            {data?.slice(0, 20).map((product: any) => (
+              <div key={product?._id} className="carousel-slide">
+                <CardProductShort
+                  openModal={props.openModal}
+                  product={product}
+                  setCart={() => props.addProduct(product)}
+                />
+              </div>
             ))}
           </div>
 

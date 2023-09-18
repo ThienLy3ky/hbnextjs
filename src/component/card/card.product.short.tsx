@@ -15,7 +15,7 @@ export default function CardProductShort(props: propsIF) {
   const { product, setCart, openModal } = props;
   useEffect(() => {
     setMounted(true);
-    setPrice(product?.price[0]);
+    setPrice(product?.price ? product?.price[0] : undefined);
   }, [product]);
   product?.price?.forEach(({ priceNew }: any, index: number) => {
     if (priceNew < price?.priceNew) setPrice(product.price[index]);

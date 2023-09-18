@@ -116,6 +116,10 @@ export const addCart = (productAdd: productcart) => {
 //   return products;
 // };
 export const getCart = () => {
-  let products = getCartFromLS() ? JSON.parse(getCartFromLS()) : false;
-  return products;
+  try {
+    return getCartFromLS() ? JSON.parse(getCartFromLS()) : false;
+  } catch (error) {
+    console.log(error);
+    return "";
+  }
 };

@@ -1,9 +1,26 @@
-// import { useParams, useSearchParams } from "react-router-dom";
+import CartProvider from "@/src/component/context/client.context";
 import ClientLayout from "@/src/component/layout/client.layout";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import useDetailHook from "@/src/controller/hooks/detail.client.hook";
-export default function ProductDetail() {
+import Image from "next/image";
+import { useContext, useEffect, useState } from "react";
+import { formatMoney } from "@/src/utils/action.helper";
+import { addCart } from "@/src/utils/cart.client";
+import InformationOther from "./other.information";
+export default function ProductDetail(props: any) {
+  const product = useContext(CartProvider);
+  const { carts, setCarts } = useContext(CartProvider);
+  console.log("🚀 ~ file: [index].tsx:13 ~ ProductDetail ~ carts:", carts);
+  console.log("🚀 ~ file: [index].tsx:12 ~ ProductDetail ~ product:", product);
+  const [Groups, setGroups] = useState<object[]>([]);
+  const [Styles, setStyles] = useState<object[]>([]);
+  const [Sizes, setSizes] = useState<object[]>([]);
+  const [groups, setGroup] = useState<string>();
+  const [styles, setStyle] = useState<string>();
+  const [sizes, setSize] = useState<string>();
+  const [quanlity, setQuanlity] = useState(1);
+  const [PriceProduct, setPriceProduct] = useState<any>({});
   const DynamicHeader = dynamic(() => import("./slide"));
   const router = useRouter();
   const { index = "" } = router.query;
@@ -12,6 +29,61 @@ export default function ProductDetail() {
     data: { items, data },
     isLoading,
   } = useDetailHook(index);
+  useEffect(() => {
+    setSizes([]);
+    setStyles([]);
+    setGroups([]);
+    setPriceProduct(data?.price[0]);
+    let sizes: object[] = [],
+      styles: object[] = [],
+      groups: object[] = [];
+    data?.price?.map((price: any) => {
+      sizes = [...sizes, price.size];
+      styles = [...styles, price.style];
+      groups = [...groups, price.group];
+      if (price.priceNew < PriceProduct?.priceNew) setPriceProduct(price);
+    });
+    setSizes([
+      ...Sizes,
+      ...sizes.filter(
+        (v: any, i, a) => a.findIndex((v2: any) => v2._id === v._id) === i
+      ),
+    ]);
+    setStyles([
+      ...Styles,
+      ...styles.filter(
+        (v: any, i, a) => a.findIndex((v2: any) => v2._id === v._id) === i
+      ),
+    ]);
+    setGroups([
+      ...Groups,
+      ...groups.filter(
+        (v: any, i, a) => a.findIndex((v2: any) => v2._id === v._id) === i
+      ),
+    ]);
+  }, [data]);
+  const handleChange = ({
+    sizeI,
+    styleI,
+    groupI,
+  }: {
+    sizeI?: string;
+    styleI?: string;
+    groupI?: string;
+  }) => {
+    if (sizeI) setSize(sizeI);
+    if (styleI) setStyle(styleI);
+    if (groupI) setGroup(groupI);
+    if ((sizeI ?? sizes) && (styleI ?? styles) && (groupI ?? groups))
+      setPriceProduct(
+        data.price.filter(
+          ({ size, style, group }: any) =>
+            size._id === (sizeI ?? sizes) &&
+            (styleI ?? styles) === style._id &&
+            (groupI ?? groups) === group._id
+        )[0]
+      );
+  };
   return (
     <ClientLayout>
       <div className="container-fluid pb-5">
@@ -25,18 +97,21 @@ export default function ProductDetail() {
                   data-ride="carousel"
                 >
                   <div className="carousel-inner bg-light">
-                    <div className="carousel-item active">
-                      <img className=" h-100" src={data?.image} alt="" />
-                    </div>
-                    <div className="carousel-item">
-                      <img className=" h-100" src={data?.image} alt="" />
-                    </div>
-                    <div className="carousel-item">
-                      <img className="w-100 h-100" src={data?.image} alt="" />
-                    </div>
-                    <div className="carousel-item">
-                      <img className="w-100 h-100" src={data?.image} alt="" />
-                    </div>
+                    {data?.price?.map((element: any, index: number) =>
+                      element.image ? (
+                        <div className="carousel-item active" key={index}>
+                          <Image
+                            className=" h-100"
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            src={element?.image ?? "/static/image/noImage.jpeg"}
+                            alt={data?.name}
+                          />
+                        </div>
+                      ) : (
+                        ""
+                      )
+                    )}
                   </div>
                   <a
                     className="carousel-control-prev"
@@ -87,158 +162,107 @@ export default function ProductDetail() {
                     </div>
                     <small className="pt-1">(99 Reviews)</small>
                   </div>
-                  <h3 className="font-weight-semi-bold mb-4">
-                    {data?.priceNew}
+                  <h3
+                    className="font-weight-semi-bold"
+                    style={{ color: "red" }}
+                  >
+                    {formatMoney(PriceProduct?.priceNew)}
                   </h3>
-                  <p className="mb-4">{data?.summary}</p>
+                  <small style={{ fontStyle: "revert" }}>
+                    {formatMoney(PriceProduct?.priceOld)}
+                  </small>
+                  <p className="mb-4 mt-3">{data?.summary}</p>
                   <div className="d-flex mb-3">
-                    <strong className="text-dark mr-3">Sizes:</strong>
+                    <strong className="text-dark mr-3">Kích cỡ:</strong>
                     <form>
-                      <div className="custom-control custom-radio custom-control-inline">
-                        <input
-                          type="radio"
-                          className="custom-control-input"
-                          id="size-1"
-                          name="size"
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="size-1"
-                        >
-                          XS
-                        </label>
-                      </div>
-                      <div className="custom-control custom-radio custom-control-inline">
-                        <input
-                          type="radio"
-                          className="custom-control-input"
-                          id="size-2"
-                          name="size"
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="size-2"
-                        >
-                          S
-                        </label>
-                      </div>
-                      <div className="custom-control custom-radio custom-control-inline">
-                        <input
-                          type="radio"
-                          className="custom-control-input"
-                          id="size-3"
-                          name="size"
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="size-3"
-                        >
-                          M
-                        </label>
-                      </div>
-                      <div className="custom-control custom-radio custom-control-inline">
-                        <input
-                          type="radio"
-                          className="custom-control-input"
-                          id="size-4"
-                          name="size"
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="size-4"
-                        >
-                          L
-                        </label>
-                      </div>
-                      <div className="custom-control custom-radio custom-control-inline">
-                        <input
-                          type="radio"
-                          className="custom-control-input"
-                          id="size-5"
-                          name="size"
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="size-5"
-                        >
-                          XL
-                        </label>
-                      </div>
+                      {Sizes?.map((element: any, index: number) =>
+                        element ? (
+                          <div
+                            key={index}
+                            className="custom-control custom-radio custom-control-inline"
+                          >
+                            <input
+                              type="radio"
+                              className="custom-control-input"
+                              id={"size" + element?._id}
+                              name="size"
+                              onChange={() => {
+                                handleChange({ sizeI: element._id });
+                              }}
+                            />
+                            <label
+                              className="custom-control-label"
+                              htmlFor={"size" + element?._id}
+                            >
+                              {element?.name}
+                            </label>
+                          </div>
+                        ) : (
+                          ""
+                        )
+                      )}
                     </form>
                   </div>
                   <div className="d-flex mb-4">
-                    <strong className="text-dark mr-3">Colors:</strong>
+                    <strong className="text-dark mr-3">Kiểu dáng:</strong>
                     <form>
-                      <div className="custom-control custom-radio custom-control-inline">
-                        <input
-                          type="radio"
-                          className="custom-control-input"
-                          id="color-1"
-                          name="color"
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="color-1"
-                        >
-                          Black
-                        </label>
-                      </div>
-                      <div className="custom-control custom-radio custom-control-inline">
-                        <input
-                          type="radio"
-                          className="custom-control-input"
-                          id="color-2"
-                          name="color"
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="color-2"
-                        >
-                          White
-                        </label>
-                      </div>
-                      <div className="custom-control custom-radio custom-control-inline">
-                        <input
-                          type="radio"
-                          className="custom-control-input"
-                          id="color-3"
-                          name="color"
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="color-3"
-                        >
-                          Red
-                        </label>
-                      </div>
-                      <div className="custom-control custom-radio custom-control-inline">
-                        <input
-                          type="radio"
-                          className="custom-control-input"
-                          id="color-4"
-                          name="color"
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="color-4"
-                        >
-                          Blue
-                        </label>
-                      </div>
-                      <div className="custom-control custom-radio custom-control-inline">
-                        <input
-                          type="radio"
-                          className="custom-control-input"
-                          id="color-5"
-                          name="color"
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="color-5"
-                        >
-                          Green
-                        </label>
-                      </div>
+                      {Styles?.map((element: any, index: number) =>
+                        element ? (
+                          <div
+                            key={index}
+                            className="custom-control custom-radio custom-control-inline"
+                          >
+                            <input
+                              type="radio"
+                              className="custom-control-input"
+                              id={"style" + element?._id}
+                              name="size"
+                              onChange={() => {
+                                handleChange({ styleI: element._id });
+                              }}
+                            />
+                            <label
+                              className="custom-control-label"
+                              htmlFor={"style" + element?._id}
+                            >
+                              {element?.name}
+                            </label>
+                          </div>
+                        ) : (
+                          ""
+                        )
+                      )}
+                    </form>
+                  </div>
+                  <div className="d-flex mb-4">
+                    <strong className="text-dark mr-3">Nhóm:</strong>
+                    <form>
+                      {Groups?.map((element: any, index: number) =>
+                        element ? (
+                          <div
+                            key={index}
+                            className="custom-control custom-radio custom-control-inline"
+                          >
+                            <input
+                              type="radio"
+                              className="custom-control-input"
+                              id={"group" + element?._id}
+                              name="size"
+                              onChange={() => {
+                                handleChange({ groupI: element._id });
+                              }}
+                            />
+                            <label
+                              className="custom-control-label"
+                              htmlFor={"group" + element?._id}
+                            >
+                              {element?.name}
+                            </label>
+                          </div>
+                        ) : (
+                          ""
+                        )
+                      )}
                     </form>
                   </div>
                   <div className="d-flex align-items-center mb-4 pt-2">
@@ -247,22 +271,52 @@ export default function ProductDetail() {
                       style={{ width: "130px" }}
                     >
                       <div className="input-group-btn">
-                        <button className="btn btn-primary btn-minus">
+                        <button
+                          className="btn btn-primary btn-minus"
+                          onClick={() => setQuanlity(quanlity - 1)}
+                        >
                           <i className="fa fa-minus"></i>
                         </button>
                       </div>
                       <input
-                        type="text"
+                        type="number"
                         className="form-control bg-secondary border-0 text-center"
+                        value={quanlity}
+                        onChange={({ target: { value } }: any) =>
+                          setQuanlity(value)
+                        }
                       />
                       <div className="input-group-btn">
-                        <button className="btn btn-primary btn-plus">
+                        <button
+                          className="btn btn-primary btn-plus"
+                          onClick={() => setQuanlity(quanlity + 1)}
+                        >
                           <i className="fa fa-plus"></i>
                         </button>
                       </div>
                     </div>
-                    <button className="btn btn-primary px-3">
-                      <i className="fa fa-shopping-cart mr-1"></i> Add To Cart
+                    <button
+                      className="btn btn-primary px-3"
+                      onClick={() => {
+                        product.setCarts(
+                          addCart({
+                            _id: data._id,
+                            name: data.name,
+                            code: data.code,
+                            quanlity: quanlity,
+                            size: PriceProduct.size,
+                            style: PriceProduct.style,
+                            group: PriceProduct.group,
+                            priceNew: PriceProduct.priceNew,
+                            image: PriceProduct.image,
+                          })
+                        );
+                      }}
+                    >
+                      <i className="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ
+                    </button>
+                    <button className="btn btn-danger px-3 ml-2">
+                      <i className="fa fa-buysellads mr-1"></i> Mua ngay
                     </button>
                   </div>
                   <div className="d-flex pt-2">
@@ -315,12 +369,12 @@ export default function ProductDetail() {
                         <div className="col-md-6">
                           <h4 className="mb-4">1 review for Product Name</h4>
                           <div className="media mb-4">
-                            <img
+                            {/* <img
                               src="img/user.jpg"
                               alt=""
                               className="img-fluid mr-3 mt-1"
                               style={{ width: "45px" }}
-                            />
+                            /> */}
                             <div className="media-body">
                               <h6>
                                 John Doe
@@ -406,8 +460,8 @@ export default function ProductDetail() {
           ""
         )}
       </div>
-
-      <DynamicHeader products={items} openModal={() => {}} nocart={true} />
+      <InformationOther />
+      {/* <DynamicHeader products={items} openModal={() => {}} nocart={true} /> */}
     </ClientLayout>
   );
 }

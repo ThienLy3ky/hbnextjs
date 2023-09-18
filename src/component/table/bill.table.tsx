@@ -13,6 +13,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
+import SwitchText from "../switch/swittch.text";
 
 type Order = "asc" | "desc";
 type Align = "right" | "left" | "center";
@@ -25,36 +26,14 @@ interface HeadCell {
   numeric: boolean;
   sort: boolean;
 }
-
+const StatusBill = ["Cancel", "Pendding", "Processing", "Shipping", "complete"];
 function EnhancedTableHead(props: any) {
-  const {
-    option,
-    onSelectAllClick,
-    order,
-    numSelected,
-    rowCount,
-    setOder,
-    select,
-  } = props;
+  const { option, onSelectAllClick, order, numSelected, rowCount, setOder } =
+    props;
 
   return (
     <TableHead style={{ background: "#ccccf3" }}>
       <TableRow>
-        {select ? (
-          <TableCell padding="checkbox">
-            <Checkbox
-              color="primary"
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={rowCount > 0 && numSelected === rowCount}
-              onChange={onSelectAllClick}
-              inputProps={{
-                "aria-label": "select all desserts",
-              }}
-            />
-          </TableCell>
-        ) : (
-          ""
-        )}
         {option?.map((headCell: HeadCell) => (
           <TableCell
             key={headCell.id}
@@ -106,10 +85,10 @@ interface IProps {
   isDeleted: boolean;
   isUpdate: boolean;
   isPagination: boolean;
-  select?: string[];
-  onselect?: any;
+  changeStatus: any;
+  changePayment: any;
 }
-export default function EnhancedTable(props: IProps) {
+export default function EnhancedTableBill(props: IProps) {
   const {
     rows,
     header,
@@ -125,8 +104,8 @@ export default function EnhancedTable(props: IProps) {
     onDelete,
     isPagination,
     onUpdate,
-    select,
-    onselect,
+    changePayment,
+    changeStatus,
   } = props;
   const [selected, setSelected] = React.useState<readonly string[]>([]);
 
@@ -145,7 +124,6 @@ export default function EnhancedTable(props: IProps) {
               numSelected={selected.length}
               order={order}
               setOder={rows.length ? setOder : false}
-              select={select}
               // onSelectAllClick={() => console.log("sort")}
               // onRequestSort={() => console.log("sort")}
               rowCount={rows?.length}
@@ -158,62 +136,37 @@ export default function EnhancedTable(props: IProps) {
                 return (
                   <TableRow
                     hover
-                    onClick={() => (onselect ? onselect(row._id) : {})}
+                    // onClick={(event) => console.log(event, row.name)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    style={
-                      select?.includes(row._id)
-                        ? { background: "radial-gradient(#0926f70d, #56b8f7)" }
-                        : {}
-                    }
                     key={row.name | index}
                     selected={isItemSelected}
                     sx={{ cursor: "pointer" }}
                   >
-                    {select ? (
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={select.includes(row._id)}
-                          inputProps={{
-                            "aria-labelledby": labelId,
-                          }}
-                        />
-                      </TableCell>
-                    ) : (
-                      ""
-                    )}
                     {header?.map((val, index) => {
                       return (
                         //
-                        val.idChil && row[val.id] ? (
-                          <TableCell
-                            align={index === 0 ? "left" : val?.align}
-                            key={index}
-                          >
-                            {val.id === "image" ? (
-                              <a href={row[val.id][val.idChil]}>
-                                {row[val.id]?.toString().slice(0, 50)}
-                              </a>
-                            ) : (
-                              row[val.id][val.idChil]?.toString().slice(0, 50)
-                            )}
-                          </TableCell>
-                        ) : (
-                          <TableCell
-                            align={index === 0 ? "left" : val?.align}
-                            key={index}
-                          >
-                            {val.id === "image" ? (
-                              <a href={row[val.id]}>
-                                {row[val.id]?.toString().slice(0, 50)}
-                              </a>
-                            ) : (
-                              row[val.id]?.toString().slice(0, 50)
-                            )}
-                          </TableCell>
-                        )
+
+                        <TableCell
+                          align={index === 0 ? "left" : val?.align}
+                          key={index}
+                        >
+                          {val.id === "status" ? (
+                            <button className="btn btn-success">
+                              {StatusBill[row[val.id]]}
+                            </button>
+                          ) : val.id === "wasPayment" ? (
+                            <SwitchText
+                              status={row[val.id]}
+                              left={<i className="fa fa-check"></i>}
+                              right={<i className="mdi mdi-close"></i>}
+                              change={changePayment}
+                            />
+                          ) : (
+                            row[val.id]
+                          )}
+                        </TableCell>
                       );
                     })}
                     <TableCell align="right" className="pt-0 pr-1 pb-0">
@@ -222,7 +175,7 @@ export default function EnhancedTable(props: IProps) {
                           className="p-2 border-0 col-3 btn-edit"
                           onClick={() => onUpdate(row)}
                         >
-                          <i className="mdi mdi-pencil"></i>
+                          <i className="mdi mdi-information"></i>
                         </button>
                       ) : (
                         ""

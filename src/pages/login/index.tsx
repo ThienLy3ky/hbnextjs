@@ -28,7 +28,8 @@ export default function Login() {
   const dispatch = useDispatch();
   const login = () => {};
   const sigin = () => {};
-  const handleLogin = async () => {
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
     setLoading(true);
     if (!email || !password || validateEmails || validatePassword) {
       setValidateEmails(!email || validateEmails);
@@ -55,7 +56,8 @@ export default function Login() {
     }
     setLoading(false);
   };
-  const handleSingUp = async () => {
+  const handleSingUp = async (e: any) => {
+    e.preventDefault();
     if (
       !emailSG ||
       !passwordSG ||
@@ -101,7 +103,7 @@ export default function Login() {
       <div className="container-login" id="container">
         {/* sigup */}
         <div className="form-container sign-up-container">
-          <form>
+          <form onSubmit={handleSingUp}>
             <h1>Tạo Tài khoản</h1>
             <div className="social-container">
               <a href="#" className="social">
@@ -190,12 +192,12 @@ export default function Login() {
             ) : (
               ""
             )}
-            <button onClick={handleSingUp}>Đăng kí</button>
+            <button type="submit">Đăng kí</button>
           </form>
         </div>
         {/* login */}
         <div className="form-container sign-in-container">
-          <form>
+          <form onSubmit={handleLogin}>
             <h1>Đăng nhập</h1>
             <div className="social-container">
               <a href="#" className="social">
@@ -258,7 +260,7 @@ export default function Login() {
             <a href="#" className="forgot">
               Bạn quên mật khẩu?
             </a>
-            <button disabled={loading} onClick={handleLogin}>
+            <button disabled={loading} type="submit">
               Đăng nhập
             </button>
           </form>

@@ -1,8 +1,8 @@
 import AdminLayout from "@/src/component/layout/client.admin";
-import EnhancedTable from "@/src/component/table/table.mui";
+import EnhancedTableBill from "@/src/component/table/bill.table";
 import CompanyService from "@/src/controller/api/company.api";
 import { hederTable } from "@/src/controller/constant/interface";
-import useCompanyHook from "@/src/controller/hooks/company.hook";
+import useBill from "@/src/controller/hooks/bills.hook";
 import CompanyModal from "@/src/create_update/admin/company";
 import { Button } from "@mui/material";
 import { useState } from "react";
@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 
 const Head: hederTable[] = [
   {
-    id: "name",
+    id: "code",
     label: "Mã đơn",
     sort: true,
     align: "left",
@@ -18,23 +18,15 @@ const Head: hederTable[] = [
     disablePadding: false,
   },
   {
-    id: "code",
-    label: "Tên khách hàng",
-    align: "left",
-    sort: true,
-    numeric: true,
-    disablePadding: false,
-  },
-  {
-    id: "address",
-    label: "Địa chỉ ",
+    id: "date",
+    label: "Thời gian",
     align: "left",
     sort: true,
     numeric: false,
     disablePadding: false,
   },
   {
-    id: "address",
+    id: "",
     label: "Sô lượng ",
     align: "left",
     sort: true,
@@ -42,8 +34,24 @@ const Head: hederTable[] = [
     disablePadding: false,
   },
   {
-    id: "address",
-    label: "Giá",
+    id: "sumPrice",
+    label: "Tổng tiền",
+    align: "left",
+    sort: true,
+    numeric: false,
+    disablePadding: false,
+  },
+  {
+    id: "status",
+    label: "Trạng thái",
+    align: "left",
+    sort: true,
+    numeric: false,
+    disablePadding: false,
+  },
+  {
+    id: "wasPayment",
+    label: "Thanh toán",
     align: "left",
     sort: true,
     numeric: false,
@@ -60,10 +68,11 @@ export default function Bills() {
     orderBy: "createdAt",
   });
   const [dataEd, setDataEd] = useState();
-  const { data, isLoading, refetch } = useCompanyHook(query);
+  const { data, isLoading, refetch } = useBill(query);
+  console.log("🚀 ~ file: index.tsx:80 ~ Bills ~ data:", data);
   const handleDeleted = async (data: string) => {
-    await CompanyService.delete(data);
-    refetch();
+    // await CompanyService.delete(data);
+    // refetch();
   };
   return (
     <AdminLayout title="Đơn hàng">
@@ -74,21 +83,8 @@ export default function Bills() {
             type="text"
             placeholder="Tìm kiếm !!"
           />
-          <Button
-            variant="contained"
-            color="success"
-            onClick={() => {
-              setModal(true);
-              setDataEd(undefined);
-            }}
-            size="small"
-            // style={{ height: "calc(2.25rem + 2px)" }}
-            endIcon={<i className="mdi mdi-plus"></i>}
-          >
-            Tạo mới
-          </Button>
         </div>
-        <EnhancedTable
+        <EnhancedTableBill
           isPagination={query.limit > 0}
           rows={data.items}
           header={Head}
@@ -113,6 +109,8 @@ export default function Bills() {
               order: e.order === "asc" ? "desc" : "asc",
             })
           }
+          changePayment={() => {}}
+          changeStatus={() => {}}
           limit={parseInt(data.limit)}
         />
       </div>
