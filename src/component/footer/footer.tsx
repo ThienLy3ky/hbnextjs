@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { it } from "node:test";
 import { useSelector } from "react-redux";
 
 export default function Footer() {
   const Settings = useSelector((state: any) => state?.app?.template?.setting);
+  const keyWord = useSelector((state: any) => state?.app?.template?.keyWord);
   return (
     <div className="container-fluid bg-dark text-secondary mt-5 pt-5">
       <div className="row px-xl-5 pt-5">
@@ -30,6 +32,19 @@ export default function Footer() {
           <div className="row">
             <div className="col-md-8 mb-5">
               <h5 className="text-secondary text-uppercase mb-4">Gợi ý</h5>
+              {keyWord
+                ? keyWord[0].keyWord?.map((item: string) => {
+                    return (
+                      <Link
+                        href={"/shops"}
+                        className="btn btn-outline-warning mr-1"
+                        key={item}
+                      >
+                        {item}
+                      </Link>
+                    );
+                  })
+                : ""}
             </div>
 
             <div className="col-md-4 mb-5">

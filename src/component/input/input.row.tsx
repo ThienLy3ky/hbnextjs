@@ -1,6 +1,9 @@
-import { formatNumber, formatString } from "@/src/utils/action.helper";
+import {
+  formatLinkString,
+  formatNumber,
+  formatString,
+} from "@/src/utils/action.helper";
 import { TextField } from "@mui/material";
-import UploadInput from "./input.upload";
 import { AccordionSummary, Typography } from "@mui/material";
 export default function InputRow(props: any) {
   const {
@@ -59,6 +62,20 @@ export default function InputRow(props: any) {
             style={{ padding: "5px", width: "100%", background: "white" }}
             {...prop}
             onChange={(e) => change(formatNumber(e.target.value))}
+          />
+        ) : type === "link" ? (
+          <TextField
+            name={name}
+            type={type}
+            error={!error ? false : true}
+            value={value}
+            id="outlined-error"
+            label={error ? error : ""}
+            defaultValue={defaultValue}
+            size="small"
+            style={{ padding: "5px", width: "100%", background: "white" }}
+            {...prop}
+            onChange={(e) => change(formatLinkString(e.target.value))}
           />
         ) : (
           <TextField

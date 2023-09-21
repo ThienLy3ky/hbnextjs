@@ -30,7 +30,7 @@ export default function BannerModal(props: any) {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
-  const [product, setProduct] = useState("");
+  const [link, setLink] = useState("");
   const [type, setType] = useState("");
   const [file, setFile] = useState("");
   const err = validateForm.notNull(name) || validateForm.notNull(content);
@@ -55,7 +55,7 @@ export default function BannerModal(props: any) {
     formData.append("title", name);
     formData.append("content", content);
     formData.append("type", type);
-    formData.append("product", product);
+    formData.append("link", link);
     setLoading(true);
     if (!data) {
       const res = await BannerService.create(formData);
@@ -117,12 +117,12 @@ export default function BannerModal(props: any) {
             <InputRow
               row={true}
               // error={content === "" ? "not null" : false}
-              type="content"
-              value={product}
+              type="link"
+              value={link}
               name="content"
-              placeholder="Sản phẩm"
-              label="Sản phẩm"
-              change={(e: any) => setProduct(e)}
+              placeholder="Link"
+              label="Link"
+              change={(e: any) => setLink(e)}
             />
             <UploadInput
               name="image"

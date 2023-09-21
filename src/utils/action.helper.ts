@@ -48,7 +48,7 @@ export function removeVietnameseTones(str: any) {
   // Bỏ dấu câu, kí tự đặc biệt
   str = str.replace(
     /!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g,
-    " "
+    "-"
   );
   return str;
 }
@@ -180,6 +180,16 @@ export const formatString = (str: string) => {
   // Bỏ dấu câu, kí tự đặc biệt
   str = str.replace(
     /!|\^|\*|\=|\<|\>|\?|\/|\;|\&|\#|\[|\]|~|\$|_|`|{|}|\||\\/g,
+    " "
+  );
+  return str;
+};
+export const formatLinkString = (str: string) => {
+  str = str.replace(/ + /g, " ");
+  // Remove punctuations
+  // Bỏ dấu câu, kí tự đặc biệt
+  str = str.replace(
+    /!|\^|\*|\=|\<|\>|\?|\;|\&|\#|\[|\]|~|\$|_|`|{|}|\||\\/g,
     " "
   );
   return str;

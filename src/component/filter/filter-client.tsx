@@ -67,7 +67,11 @@ export default function FilterClient({ option, query, setQuery }: any) {
             max={5000000}
             valueLabelFormat={valueLabelFormat}
             onChange={({ target }: any) => setPrice(target.value)}
-            onChangeCommitted={() => setQuery({ ...query, price })}
+            onChangeCommitted={() =>
+              router.replace({
+                query: { ...router.query, price: JSON.stringify(price) },
+              })
+            }
             valueLabelDisplay="on"
           />
         </div>

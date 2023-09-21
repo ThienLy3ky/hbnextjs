@@ -72,11 +72,11 @@ export default function BannerClient(props: any) {
         </div>
         <div className="banner_section layout_padding">
           <div className="container">
-            <div className="carousel slide" data-ride="carousel">
-              <div className="carousel-inner carousel-text">
+            <div className="" style={{ position: "relative" }}>
+              <div className="owl-carousel carousel-text">
                 {data
                   ? data.map((item: any) => (
-                      <div key={item._id} className="carousel-item active">
+                      <div key={item._id} className="">
                         <div className="row">
                           <div className="col-sm-12">
                             <h1 className="banner_taital">
@@ -85,7 +85,7 @@ export default function BannerClient(props: any) {
                               {item.content}
                             </h1>
                             <div className="buynow_bt">
-                              <a href="#/">Buy Now</a>
+                              <a href={item.link}>Mua ngay</a>
                             </div>
                           </div>
                         </div>
@@ -113,6 +113,7 @@ export default function BannerClient(props: any) {
           </div>
         </div>
       </div>
+      <Script src="/static/library/js/custom.js"></Script>
     </div>
   );
 }

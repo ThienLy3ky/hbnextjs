@@ -6,13 +6,10 @@ import useDetailHook from "@/src/controller/hooks/detail.client.hook";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { formatMoney } from "@/src/utils/action.helper";
-import { addCart } from "@/src/utils/cart.client";
-import InformationOther from "./other.information";
+import AddToCart from "@/src/create_update/client/addCart";
 export default function ProductDetail(props: any) {
   const product = useContext(CartProvider);
   const { carts, setCarts } = useContext(CartProvider);
-  console.log("🚀 ~ file: [index].tsx:13 ~ ProductDetail ~ carts:", carts);
-  console.log("🚀 ~ file: [index].tsx:12 ~ ProductDetail ~ product:", product);
   const [Groups, setGroups] = useState<object[]>([]);
   const [Styles, setStyles] = useState<object[]>([]);
   const [Sizes, setSizes] = useState<object[]>([]);
@@ -169,7 +166,7 @@ export default function ProductDetail(props: any) {
                     {formatMoney(PriceProduct?.priceNew)}
                   </h3>
                   <small style={{ fontStyle: "revert" }}>
-                    {formatMoney(PriceProduct?.priceOld)}
+                    {formatMoney(PriceProduct?.priceOlder)}
                   </small>
                   <p className="mb-4 mt-3">{data?.summary}</p>
                   <div className="d-flex mb-3">
@@ -295,26 +292,19 @@ export default function ProductDetail(props: any) {
                         </button>
                       </div>
                     </div>
-                    <button
-                      className="btn btn-primary px-3"
-                      onClick={() => {
-                        product.setCarts(
-                          addCart({
-                            _id: data._id,
-                            name: data.name,
-                            code: data.code,
-                            quanlity: quanlity,
-                            size: PriceProduct.size,
-                            style: PriceProduct.style,
-                            group: PriceProduct.group,
-                            priceNew: PriceProduct.priceNew,
-                            image: PriceProduct.image,
-                          })
-                        );
+                    <AddToCart
+                      data={{
+                        _id: data._id,
+                        name: data.name,
+                        code: data.code,
+                        quanlity: quanlity,
+                        size: PriceProduct?.size,
+                        style: PriceProduct?.style,
+                        group: PriceProduct?.group,
+                        priceNew: PriceProduct?.priceNew,
+                        image: PriceProduct?.image,
                       }}
-                    >
-                      <i className="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ
-                    </button>
+                    />
                     <button className="btn btn-danger px-3 ml-2">
                       <i className="fa fa-buysellads mr-1"></i> Mua ngay
                     </button>
@@ -361,7 +351,19 @@ export default function ProductDetail(props: any) {
                   <div className="tab-content">
                     <div className="tab-pane fade show active" id="tab-pane-1">
                       <h4 className="mb-3">Thông tin</h4>
+                      <h5>{data?.summary}</h5>
                       <p>{data?.description}</p>
+                      <div className="d-flex flex-nowrap">
+                        <h5 className="mr-1 p-1">Keyword:</h5>
+
+                        {data?.keyWord?.map((e: string) => {
+                          return (
+                            <button key={e} className="btn btn-secondary">
+                              {e}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
 
                     <div className="tab-pane fade" id="tab-pane-3">
@@ -460,7 +462,6 @@ export default function ProductDetail(props: any) {
           ""
         )}
       </div>
-      <InformationOther />
       {/* <DynamicHeader products={items} openModal={() => {}} nocart={true} /> */}
     </ClientLayout>
   );

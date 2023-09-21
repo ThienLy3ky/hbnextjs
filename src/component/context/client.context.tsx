@@ -6,7 +6,6 @@ const CartContext = createContext<any>({});
 // Provide Context
 export const CartProvider = ({ children }: any) => {
   const [carts, setCarts] = useState<productcart[]>();
-  console.log("🚀 ~ file: client.context.tsx:9 ~ CartProvider ~ carts:", carts);
   useEffect(() => {
     setCarts(getCart());
   }, []);

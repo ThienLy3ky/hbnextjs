@@ -31,7 +31,7 @@ export const addCart = (productAdd: productcart) => {
         products[i].group = productAdd?.group;
         products[i].style = productAdd?.style;
         products[i].priceNew = productAdd?.priceNew;
-        products[i].quanlity++;
+        products[i].quanlity += productAdd.quanlity ?? 1;
         return (isProduct = true);
       }
     });

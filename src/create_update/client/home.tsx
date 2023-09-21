@@ -52,6 +52,7 @@ export default function HomeModal(props: any) {
                 style={{ height: "400px", border: "1px black solid" }}
               >
                 <Image
+                  priority={false}
                   alt="Hình ảnh"
                   src={
                     pricePr?.image === ""
@@ -73,6 +74,7 @@ export default function HomeModal(props: any) {
                   {price?.map((element: any, index: number) =>
                     element.image ? (
                       <Image
+                        priority={false}
                         key={index}
                         src={element?.image ?? "/static/image/noImage.jpeg"}
                         // fill

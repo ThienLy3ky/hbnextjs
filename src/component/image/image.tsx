@@ -13,6 +13,7 @@ export default function CardImage(props: any) {
   return (
     <div className="product-img position-relative overflow-hidden d-flex justify-content-center">
       <Image
+        priority={false}
         className="img-fluid"
         src={
           props.src !== ""

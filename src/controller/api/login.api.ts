@@ -33,6 +33,16 @@ const UserAdminService = {
       payload
     );
   },
+  google() {
+    return APIService.request(
+      METHOD_TYPE.GET,
+      `${apiUrl}/google`,
+      this.google.name,
+      cancelTokenHandlerObject,
+      null,
+      null
+    );
+  },
   getnewpasword(payload: object) {
     return APIService.request(
       METHOD_TYPE.POST,

@@ -12,7 +12,7 @@ export default function FlashProducts(props: any) {
         }}
       >
         <h2 className="bg-secondary pr-3">Đang giảm giá</h2>
-        {/* <a
+        <a
           style={{
             right: "0px",
             color: "red",
@@ -20,7 +20,7 @@ export default function FlashProducts(props: any) {
             padding: "0 15px",
           }}
           id="time-count"
-        ></a> */}
+        ></a>
       </div>
 
       <div className="row px-xl-5">
