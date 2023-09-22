@@ -12,14 +12,15 @@ import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
+// import { GoogleLogin } from "@react-oauth/google";
 export default function Sigin(props: any) {
-  const { setVerify } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validateEmails, setValidateEmails] = useState(false);
   const [validatePassword, setValidatePassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const url = useRouter();
+  const clientId = process.env.GOOGLE_CLIENT_ID;
   const dispatch = useDispatch();
   const handleLogin = async (e: any) => {
     e.preventDefault();
@@ -35,11 +36,17 @@ export default function Sigin(props: any) {
     const { access_token, role } = res;
 
     if (res) {
-      const { accessToken, refreshToken } = access_token;
-      dispatch(setUserData({ token: accessToken, refreshToken: refreshToken }));
-      dispatch(setRole(role));
-      showNotificationSuccess("Đăng nhập thành công ");
-      url.replace(role === "admin" ? "./manager" : "./");
+      if (access_token) {
+        const { accessToken, refreshToken } = access_token;
+        dispatch(
+          setUserData({ token: accessToken, refreshToken: refreshToken })
+        );
+        dispatch(setRole(role));
+        showNotificationSuccess("Đăng nhập thành công ");
+        url.replace(role === "admin" ? "./manager" : "./");
+      } else {
+        url.replace({ query: { verify: email } });
+      }
 
       //
     } else {
@@ -67,9 +74,26 @@ export default function Sigin(props: any) {
         <a href="#" className="social">
           <i className="fab fa-facebook-f"></i>
         </a>
-        <a onClick={() => {}} className=" social">
-          <i className="fab fa-google-plus-g"></i>
-        </a>
+        <GoogleLogin
+          clientId={clientId ?? ""}
+          render={(renderProps) => (
+            <button
+              type="button"
+              onClick={renderProps.onClick}
+              className="social p-2"
+            >
+              <i className="fab fa-google-plus-g"></i>
+            </button>
+          )}
+          onSuccess={(
+            response: GoogleLoginResponse | GoogleLoginResponseOffline
+          ) => {
+            console.log(response);
+          }}
+          onFailure={(err) => {
+            console.log(err);
+          }}
+        />
         <a href="#" className="social">
           <i className="fab fa-linkedin-in"></i>
         </a>

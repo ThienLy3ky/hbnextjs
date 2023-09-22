@@ -51,10 +51,6 @@ export default function Home() {
         data={product}
         onclose={() => setShowmodal(!showmodal)}
       />
-      <Script
-        src="/static/library/js/custom.js"
-        type="text/javascript"
-      ></Script>
     </ClientLayout>
   );
 }

@@ -9,10 +9,13 @@ import Sigin from "@/src/create_update/login/sigin";
 import ForgotPass from "@/src/create_update/login/forgotPass";
 import VerifyCode from "@/src/create_update/login/verifyCode";
 export default function Login() {
-  const [verify, setVerify] = useState(false);
+  const [Verify, setVerify] = useState<any>("");
   const url = useRouter();
+  const { verify } = url.query;
   const dispatch = useDispatch();
-  const clientId = process.env.GOOGLE_CLIENT_ID;
+  useEffect(() => {
+    setVerify(verify);
+  }, [verify]);
 
   return (
     <LoginLayout>
@@ -54,12 +57,12 @@ export default function Login() {
         </div>
         <div
           className={
-            verify
+            Verify
               ? "verify-code d-flex align-items-center justify-content-center active"
               : "verify-code d-flex align-items-center justify-content-center"
           }
         >
-          <VerifyCode />
+          <VerifyCode email={Verify} />
           {/* <GoogleLogin
             clientId={clientId ?? ""}
             // onSuccess={(

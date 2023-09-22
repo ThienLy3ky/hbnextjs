@@ -23,9 +23,9 @@ const MenuClient = (props: any) => {
                   style={{ flexDirection: "row" }}
                 >
                   <div className="btn px-0 ml-3 no-padding no-margin">
-                    <a href="#/" className="btn px-0">
+                    <Link href="#/" className="btn px-0">
                       <i className="fas fa-heart text-primary"></i>
-                    </a>
+                    </Link>
                     <span
                       className="badge number-noti rounded-circle"
                       style={{ paddingBottom: "2px" }}
@@ -60,7 +60,7 @@ const MenuClient = (props: any) => {
                     <nav
                       className="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"
                       id="user-dropdown"
-                      style={{ zIndex: "999", width: "max-content" }}
+                      style={{ zIndex: "999", width: "max-content", right: 0 }}
                     >
                       <div
                         className="navbar-nav w-100"
@@ -70,21 +70,30 @@ const MenuClient = (props: any) => {
                         }}
                       >
                         {!(data && data !== "") ? (
-                          <a
+                          <Link
                             href={`/login`}
                             className="nav-item nav-link"
                             style={{ color: "black !important" }}
                           >
                             Đăng nhập
-                          </a>
+                          </Link>
                         ) : (
-                          <a
-                            href={`/login`}
-                            className="nav-item nav-link "
-                            style={{ color: "black !important" }}
-                          >
-                            Đăng xuất
-                          </a>
+                          <>
+                            <Link
+                              href={`/user`}
+                              className="nav-item nav-link "
+                              style={{ color: "black !important" }}
+                            >
+                              Cài đặt
+                            </Link>
+                            <Link
+                              href={`/login`}
+                              className="nav-item nav-link "
+                              style={{ color: "black !important" }}
+                            >
+                              Đăng xuất
+                            </Link>
+                          </>
                         )}
                       </div>
                     </nav>
@@ -103,9 +112,9 @@ const MenuClient = (props: any) => {
                   id="navbarCollapse"
                 >
                   <div className="navbar-nav mr-auto py-0">
-                    <a href={"/"} className="nav-item nav-link active">
+                    <Link href={"/"} className="nav-item nav-link active">
                       Trang Chủ
-                    </a>
+                    </Link>
                     <Link href="/shops" className="nav-item nav-link">
                       Nhãn Hàng
                     </Link>
@@ -117,9 +126,9 @@ const MenuClient = (props: any) => {
                   </div>
                   <div className="navbar-nav ml-auto py-0 d-none d-lg-block">
                     <div className="btn px-0 ml-3 no-padding no-margin">
-                      <a href="#/" className="btn px-0">
+                      <Link href="#/" className="btn px-0">
                         <i className="fas fa-heart text-primary"></i>
-                      </a>
+                      </Link>
                       <span
                         className="badge number-noti rounded-circle"
                         style={{ paddingBottom: "2px" }}
@@ -154,7 +163,11 @@ const MenuClient = (props: any) => {
                       <nav
                         className="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"
                         id="user-dropdown"
-                        style={{ zIndex: "999", width: "max-content" }}
+                        style={{
+                          zIndex: "999",
+                          width: "max-content",
+                          right: 0,
+                        }}
                       >
                         <div
                           className="navbar-nav w-100"
@@ -164,21 +177,30 @@ const MenuClient = (props: any) => {
                           }}
                         >
                           {!(data && data !== "") ? (
-                            <a
+                            <Link
                               href={`/login`}
                               className="nav-item nav-link"
                               style={{ color: "black !important" }}
                             >
                               Đăng nhập
-                            </a>
+                            </Link>
                           ) : (
-                            <a
-                              href={`/login`}
-                              className="nav-item nav-link "
-                              style={{ color: "black !important" }}
-                            >
-                              Đăng xuất
-                            </a>
+                            <>
+                              <Link
+                                href={`/user`}
+                                className="nav-item nav-link "
+                                style={{ color: "black" }}
+                              >
+                                Cài đặt
+                              </Link>
+                              <Link
+                                href={`/login`}
+                                className="nav-item nav-link "
+                                style={{ color: "black" }}
+                              >
+                                Đăng xuất
+                              </Link>
+                            </>
                           )}
                         </div>
                       </nav>

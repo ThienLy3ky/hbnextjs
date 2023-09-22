@@ -27,11 +27,6 @@ export default function Document() {
         ></Script>
         <Script
           type="text/javascript"
-          src="/static/library/js/owl.carousel.min.js"
-          strategy="beforeInteractive"
-        ></Script>
-        <Script
-          type="text/javascript"
           src="/static/library/js/easing.min.js"
           strategy="beforeInteractive"
         ></Script>

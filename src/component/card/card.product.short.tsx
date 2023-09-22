@@ -33,7 +33,6 @@ export default function CardProductShort(props: propsIF) {
               className="btn btn-slide btn-square btn-cart"
               onClick={openModal}
             ></button>
-            <a className="btn btn-slide btn-square btn-heart" href="#/"></a>
           </div>
         </div>
       ) : (

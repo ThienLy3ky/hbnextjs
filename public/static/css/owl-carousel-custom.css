@@ -1,0 +1,118 @@
+.owl-prev {
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  border: 0;
+  display: flex;
+  align-items: center;
+  font-size: 2px;
+  color: #ff00938f;
+  text-align: center;
+  transition: opacity 0.15s ease;
+  animation: zoom-out-left 0.5s;
+  animation-timing-function: ease-in;
+}
+.owl-prev:focus,
+.owl-next:focus {
+  outline: none !important;
+}
+.owl-next {
+  background: transparent;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  font-size: 2px;
+  color: #ff00938f;
+  text-align: center;
+  transition: opacity 0.15s ease;
+  animation: zoom-out-right 0.5s;
+  animation-timing-function: ease-in;
+}
+.owl-carousel:hover .owl-prev {
+  font-size: 60px;
+  left: 1%;
+  color: #001db3;
+  text-decoration: none;
+  opacity: none;
+  animation: zoom-hover-left 0.5s;
+  animation-timing-function: ease-out;
+}
+.owl-carousel:hover .owl-next {
+  font-size: 60px;
+  right: 1%;
+  color: #001db3;
+  text-decoration: none;
+  opacity: none;
+  animation: zoom-hover-right 0.5s;
+  animation-timing-function: ease-out;
+}
+@keyframes zoom-hover-left {
+  from {
+    left: 0;
+    font-size: 2px;
+    color: #ff00938f;
+  }
+  to {
+    left: 1%;
+    font-size: 60px;
+    color: #001db3;
+  }
+}
+@keyframes zoom-out-left {
+  to {
+    left: 0;
+    font-size: 2px;
+    color: #ff00938f;
+  }
+  from {
+    left: 1%;
+    font-size: 60px;
+    color: #001db3;
+  }
+}
+@keyframes zoom-hover-right {
+  from {
+    right: 0;
+    font-size: 2px;
+    color: #ff00938f;
+  }
+  to {
+    right: 1%;
+    font-size: 60px;
+    color: #001db3;
+  }
+}
+@keyframes zoom-out-right {
+  to {
+    right: 0;
+    font-size: 2px;
+    color: #ff00938f;
+  }
+  from {
+    right: 1%;
+    font-size: 60px;
+    color: #001db3;
+  }
+}
+.owl-dots {
+  width: 100%;
+  display: flex;
+  position: absolute;
+  bottom: 2px;
+  justify-content: center !important;
+}
+
+.owl-dots > button {
+  margin: 3px;
+  border: none;
+  height: 7px;
+  width: 10px;
+}

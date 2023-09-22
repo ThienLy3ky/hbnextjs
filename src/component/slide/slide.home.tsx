@@ -1,12 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
-
+import "@/public/static/css/owl-carousel-custom.css";
+import dynamic from "next/dynamic";
+const ReactOwlCarousel = dynamic(() => import("react-owl-carousel"), {
+  // Do not import in server side
+  ssr: false,
+});
+const options = {
+  margin: 10,
+  items: 1,
+  autoplay: true,
+  slideBy: "page",
+  nav: true,
+  dots: true,
+  smartSpeed: 800,
+  navSpeed: 500,
+  autoplayTimeout: 10000,
+};
 export default function HomeSlide(props: any) {
   const { data }: { data: [] } = props;
   return (
     <div className="container-fluid mb-3">
       <div className="row px-xl-5">
-        <div className="col-lg-8">
+        <div className="col-lg-8 ">
           <div id="header-carousel" className=" mb-30 mb-lg-0">
             {/* <ol className="carousel-indicators">
               <li
@@ -18,41 +34,45 @@ export default function HomeSlide(props: any) {
               <li data-target="#header-carousel" data-slide-to="2"></li>
               <li data-target="#header-carousel" data-slide-to="3"></li>
             </ol> */}
-            <div className="owl-carousel owl-testimonials">
-              {data?.map((item: any) => (
-                <div key={item._id} className="" style={{ height: "430px" }}>
-                  <Image
-                    fill
-                    priority={false}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="position-absolute w-100 h-100"
-                    src="/static/image/noImage.jpeg"
-                    style={{ objectFit: "cover" }}
-                    alt=""
-                  />
-                  <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                    <div className="p-3" style={{ maxWidth: "700px" }}>
-                      <h1 className="display-4 text-white mb-3 animate__animated animate__fadeInDown">
-                        {item.title}
-                      </h1>
-                      <p className="mx-md-5 px-5 animate__animated animate__bounceIn">
-                        {item.content}
-                      </p>
-                      <Link
-                        className="btn btn-outline-danger py-2 px-4 mt-3 animate__animated animate__fadeInUp"
-                        href={item.link}
-                      >
-                        Mua ngay
-                      </Link>
+            {data && data.length > 0 ? (
+              <ReactOwlCarousel className="owl-carousel" {...options}>
+                {data?.map((item: any) => (
+                  <div key={item._id} className="" style={{ height: "430px" }}>
+                    <Image
+                      fill
+                      priority={false}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="position-absolute w-100 h-100"
+                      src="/static/image/noImage.jpeg"
+                      style={{ objectFit: "cover" }}
+                      alt=""
+                    />
+                    <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                      <div className="p-3" style={{ maxWidth: "700px" }}>
+                        <h1 className="display-4 text-white mb-3 animate__animated animate__fadeInDown">
+                          {item.title}
+                        </h1>
+                        <p className="mx-md-5 px-5 animate__animated animate__bounceIn">
+                          {item.content}
+                        </p>
+                        <Link
+                          className="btn btn-outline-danger py-2 px-4 mt-3 animate__animated animate__fadeInUp"
+                          href={item.link}
+                        >
+                          Mua ngay
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </ReactOwlCarousel>
+            ) : (
+              ""
+            )}
           </div>
         </div>
         <div
-          className="col-lg-4"
+          className="col-lg-4 pl-0"
           style={{
             maxHeight: "450px",
             overflowY: "auto",

@@ -8,19 +8,48 @@ import {
   showNotificationError,
   showNotificationSuccess,
 } from "@/src/component/notification/notificationFc";
+import Link from "next/link";
+import CountDownBtn from "@/src/component/countDown";
 
 export default function VerifyCode(props: any) {
-  const [userName, setUserName] = useState("");
-  const [validatErr, setValidatErr] = useState(false);
+  const { email = "" } = props;
+  const [code, setCode] = useState("");
+  const url = useRouter();
+  const [isLoading, setIsLoadding] = useState(false);
+  const [exp, setExp] = useState<any>();
+  const today = new Date();
 
+  const handerSend = async (e: any) => {
+    e.preventDefault();
+    if (code?.length === 5) {
+      const res = await UserAdminService.verifyCode({ email, code });
+      if (res) {
+        showNotificationSuccess(email + " Xác thực thành công!");
+        url.replace("/login");
+      }
+    }
+    showNotificationError("Mã code chưa chính xác");
+  };
+  const handerReCode = async () => {
+    if (!exp) {
+      const res = await UserAdminService.reCode(email);
+      const { message, exp, expVerify } = res;
+      setExp(exp ?? expVerify ?? undefined);
+      setCode("");
+    }
+  };
   return (
-    <form>
+    <form onSubmit={handerSend} style={{ alignItems: "unset" }}>
       <h1>Xác thực</h1>
-      <span>Mã code đã được gửi đến email của bạn</span>
+      <span>Mã code đã được gửi đến {email} của bạn</span>
       <input
         type="text"
+        minLength={5}
+        maxLength={5}
         placeholder="Nhập mã code"
-        onBlur={({ target }) => {}}
+        onBlur={({ target }) => {
+          setCode(target.value);
+        }}
       />
       <i
         style={{
@@ -33,8 +62,22 @@ export default function VerifyCode(props: any) {
         Email không đúng
       </i>
       <div>
-        <button onClick={() => {}}>Xác nhận </button>
-        <button className="forgot"> Gửi lại mã code </button>
+        <button type="submit">Xác nhận </button>
+        {!exp ? (
+          <button type="button" className="forgot ml-3" onClick={handerReCode}>
+            Gửi lại mã code
+          </button>
+        ) : (
+          <CountDownBtn
+            time={new Date(exp).getTime() - today.getTime()}
+            setExp={setExp}
+          />
+        )}
+      </div>
+      <div style={{ color: "blue", textAlign: "left" }}>
+        <Link href="/login" style={{ color: "blue", textAlign: "left" }}>
+          <i> Đăng nhập ?</i>
+        </Link>
       </div>
     </form>
   );

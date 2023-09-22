@@ -1,12 +1,13 @@
 import CartProvider from "@/src/component/context/client.context";
 import ClientLayout from "@/src/component/layout/client.layout";
 import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
 import useDetailHook from "@/src/controller/hooks/detail.client.hook";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { formatMoney } from "@/src/utils/action.helper";
 import AddToCart from "@/src/create_update/client/addCart";
+import SlideIF from "./slide";
+// import SlideIF from "./slide";
 export default function ProductDetail(props: any) {
   const product = useContext(CartProvider);
   const { carts, setCarts } = useContext(CartProvider);
@@ -18,7 +19,7 @@ export default function ProductDetail(props: any) {
   const [sizes, setSize] = useState<string>();
   const [quanlity, setQuanlity] = useState(1);
   const [PriceProduct, setPriceProduct] = useState<any>({});
-  const DynamicHeader = dynamic(() => import("./slide"));
+
   const router = useRouter();
   const { index = "" } = router.query;
   const rate = Math.random();
@@ -462,6 +463,7 @@ export default function ProductDetail(props: any) {
           ""
         )}
       </div>
+      <SlideIF products={items} openModal={() => {}} nocart={true} />
       {/* <DynamicHeader products={items} openModal={() => {}} nocart={true} /> */}
     </ClientLayout>
   );

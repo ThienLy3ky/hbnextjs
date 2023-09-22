@@ -27,42 +27,7 @@
     }
     toggleNavbarMethod();
     $(window).resize(toggleNavbarMethod);
-    if ($(".related-carousel").length)
-      if ($(".carousel-slide")?.length)
-        $(".related-carousel").owlCarousel({
-          loop: true,
-          margin: 29,
-          nav: false,
-          autoplay: true,
-          smartSpeed: 800,
-          navSpeed: 500,
-          autoplayTimeout: 10000,
-          slideBy: "page",
-          responsive: {
-            0: {
-              items: 2,
-            },
-            576: {
-              items: 2,
-            },
-            768: {
-              items: 3,
-            },
-            992: {
-              items: 5,
-            },
-          },
-        });
-      else {
-        location.reload();
-      }
-    $(".carousel-next").click(function () {
-      $(".related-carousel").trigger("next.owl.carousel");
-    });
 
-    $(".carousel-prev").click(function () {
-      $(".related-carousel").trigger("prev.owl.carousel");
-    });
     $(document).click(function (event) {
       var clickover = $(event.target);
       var _opened = $(".collapse").hasClass("collapse show");
@@ -131,30 +96,6 @@
 
   // Vendor carousel
   // if ($(".vendor-carousel")?.length)
-  $(".vendor-carousel").owlCarousel({
-    loop: true,
-    margin: 29,
-    nav: false,
-    autoplay: true,
-    smartSpeed: 1000,
-    responsive: {
-      0: {
-        items: 2,
-      },
-      576: {
-        items: 3,
-      },
-      768: {
-        items: 4,
-      },
-      992: {
-        items: 5,
-      },
-      1200: {
-        items: 6,
-      },
-    },
-  });
 
   // Related carousel
 

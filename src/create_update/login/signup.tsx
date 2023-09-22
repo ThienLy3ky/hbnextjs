@@ -16,6 +16,7 @@ import GoogleLogin, {
   GoogleLoginResponseOffline,
 } from "react-google-login";
 export default function Signup(props: any) {
+  const { setVerify } = props;
   const [userName, setUserName] = useState("");
   const [validatErr, setValidatErr] = useState(false);
   const [emailSG, setEmailSG] = useState("");
@@ -50,7 +51,7 @@ export default function Signup(props: any) {
     if (res) {
       showNotificationError("tài khoản của bạn đã được tạo thành công");
       setTimeout(() => {}, 3000);
-      url.reload();
+      url.replace({ query: { verify: emailSG } });
     }
     // redirect("/manager");
   };

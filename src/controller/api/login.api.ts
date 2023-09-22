@@ -53,6 +53,29 @@ const UserAdminService = {
       payload
     );
   },
+  verifyCode(payload: { email: string; code: string }) {
+    return APIService.request(
+      METHOD_TYPE.POST,
+      `${apiUrl}/verify`,
+      this.verifyCode.name,
+      cancelTokenHandlerObject,
+      null,
+      payload,
+      null
+    );
+  },
+
+  reCode(email: string) {
+    return APIService.request(
+      METHOD_TYPE.POST,
+      `${apiUrl}/resend/${email}`,
+      this.reCode.name,
+      cancelTokenHandlerObject,
+      null,
+      null,
+      null
+    );
+  },
 };
 
 const cancelTokenHandlerObject = createCancelTokenHandler(UserAdminService);
