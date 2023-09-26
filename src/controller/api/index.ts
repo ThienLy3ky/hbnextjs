@@ -73,16 +73,13 @@ export default class APIService {
               headers: { Authorization: reToken },
             })
             .then(({ data }) => {
-              console.log(
-                "🚀 ~ file: index.ts:92 ~ APIService ~ .then ~ data:",
-                data
-              );
               store.dispatch(
                 setUserData({
                   token: data,
                   refreshToken: reToken?.replace("Bearer", "").trim(),
                 })
               );
+              window.location.reload();
             })
             .catch(() => {
               showNotificationError(
@@ -92,6 +89,7 @@ export default class APIService {
               setRole("");
               clearRoler();
               clearToken();
+              window.location.reload();
             });
         } else if (error?.response?.status === 500) {
           showNotificationError("Lỗi Cập nhật");

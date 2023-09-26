@@ -1,9 +1,13 @@
 import CartContext from "@/src/component/context/client.context";
 import ClientLayout from "@/src/component/layout/client.layout";
-import { showNotificationSuccess } from "@/src/component/notification/notificationFc";
+import {
+  showNotificationError,
+  showNotificationSuccess,
+} from "@/src/component/notification/notificationFc";
 import Title from "@/src/component/title";
 import ClientService from "@/src/controller/api/client.api";
 import useUserHook from "@/src/controller/hooks/user.hook";
+import AddressModal from "@/src/create_update/client/address";
 import { formatMoney } from "@/src/utils/action.helper";
 import { clearCartFromLS } from "@/src/utils/cart";
 import { getCart, productcart } from "@/src/utils/cart.client";
@@ -12,23 +16,31 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function CheckOut() {
-  const [carts, setCarts] = useState([]);
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState({
-    provice: "",
-    ditrict: "",
-    ward: "",
-    street: "",
-  });
+  const [carts, setCarts] = useState<productcart[]>();
+  const [show, setShow] = useState(false);
+  const [address, setAddress] = useState("{}");
   const [typePayment, settypePayment] = useState<number>();
-  const [phone, setPhone] = useState("");
-  useEffect(() => {
-    setCarts(getCart());
-  }, []);
+
   const { data, isLoading, refetch } = useUserHook();
+  useEffect(() => {
+    setAddress(data?.address[0] ?? "{}");
+    setCarts(getCart());
+  }, [data]);
   let sumPrice = 0,
     ship = 20000;
+  const {
+    provice = "{}",
+    ditrict = "{}",
+    ward = "{}",
+    street = "",
+    phone = "",
+    name = "",
+  } = JSON.parse(address);
   const payment = async () => {
+    if (!carts || carts.length === 0) {
+      showNotificationError("Chưa có sản phẩm trong giỏ hàng");
+      return;
+    }
     const product = carts.map(
       ({ _id, group, name, size, style, priceNew, quanlity }: productcart) => {
         return {
@@ -43,8 +55,6 @@ export default function CheckOut() {
       }
     );
     const res = await ClientService.payment({
-      name,
-      phone,
       address,
       typePayment,
       product,
@@ -154,67 +164,47 @@ export default function CheckOut() {
               <div className="row">
                 <div className="col-md-6 form-group">
                   <label>Tên</label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    placeholder="John"
-                    value={name}
-                    onChange={({ target }) => setName(target.value)}
-                  />
+                  <text className="form-control" type="text">
+                    {name}
+                  </text>
                 </div>
                 <div className="col-md-6 form-group">
                   <label>Số Điện thoại</label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    placeholder="+123 456 789"
-                    onChange={({ target }) => setPhone(target.value)}
-                  />
+                  <text className="form-control" type="text">
+                    {phone}
+                  </text>
                 </div>
                 <div className="col-md-6 form-group">
                   <label>Số nhà/ Đường</label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    placeholder=".."
-                    value={address.street}
-                    onChange={({ target }) =>
-                      setAddress({ ...address, street: target.value })
-                    }
-                  />
+                  <text className="form-control" type="text">
+                    {street}
+                  </text>
                 </div>
                 <div className="col-md-6 form-group">
                   <label>Thành phố</label>
-                  <select className="custom-select">
-                    <option>Tp Hồ chí minh</option>
-                    <option>Đà nẵng</option>
-                    <option>Hà nội</option>
-                    <option>Hải phòng</option>
-                  </select>
+                  <text className="form-control" type="text">
+                    {JSON.parse(provice)?.name ?? ""}
+                  </text>
                 </div>
                 <div className="col-md-6 form-group">
-                  <label>Quận </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    placeholder=".."
-                    value={address.ward}
-                    onChange={({ target }) =>
-                      setAddress({ ...address, ward: target.value })
-                    }
-                  />
+                  <label>TP/Huyện </label>
+                  <text className="form-control" type="text">
+                    {JSON.parse(ditrict)?.name ?? ""}
+                  </text>
                 </div>
                 <div className="col-md-6 form-group">
-                  <label>Huyện</label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    placeholder=".."
-                    value={address.ditrict}
-                    onChange={({ target }) =>
-                      setAddress({ ...address, ditrict: target.value })
-                    }
-                  />
+                  <label>Xã/Quận</label>
+                  <text className="form-control" type="text">
+                    {JSON.parse(ward)?.name ?? ""}
+                  </text>
+                </div>
+                <div className="col-12 d-flex justify-content-center">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => setShow(true)}
+                  >
+                    Đổi địa chỉ nhận hàng
+                  </button>
                 </div>
               </div>
             </div>
@@ -261,25 +251,35 @@ export default function CheckOut() {
                   </div>
                 </div>
               </div>
-              {data ? (
-                <button
-                  className="btn btn-block btn-primary font-weight-bold py-3"
-                  onClick={() => payment()}
-                >
-                  Xác nhận
-                </button>
+              {carts && carts.length > 0 ? (
+                data ? (
+                  <button
+                    className="btn btn-block btn-primary font-weight-bold py-3"
+                    onClick={() => payment()}
+                  >
+                    Xác nhận
+                  </button>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="btn btn-block btn-primary font-weight-bold py-3"
+                  >
+                    Đăng nhập
+                  </Link>
+                )
               ) : (
-                <Link
-                  href="/login"
-                  className="btn btn-block btn-primary font-weight-bold py-3"
-                >
-                  Đăng nhập
-                </Link>
+                ""
               )}
             </div>
           </div>
         </div>
       </div>
+      <AddressModal
+        show={show}
+        onclose={() => setShow(false)}
+        data={data?.address}
+        setData={(e: any) => setAddress(e)}
+      />
     </ClientLayout>
   );
 }
