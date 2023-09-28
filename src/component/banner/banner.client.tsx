@@ -3,6 +3,8 @@ import DropdownMenu from "@/src/component/dropdown/categori.menu";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import dynamic from "next/dynamic";
+import { useState } from "react";
+import { useRouter } from "next/router";
 const ReactOwlCarousel = dynamic(() => import("react-owl-carousel"), {
   // Do not import in server side
   ssr: false,
@@ -23,6 +25,20 @@ export default function BannerClient(props: any) {
     (state: any) => state.app?.template?.categories
   );
   const { data }: { data: any[] } = props;
+  const router = useRouter();
+  const [key, setKey] = useState<string>("");
+  const [categories, setCategories] = useState<string[]>();
+  const handleSearch = (e: any) => {
+    if (!categories || !key) return;
+    router.replace({
+      pathname: "/shops",
+      query: {
+        ...router.query,
+        categories: JSON.stringify(categories),
+        key,
+      },
+    });
+  };
   return (
     <div className="container-fluid">
       <div className="banner_bg_main" style={{ marginBottom: "20px" }}>
@@ -58,14 +74,19 @@ export default function BannerClient(props: any) {
                 >
                   Danh mục sản phẩm
                 </a>
-                <DropdownMenu data={dataSelect} />
+                <DropdownMenu
+                  data={dataSelect}
+                  onClick={(id: string) => setCategories([id])}
+                />
               </div>
               <div className="main col-6">
                 <div className="input-group">
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Tim kiem"
+                    placeholder="Tìm kiếm"
+                    value={key}
+                    onChange={({ target }) => setKey(target.value)}
                     style={{ borderRadius: "0.25rem" }}
                   />
                   <div className="input-group-append">
@@ -77,6 +98,7 @@ export default function BannerClient(props: any) {
                         borderColor: "#f26522",
                         borderRadius: "0.25rem",
                       }}
+                      onClick={handleSearch}
                     >
                       <i className="fa fa-search"></i>
                     </button>

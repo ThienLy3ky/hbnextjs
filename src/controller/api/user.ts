@@ -26,6 +26,39 @@ const UserService = {
       null
     );
   },
+  cancelOrder(code: string) {
+    return APIService.request(
+      METHOD_TYPE.POST,
+      `${apiUrl}/cancel`,
+      this.cancelOrder.name,
+      cancelTokenHandlerObject,
+      null,
+      { code },
+      null
+    );
+  },
+  updateProfile(data: any) {
+    return APIService.request(
+      METHOD_TYPE.PUT,
+      `${apiUrl}`,
+      this.updateProfile.name,
+      cancelTokenHandlerObject,
+      null,
+      data,
+      null
+    );
+  },
+  changePassword(data: any) {
+    return APIService.request(
+      METHOD_TYPE.PUT,
+      `${apiUrl}/change-passwork`,
+      this.updateProfile.name,
+      cancelTokenHandlerObject,
+      null,
+      { data },
+      null
+    );
+  },
 };
 
 const cancelTokenHandlerObject = createCancelTokenHandler(UserService);

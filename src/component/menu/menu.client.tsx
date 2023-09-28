@@ -3,11 +3,22 @@ import * as React from "react";
 import CartContext from "@/src/component/context/client.context";
 import CartDropdown from "@/src/pages/cart/cart.dropdown";
 import Link from "next/link";
+import { TextField } from "@mui/material";
+import { useRouter } from "next/router";
+import useUserHook from "@/src/controller/hooks/user.hook";
 const MenuClient = (props: any) => {
-  const { data } = props;
-  const { carts, setCarts } = React.useContext(CartContext);
-
-  return (
+  const { data, isLoading, refetch } = useUserHook();
+  const { carts } = React.useContext(CartContext);
+  const router = useRouter();
+  const [key, setKey] = React.useState("");
+  const handleSearch = (e: any) => {
+    e.preventDefault();
+    router.replace({
+      pathname: "/shops",
+      query: { ...router.query, key },
+    });
+  };
+  return !isLoading ? (
     <div className="container-fluid">
       <div className="banner_bg_main">
         <div className="container-fluid bg-dark menu-animation menu-layer">
@@ -18,20 +29,19 @@ const MenuClient = (props: any) => {
                   href="/"
                   className="text-decoration-none d-block d-lg-none"
                 />
+
                 <div
                   className="navbar-nav ml-auto py-0 navbar-toggler"
                   style={{ flexDirection: "row" }}
                 >
                   <div className="btn px-0 ml-3 no-padding no-margin">
-                    <Link href="#/" className="btn px-0">
-                      <i className="fas fa-heart text-primary"></i>
-                    </Link>
-                    <span
-                      className="badge number-noti rounded-circle"
-                      style={{ paddingBottom: "2px" }}
+                    <a
+                      className="btn pr-3"
+                      data-toggle="collapse"
+                      data-target="#navbarSearch"
                     >
-                      0
-                    </span>
+                      <i className="fa fa-search text-primary"></i>
+                    </a>
                   </div>
                   <div className="btn px-0 ml-3 no-padding no-margin">
                     <a
@@ -65,7 +75,6 @@ const MenuClient = (props: any) => {
                       <div
                         className="navbar-nav w-100"
                         style={{
-                          color: "black !important",
                           flexDirection: "column",
                         }}
                       >
@@ -73,7 +82,7 @@ const MenuClient = (props: any) => {
                           <Link
                             href={`/login`}
                             className="nav-item nav-link"
-                            style={{ color: "black !important" }}
+                            style={{ color: "black " }}
                           >
                             Đăng nhập
                           </Link>
@@ -82,14 +91,14 @@ const MenuClient = (props: any) => {
                             <Link
                               href={`/user`}
                               className="nav-item nav-link "
-                              style={{ color: "black !important" }}
+                              style={{ color: "black " }}
                             >
                               Cài đặt
                             </Link>
                             <Link
                               href={`/login`}
                               className="nav-item nav-link "
-                              style={{ color: "black !important" }}
+                              style={{ color: "black " }}
                             >
                               Đăng xuất
                             </Link>
@@ -126,15 +135,13 @@ const MenuClient = (props: any) => {
                   </div>
                   <div className="navbar-nav ml-auto py-0 d-none d-lg-block">
                     <div className="btn px-0 ml-3 no-padding no-margin">
-                      <Link href="#/" className="btn px-0">
-                        <i className="fas fa-heart text-primary"></i>
-                      </Link>
-                      <span
-                        className="badge number-noti rounded-circle"
-                        style={{ paddingBottom: "2px" }}
+                      <a
+                        className="btn px-3"
+                        data-toggle="collapse"
+                        data-target="#navbarSearch"
                       >
-                        0
-                      </span>
+                        <i className="fa fa-search text-primary"></i>
+                      </a>
                     </div>
                     <div className="btn px-0 ml-3 no-padding no-margin">
                       <a
@@ -172,7 +179,6 @@ const MenuClient = (props: any) => {
                         <div
                           className="navbar-nav w-100"
                           style={{
-                            color: "black !important",
                             flexDirection: "column",
                           }}
                         >
@@ -209,10 +215,39 @@ const MenuClient = (props: any) => {
                 </div>
               </nav>
             </div>
+            <div
+              className=" collapse navbar-collapse col-12 p-0 "
+              style={{ background: "rgb(204 241 213 / 62%)" }}
+              id="navbarSearch"
+            >
+              <form
+                onSubmit={handleSearch}
+                className="navbar d-flex justify-content-center p-2"
+              >
+                <TextField
+                  inputMode="search"
+                  inputProps={{ style: { background: "white" } }}
+                  color="primary"
+                  className="col-md-4 col-sm-7"
+                  type="text"
+                  size="small"
+                  placeholder="Tìm kiếm"
+                  title="search"
+                  name="search"
+                  value={key}
+                  onChange={({ target }) => setKey(target.value)}
+                />
+                <button type="submit" className="btn btn-primary">
+                  <i className="fa fa-search"></i>
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  ) : (
+    ""
   );
 };
 

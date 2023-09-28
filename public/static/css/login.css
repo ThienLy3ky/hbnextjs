@@ -310,3 +310,6 @@ footer a {
   animation: dropdown-out 0.3s;
   animation-timing-function: ease-out;
 }
+.col {
+  flex: unset !important;
+}

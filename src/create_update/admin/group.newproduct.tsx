@@ -108,6 +108,7 @@ export default function NewProductGroup(props: IGroupProps) {
                   </div>
                   <div className="col-md-4">
                     <Image
+                      priority={false}
                       alt="Hình ảnh"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       fill

@@ -5,13 +5,11 @@ import Header from "@/src/component/header/index.client";
 import "@/public/static/library/css/style.css";
 import Script from "next/script";
 import Footer from "../footer/footer";
-import useUserHook from "@/src/controller/hooks/user.hook";
 export default function ClientLayout({ children }: any) {
-  const { data, isLoading, refetch } = useUserHook();
   return (
     <CartProvider value="any">
       <Header />
-      <MenuClient data={data} />
+      <MenuClient />
       {children}
       <button className="btn btn-primary back-to-top">
         <i className="fa fa-angle-double-up"></i>

@@ -1,11 +1,7 @@
 import "@/public/static/css/login.css";
-import Script from "next/script";
-import LoginLayout from "@/src/component/layout/login.layout";
+import { OutlinedInput, InputAdornment } from "@mui/material";
 import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { setRole, setUserData } from "@/src/controller/redux/slice";
 import UserAdminService from "@/src/controller/api/login.api";
 import {
   showNotificationError,
@@ -25,6 +21,14 @@ export default function Signup(props: any) {
   const [validatePasswordSG, setValidatePasswordSG] = useState(false);
   const [validatePasswordRSG, setValidatePasswordRSG] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
   const url = useRouter();
   const handleSingUp = async (e: any) => {
     e.preventDefault();
@@ -80,18 +84,22 @@ export default function Signup(props: any) {
         </a>
       </div>
       <span>hoặc sử dụng email để đăng kí</span>
-      <input
+      <OutlinedInput
+        size="medium"
+        className="col col-12"
         type="text"
         placeholder="Name"
-        onBlur={({ target }) => {
+        onChange={({ target }) => {
           setValidatErr(!target.value);
           target.value ? setUserName(target.value) : "";
         }}
       />
-      <input
+      <OutlinedInput
+        size="medium"
+        className="col col-12"
         type="email"
         placeholder="Email"
-        onBlur={({ target }) => {
+        onChange={({ target }) => {
           setEmailSG(target.value);
           setValidateEmailsSG(!validateEmail(target.value));
         }}
@@ -110,10 +118,29 @@ export default function Signup(props: any) {
       ) : (
         ""
       )}
-      <input
-        type="password"
+      <OutlinedInput
+        size="medium"
+        endAdornment={
+          <InputAdornment position="end">
+            {showPassword ? (
+              <i
+                className="fa fa-eye"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+              ></i>
+            ) : (
+              <i
+                className="fa fa-eye-slash"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+              ></i>
+            )}
+          </InputAdornment>
+        }
+        className="col col-12"
+        type={showPassword ? "text" : "password"}
         placeholder="Password"
-        onBlur={({ target }) => {
+        onChange={({ target }) => {
           setValidatePasswordSG(!validatePasswords(target.value));
           validatePasswords(target.value) ? setPasswordSG(target.value) : "";
         }}
@@ -132,10 +159,29 @@ export default function Signup(props: any) {
       ) : (
         ""
       )}
-      <input
-        type="password"
+      <OutlinedInput
+        size="medium"
+        endAdornment={
+          <InputAdornment position="end">
+            {showPassword ? (
+              <i
+                className="fa fa-eye"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+              ></i>
+            ) : (
+              <i
+                className="fa fa-eye-slash"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+              ></i>
+            )}
+          </InputAdornment>
+        }
+        className="col col-12"
+        type={showPassword ? "text" : "password"}
         placeholder="RePassword"
-        onBlur={({ target }) => {
+        onChange={({ target }) => {
           setValidatePasswordRSG(target.value !== passwordSG);
         }}
       />

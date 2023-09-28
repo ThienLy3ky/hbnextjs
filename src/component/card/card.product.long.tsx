@@ -58,7 +58,7 @@ export default function CardProductLong(props: propsIF) {
             <div>
               {product?.rate ?? 5}
               <small className="fa fa-star text-primary mr-1"></small>
-              <small>({product?.totalRate ?? 1})</small>
+              <small>({product?.review?.length ?? 1})</small>
             </div>
             {openModal ? (
               <button

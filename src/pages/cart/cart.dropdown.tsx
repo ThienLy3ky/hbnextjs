@@ -83,9 +83,6 @@ export default function CartDropdown(props: any) {
                                         )}
                                       </h5>
                                     </div>
-                                    <a href="#!" style={{ color: "#cecece " }}>
-                                      <i className="fas fa-trash-alt"></i>
-                                    </a>
                                   </div>
                                 </div>
                               </div>

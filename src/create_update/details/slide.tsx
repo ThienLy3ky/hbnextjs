@@ -32,7 +32,7 @@ export default function SlideIF({ products, openModal, addProduct }: any) {
   return (
     <div className="container-fluid py-5">
       <h2 className="section-title position-relative text-uppercase mx-xl-5 mb-4">
-        <span className="bg-secondary pr-3">You May Also Like</span>
+        <span className="bg-secondary pr-3">Có thể bạn quan tâm</span>
       </h2>
       <div className="row px-xl-5">
         <div className="col">

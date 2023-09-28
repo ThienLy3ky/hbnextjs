@@ -44,6 +44,7 @@ export default function Upload({
       <Image
         alt="Hình ảnh"
         fill
+        priority={false}
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         src={
           preview !== "/static/image/download.png"

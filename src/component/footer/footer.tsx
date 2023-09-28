@@ -38,7 +38,7 @@ export default function Footer() {
                 ? keyWord[0].keyWord?.map((item: string) => {
                     return (
                       <Link
-                        href={"/shops"}
+                        href={"/shops?key=" + item}
                         className="btn btn-outline-warning mr-1"
                         key={item}
                       >

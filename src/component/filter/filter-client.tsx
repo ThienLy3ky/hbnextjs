@@ -1,13 +1,16 @@
 import { Slider } from "@mui/material";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function FilterClient({ option, query, setQuery }: any) {
   const router = useRouter();
   let type: string[] = query?.type ?? [];
   let category: string[] = query?.categories ?? [];
   let company: string[] = query?.company ?? [];
-  const [price, setPrice] = useState(query?.price ?? [1000, 1000000]);
+  const [price, setPrice] = useState<number[]>(
+    query?.price.length < 2 ? [1000, 1000000] : query?.price
+  );
+
   const { types = [], categories = [], companies = [] } = option ?? {};
   function valueLabelFormat(value: number) {
     const units = ["Đ", "K", "M"];
@@ -50,7 +53,6 @@ export default function FilterClient({ option, query, setQuery }: any) {
     <div
       className="col-lg-3 col-md-4"
       style={{
-        paddingTop: "9px",
         height: "fit-content",
       }}
     >
@@ -67,10 +69,11 @@ export default function FilterClient({ option, query, setQuery }: any) {
             max={5000000}
             valueLabelFormat={valueLabelFormat}
             onChange={({ target }: any) => setPrice(target.value)}
-            onChangeCommitted={() =>
-              router.replace({
-                query: { ...router.query, price: JSON.stringify(price) },
-              })
+            onChangeCommitted={
+              () => setQuery({ ...query, price })
+              // router.replace({
+              //   query: { ...router.query, price: JSON.stringify(price) },
+              // })
             }
             valueLabelDisplay="on"
           />

@@ -8,10 +8,14 @@ const getData = async ({ queryKey }: any) => {
 };
 
 const useProfilelHook = (status: any) => {
-  const { data, isLoading } = useQuery([QUERY_KEY.profile, status], getData);
+  const { data, isLoading, refetch } = useQuery(
+    [QUERY_KEY.profile, status],
+    getData
+  );
   return {
     isLoading,
     data,
+    refetch,
   };
 };
 

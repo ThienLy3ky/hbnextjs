@@ -6,7 +6,11 @@ import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { formatMoney } from "@/src/utils/action.helper";
 import AddToCart from "@/src/create_update/client/addCart";
-import SlideIF from "./slide";
+import SlideIF from "../../create_update/details/slide";
+import Title from "@/src/component/title";
+import Review from "@/src/create_update/details/review";
+import Link from "next/link";
+import SlideDetail from "@/src/create_update/details/slide.detail";
 // import SlideIF from "./slide";
 export default function ProductDetail(props: any) {
   const product = useContext(CartProvider);
@@ -22,7 +26,6 @@ export default function ProductDetail(props: any) {
 
   const router = useRouter();
   const { index = "" } = router.query;
-  const rate = Math.random();
   const {
     data: { items, data },
     isLoading,
@@ -82,50 +85,18 @@ export default function ProductDetail(props: any) {
         )[0]
       );
   };
-  return (
+  return !isLoading ? (
     <ClientLayout>
+      <Title
+        nameLink={{ name: "Trang Chủ", link: "/" }}
+        namePage={data?.name}
+      />
       <div className="container-fluid pb-5">
         {data ? (
           <>
             <div className="row px-xl-5">
               <div className="col-lg-5 mb-30">
-                <div
-                  id="product-carousel"
-                  className="carousel slide"
-                  data-ride="carousel"
-                >
-                  <div className="carousel-inner bg-light">
-                    {data?.price?.map((element: any, index: number) =>
-                      element.image ? (
-                        <div className="carousel-item active" key={index}>
-                          <Image
-                            className=" h-100"
-                            fill
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            src={element?.image ?? "/static/image/noImage.jpeg"}
-                            alt={data?.name}
-                          />
-                        </div>
-                      ) : (
-                        ""
-                      )
-                    )}
-                  </div>
-                  <a
-                    className="carousel-control-prev"
-                    href="#product-carousel"
-                    data-slide="prev"
-                  >
-                    <i className="fa fa-2x fa-angle-left text-dark"></i>
-                  </a>
-                  <a
-                    className="carousel-control-next"
-                    href="#product-carousel"
-                    data-slide="next"
-                  >
-                    <i className="fa fa-2x fa-angle-right text-dark"></i>
-                  </a>
-                </div>
+                <SlideDetail data={data?.price} name={data?.name} />
               </div>
 
               <div className="col-lg-7 h-auto mb-30">
@@ -136,14 +107,14 @@ export default function ProductDetail(props: any) {
                       {Array(5)
                         .fill(1)
                         .map((el, index) => {
-                          if (rate < index + 1 && rate > index)
+                          if (data?.rate < index + 1 && data?.rate > index)
                             return (
                               <small
                                 key={index}
                                 className="fa fa-star-half-alt text-primary mr-1"
                               ></small>
                             );
-                          if (rate < index + 1)
+                          if (data?.rate < index + 1)
                             return (
                               <small
                                 key={index}
@@ -158,7 +129,9 @@ export default function ProductDetail(props: any) {
                           );
                         })}
                     </div>
-                    <small className="pt-1">(99 Reviews)</small>
+                    <small className="pt-1">
+                      ({data?.review?.length ?? 1})
+                    </small>
                   </div>
                   <h3
                     className="font-weight-semi-bold"
@@ -346,12 +319,11 @@ export default function ProductDetail(props: any) {
                       data-toggle="tab"
                       href="#tab-pane-3"
                     >
-                      Đánh giá (0)
+                      Đánh giá ({data?.review?.length ?? 1})
                     </a>
                   </div>
                   <div className="tab-content">
                     <div className="tab-pane fade show active" id="tab-pane-1">
-                      <h4 className="mb-3">Thông tin</h4>
                       <h5>{data?.summary}</h5>
                       <p>{data?.description}</p>
                       <div className="d-flex flex-nowrap">
@@ -359,9 +331,13 @@ export default function ProductDetail(props: any) {
 
                         {data?.keyWord?.map((e: string) => {
                           return (
-                            <button key={e} className="btn btn-secondary">
+                            <Link
+                              href={"/shops?key=" + e}
+                              key={e}
+                              className="btn btn-secondary"
+                            >
                               {e}
-                            </button>
+                            </Link>
                           );
                         })}
                       </div>
@@ -369,88 +345,76 @@ export default function ProductDetail(props: any) {
 
                     <div className="tab-pane fade" id="tab-pane-3">
                       <div className="row">
-                        <div className="col-md-6">
-                          <h4 className="mb-4">1 review for Product Name</h4>
-                          <div className="media mb-4">
-                            {/* <img
+                        <div
+                          className="col-md-6"
+                          style={{ maxHeight: "500px" }}
+                        >
+                          <h4 className="mb-4">
+                            {data?.review?.length ?? 1} review
+                          </h4>
+
+                          {/* <img
                               src="img/user.jpg"
                               alt=""
                               className="img-fluid mr-3 mt-1"
                               style={{ width: "45px" }}
                             /> */}
-                            <div className="media-body">
-                              <h6>
-                                John Doe
-                                <small>
-                                  {" "}
-                                  - <i>01 Jan 2045</i>
-                                </small>
-                              </h6>
-                              <div className="text-primary mb-2">
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star-half-alt"></i>
-                                <i className="far fa-star"></i>
-                              </div>
-                              <p>
-                                Diam amet duo labore stet elitr ea clita ipsum,
-                                tempor labore accusam ipsum et no at. Kasd diam
-                                tempor rebum magna dolores sed sed eirmod ipsum.
-                              </p>
-                            </div>
-                          </div>
+                          {data?.review?.map(
+                            ({
+                              accountId,
+                              comment,
+                              rate,
+                              date,
+                            }: {
+                              accountId: string;
+                              comment: string;
+                              rate: number;
+                              date: any;
+                            }) => {
+                              return (
+                                <div key={accountId} className="media mb-4">
+                                  <div className="media-body">
+                                    <h6>
+                                      {accountId}
+                                      <small>
+                                        - <i>{date}</i>
+                                      </small>
+                                    </h6>
+                                    <div className="text-primary mb-2">
+                                      {Array(5)
+                                        .fill(1)
+                                        .map((el, index) => {
+                                          if (rate < index + 1 && rate > index)
+                                            return (
+                                              <small
+                                                key={index}
+                                                className="fa fa-star-half-alt text-primary mr-1"
+                                              ></small>
+                                            );
+                                          if (rate < index + 1)
+                                            return (
+                                              <small
+                                                key={index}
+                                                className="far fa-star text-primary mr-1"
+                                              ></small>
+                                            );
+                                          return (
+                                            <small
+                                              key={index}
+                                              className="fa fa-star text-primary mr-1"
+                                            ></small>
+                                          );
+                                        })}
+                                    </div>
+                                    <p>{comment}</p>
+                                  </div>
+                                </div>
+                              );
+                            }
+                          )}
                         </div>
                         <div className="col-md-6">
-                          <h4 className="mb-4">Leave a review</h4>
-                          <small>
-                            Your email address will not be published. Required
-                            fields are marked *
-                          </small>
-                          <div className="d-flex my-3">
-                            <p className="mb-0 mr-2">Your Rating * :</p>
-                            <div className="text-primary">
-                              <i className="far fa-star"></i>
-                              <i className="far fa-star"></i>
-                              <i className="far fa-star"></i>
-                              <i className="far fa-star"></i>
-                              <i className="far fa-star"></i>
-                            </div>
-                          </div>
-                          <form>
-                            <div className="form-group">
-                              <label htmlFor="message">Your Review *</label>
-                              <textarea
-                                id="message"
-                                cols={30}
-                                rows={5}
-                                className="form-control"
-                              ></textarea>
-                            </div>
-                            <div className="form-group">
-                              <label htmlFor="name">Your Name *</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="name"
-                              />
-                            </div>
-                            <div className="form-group">
-                              <label htmlFor="email">Your Email *</label>
-                              <input
-                                type="email"
-                                className="form-control"
-                                id="email"
-                              />
-                            </div>
-                            <div className="form-group mb-0">
-                              <input
-                                type="submit"
-                                value="Leave Your Review"
-                                className="btn btn-primary px-3"
-                              />
-                            </div>
-                          </form>
+                          <Review />
                         </div>
                       </div>
                     </div>
@@ -466,5 +430,7 @@ export default function ProductDetail(props: any) {
       <SlideIF products={items} openModal={() => {}} nocart={true} />
       {/* <DynamicHeader products={items} openModal={() => {}} nocart={true} /> */}
     </ClientLayout>
+  ) : (
+    ""
   );
 }

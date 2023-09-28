@@ -12,7 +12,6 @@ import {
 import UserService from "@/src/controller/api/user";
 export default function AddressModal(props: any) {
   const { show, onclose, data = [], setData } = props;
-  console.log("🚀 ~ file: address.tsx:15 ~ AddressModal ~ data:", data);
   const [address, setAddress] = useState({
     provice: "{}",
     ditrict: "{}",
@@ -46,8 +45,6 @@ export default function AddressModal(props: any) {
     setData(JSON.stringify(address));
     data.push(JSON.stringify(address));
     onclose();
-
-    console.log("🚀 ~ file: address.tsx:50 ~ handleAdd ~ res:", res);
   };
   return (
     <Modal
@@ -74,7 +71,7 @@ export default function AddressModal(props: any) {
               <a
                 className="col-6 nav-link my-0 active"
                 data-toggle="tab"
-                href="#tab-pane-main"
+                href="#tab-pane-address"
               >
                 Địa chỉ nhận hàng
               </a>
@@ -86,7 +83,7 @@ export default function AddressModal(props: any) {
                 Thêm địa chỉ mới
               </a>
             </nav>
-            <div className=" tab-pane fade show active" id="tab-pane-main">
+            <div className=" tab-pane fade show active" id="tab-pane-address">
               {data?.map((item: any, index: number) => {
                 const {
                   provice = "{}",

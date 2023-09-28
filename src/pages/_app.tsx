@@ -9,10 +9,7 @@ import ReduxService from "../controller/redux";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
-    Promise.allSettled([
-      ReduxService.getSetting(),
-      // ReduxService.getGroupPrice(),
-    ]);
+    Promise.allSettled([ReduxService.getSetting()]);
   });
   const client = new QueryClient({
     defaultOptions: {

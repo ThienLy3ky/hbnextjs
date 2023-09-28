@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
+import { OutlinedInput, InputAdornment } from "@mui/material";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { setRole, setUserData } from "@/src/controller/redux/slice";
@@ -19,6 +19,14 @@ export default function Sigin(props: any) {
   const [validateEmails, setValidateEmails] = useState(false);
   const [validatePassword, setValidatePassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
   const url = useRouter();
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const dispatch = useDispatch();
@@ -99,10 +107,12 @@ export default function Sigin(props: any) {
         </a>
       </div>
       <span>hoặc sử dụng tài khoản</span>
-      <input
+      <OutlinedInput
         type="email"
         placeholder="Email"
-        onBlur={({ target }) => {
+        size="small"
+        className="col col-12"
+        onChange={({ target }) => {
           setValidateEmails(!validateEmail(target.value));
           validateEmail(target.value) ? setEmail(target.value) : "";
         }}
@@ -121,10 +131,28 @@ export default function Sigin(props: any) {
       ) : (
         ""
       )}
-      <input
-        type="password"
-        placeholder="Password"
-        onBlur={({ target }) => {
+      <OutlinedInput
+        endAdornment={
+          <InputAdornment position="end">
+            {showPassword ? (
+              <i
+                className="fa fa-eye"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+              ></i>
+            ) : (
+              <i
+                className="fa fa-eye-slash"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+              ></i>
+            )}
+          </InputAdornment>
+        }
+        className="col col-12"
+        type={showPassword ? "text" : "password"}
+        size="small"
+        onChange={({ target }) => {
           setValidatePassword(!validatePasswords(target.value));
           validatePasswords(target.value) ? setPassword(target.value) : "";
         }}
