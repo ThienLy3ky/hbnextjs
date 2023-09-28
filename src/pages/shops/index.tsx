@@ -88,17 +88,20 @@ export default function Shops() {
                     className="col-md-6"
                     endAdornment={
                       <InputAdornment position="end">
-                        <i className="fa fa-search" onClick={handleSearch}></i>
+                        <i
+                          className="fa-solid fa-search"
+                          onClick={handleSearch}
+                        ></i>
                       </InputAdornment>
                     }
                   />
                   <div className="d-inline-flex">
                     <SortClient />
                     <button className="ml-2 btn btn-sm btn-light btn-product-short">
-                      <i className="fa fa-th-large"></i>
+                      <i className="fa-solid fa-th-large"></i>
                     </button>
                     <button className="btn btn-sm btn-light ml-2 btn-product-long">
-                      <i className="fa fa-bars"></i>
+                      <i className="fa-solid fa-bars"></i>
                     </button>
                   </div>
                 </div>

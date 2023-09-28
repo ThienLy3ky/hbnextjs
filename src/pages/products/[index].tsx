@@ -111,7 +111,7 @@ export default function ProductDetail(props: any) {
                             return (
                               <small
                                 key={index}
-                                className="fa fa-star-half-alt text-primary mr-1"
+                                className="fa-solid fa-star-half-alt text-primary mr-1"
                               ></small>
                             );
                           if (data?.rate < index + 1)
@@ -124,7 +124,7 @@ export default function ProductDetail(props: any) {
                           return (
                             <small
                               key={index}
-                              className="fa fa-star text-primary mr-1"
+                              className="fa-solid fa-star text-primary mr-1"
                             ></small>
                           );
                         })}
@@ -246,7 +246,7 @@ export default function ProductDetail(props: any) {
                           className="btn btn-primary btn-minus"
                           onClick={() => setQuanlity(quanlity - 1)}
                         >
-                          <i className="fa fa-minus"></i>
+                          <i className="fa-solid fa-minus"></i>
                         </button>
                       </div>
                       <input
@@ -262,7 +262,7 @@ export default function ProductDetail(props: any) {
                           className="btn btn-primary btn-plus"
                           onClick={() => setQuanlity(quanlity + 1)}
                         >
-                          <i className="fa fa-plus"></i>
+                          <i className="fa-solid fa-plus"></i>
                         </button>
                       </div>
                     </div>
@@ -280,7 +280,7 @@ export default function ProductDetail(props: any) {
                       }}
                     />
                     <button className="btn btn-danger px-3 ml-2">
-                      <i className="fa fa-buysellads mr-1"></i> Mua ngay
+                      <i className="fa-solid fa-buysellads mr-1"></i> Mua ngay
                     </button>
                   </div>
                   <div className="d-flex pt-2">
@@ -388,7 +388,7 @@ export default function ProductDetail(props: any) {
                                             return (
                                               <small
                                                 key={index}
-                                                className="fa fa-star-half-alt text-primary mr-1"
+                                                className="fa-solid fa-star-half-alt text-primary mr-1"
                                               ></small>
                                             );
                                           if (rate < index + 1)
@@ -401,7 +401,7 @@ export default function ProductDetail(props: any) {
                                           return (
                                             <small
                                               key={index}
-                                              className="fa fa-star text-primary mr-1"
+                                              className="fa-solid fa-star text-primary mr-1"
                                             ></small>
                                           );
                                         })}

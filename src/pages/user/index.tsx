@@ -137,13 +137,13 @@ export default function Account() {
                             <div className="border p-3 rounded-3 bg-light">
                               <div>
                                 <b className="mx-2 text-muted">
-                                  <i className="fa fa-user"></i>
+                                  <i className="fa-solid fa-user"></i>
                                 </b>
                                 {name} - {phone}
                               </div>
                               <div>
                                 <b className="mx-2 text-muted">
-                                  <i className="fa fa-map-marker-alt"></i>
+                                  <i className="fa-solid fa-location-dot"></i>
                                 </b>
                                 {` ${street}, ${
                                   JSON.parse(ward)?.name ?? ""
@@ -164,7 +164,7 @@ export default function Account() {
                         setShow(true);
                       }}
                     >
-                      <i className="me-2 fa fa-plus"></i> Thêm địa chỉ
+                      <i className="me-2 fa-solid fa-plus"></i> Thêm địa chỉ
                     </a>
 
                     <hr className="my-4" />

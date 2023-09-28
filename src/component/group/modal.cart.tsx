@@ -82,7 +82,7 @@ export default function GroupAddCart(props: any) {
     >
       <Accordion defaultExpanded={true}>
         <AccordionSummary
-          expandIcon={<i className="fas fa-sort-down" />}
+          expandIcon={<i className="fa-solid fa-sort-down" />}
           aria-controls="panel1a-content"
           id="panel1a-header"
           className="m-0 head-group"
@@ -117,7 +117,7 @@ export default function GroupAddCart(props: any) {
       </Accordion>
       <Accordion defaultExpanded={true}>
         <AccordionSummary
-          expandIcon={<i className="fas fa-sort-down" />}
+          expandIcon={<i className="fa-solid fa-sort-down" />}
           aria-controls="panel1a-content"
           id="panel1a-header"
           className="m-0 head-group"
@@ -152,7 +152,7 @@ export default function GroupAddCart(props: any) {
       </Accordion>
       <Accordion defaultExpanded={true}>
         <AccordionSummary
-          expandIcon={<i className="fas fa-sort-down" />}
+          expandIcon={<i className="fa-solid fa-sort-down" />}
           aria-controls="panel1a-content"
           id="panel1a-header"
           className="m-0 head-group"

@@ -57,7 +57,7 @@ export default function CardProductLong(props: propsIF) {
           <div className="col-12 no-padding d-flex justify-content-between">
             <div>
               {product?.rate ?? 5}
-              <small className="fa fa-star text-primary mr-1"></small>
+              <small className="fa-solid fa-star text-primary mr-1"></small>
               <small>({product?.review?.length ?? 1})</small>
             </div>
             {openModal ? (
@@ -65,7 +65,7 @@ export default function CardProductLong(props: propsIF) {
                 className="btn btn-outline-danger d-block"
                 onClick={openModal}
               >
-                Thêm vào giỏ <i className="fa fa-cart-arrow-down"></i>
+                Thêm vào giỏ <i className="fa-solid fa-cart-arrow-down"></i>
               </button>
             ) : (
               ""

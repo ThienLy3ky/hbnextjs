@@ -16,7 +16,7 @@ export default function Review() {
                 return (
                   <small
                     key={index}
-                    className="fa fa-star-half-alt text-primary mr-1"
+                    className="fa-solid fa-star-half-alt text-primary mr-1"
                     onClick={() => setRate(index + 1)}
                   ></small>
                 );
@@ -24,14 +24,14 @@ export default function Review() {
                 return (
                   <small
                     key={index}
-                    className="far fa-star text-primary mr-1"
+                    className="fa-solid fa-star text-primary mr-1"
                     onClick={() => setRate(index + 1)}
                   ></small>
                 );
               return (
                 <small
                   key={index}
-                  className="fa fa-star text-primary mr-1"
+                  className="fa-solid fa-star text-primary mr-1"
                   onClick={() => setRate(index + 1)}
                 ></small>
               );

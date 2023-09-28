@@ -24,7 +24,7 @@ export default function AddToCart(props: any) {
         );
       }}
     >
-      <i className="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ
+      <i className="fa-solid fa-shopping-cart mr-1"></i> Thêm vào giỏ
     </button>
   );
 }

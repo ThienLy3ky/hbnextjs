@@ -14,7 +14,7 @@ export default function ClientLayout({ children }: any) {
         <MenuClient />
         {children}
         <button className="btn btn-primary back-to-top">
-          <i className="fa fa-angle-double-up"></i>
+          <i className="fa-solid fa-angle-double-up"></i>
         </button>
         <Script
           type="text/javascript"

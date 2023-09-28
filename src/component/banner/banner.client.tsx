@@ -100,7 +100,7 @@ export default function BannerClient(props: any) {
                       }}
                       onClick={handleSearch}
                     >
-                      <i className="fa fa-search"></i>
+                      <i className="fa-solid fa-search"></i>
                     </button>
                   </div>
                 </div>

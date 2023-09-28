@@ -81,7 +81,7 @@ export default function CartDetail(props: any) {
                       style={{ color: "#cecece " }}
                       onClick={() => setCarts(removeProduct(cart))}
                     >
-                      <i className="fas fa-trash-alt"></i>
+                      <i className="fa-solid fa-trash-alt"></i>
                     </button>
                   </div>
                 </div>

@@ -40,7 +40,7 @@ const MenuClient = (props: any) => {
                       data-toggle="collapse"
                       data-target="#navbarSearch"
                     >
-                      <i className="fa fa-search text-primary"></i>
+                      <i className="fa-solid fa-search text-primary"></i>
                     </a>
                   </div>
                   <div className="btn px-0 ml-3 no-padding no-margin">
@@ -65,7 +65,7 @@ const MenuClient = (props: any) => {
                       data-toggle="collapse"
                       href="#user-dropdown"
                     >
-                      <i className="fas fa-user text-primary"></i>
+                      <i className="fa-solid fa-user text-primary"></i>
                     </a>
                     <nav
                       className="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"
@@ -140,7 +140,7 @@ const MenuClient = (props: any) => {
                         data-toggle="collapse"
                         data-target="#navbarSearch"
                       >
-                        <i className="fa fa-search text-primary"></i>
+                        <i className="fa-solid fa-search text-primary"></i>
                       </a>
                     </div>
                     <div className="btn px-0 ml-3 no-padding no-margin">
@@ -165,7 +165,7 @@ const MenuClient = (props: any) => {
                         data-toggle="collapse"
                         href="#user-dropdown"
                       >
-                        <i className="fas fa-user text-primary"></i>
+                        <i className="fa-solid fa-user text-primary"></i>
                       </a>
                       <nav
                         className="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"
@@ -238,7 +238,7 @@ const MenuClient = (props: any) => {
                   onChange={({ target }) => setKey(target.value)}
                 />
                 <button type="submit" className="btn btn-primary">
-                  <i className="fa fa-search"></i>
+                  <i className="fa-solid fa-search"></i>
                 </button>
               </form>
             </div>

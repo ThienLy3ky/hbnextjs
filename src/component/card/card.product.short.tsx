@@ -66,7 +66,7 @@ export default function CardProductShort(props: propsIF) {
         <div className="d-flex justify-content-betwen mt-2">
           <div className="col-6 no-padding">
             {product?.rate ?? 5}
-            <small className="fa fa-star text-primary mr-1"></small>
+            <small className="fa-solid fa-star text-primary mr-1"></small>
             <small>({product?.review?.length ?? 1})</small>
           </div>
           <div

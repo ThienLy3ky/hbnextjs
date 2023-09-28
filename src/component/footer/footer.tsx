@@ -16,16 +16,16 @@ export default function Footer() {
           </h5>
           <p className="mb-4">{Settings?.description}</p>
           <p className="mb-2">
-            <i className="fa fa-map-marker-alt text-primary mr-3"></i>
+            <i className="fa-solid fa-map-marker-alt text-primary mr-3"></i>
             {Settings?.address}
           </p>
           <Link href={"mailto:" + Settings?.email} className="mb-2">
-            <i className="fa fa-envelope text-primary mr-3"></i>
+            <i className="fa-solid fa-envelope text-primary mr-3"></i>
             {Settings?.email}
           </Link>
           <p className="mb-0">
             <Link href={"tel:+84-" + Settings?.SDT} className="mb-0">
-              <i className="fa fa-phone-alt text-primary mr-3"></i>
+              <i className="fa-solid fa-phone-alt text-primary mr-3"></i>
               {Settings?.SDT}
             </Link>
           </p>

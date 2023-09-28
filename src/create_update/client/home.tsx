@@ -120,7 +120,7 @@ export default function HomeModal(props: any) {
                           className="btn btn-primary btn-minus"
                           onClick={() => setQuanlityPr(quanlityPr - 1)}
                         >
-                          <i className="fa fa-minus"></i>
+                          <i className="fa-solid fa-minus"></i>
                         </button>
                       </div>
                       <input
@@ -136,7 +136,7 @@ export default function HomeModal(props: any) {
                           className="btn btn-primary btn-plus"
                           onClick={() => setQuanlityPr(quanlityPr + 1)}
                         >
-                          <i className="fa fa-plus"></i>
+                          <i className="fa-solid fa-plus"></i>
                         </button>
                       </div>
                     </div>
@@ -155,7 +155,7 @@ export default function HomeModal(props: any) {
                     style={{ borderRadius: "10px", height: "20%" }}
                   >
                     {"Mua ngay "}
-                    <i className="fas fa-calculator" />
+                    <i className="fa-solid fa-calculator" />
                   </button>
                   <button
                     className="col-8 btn btn-outline-warning"
@@ -178,7 +178,7 @@ export default function HomeModal(props: any) {
                     }}
                   >
                     Thêm vào giỏ
-                    <i className="fas fa-shopping-cart" />
+                    <i className="fa-solid fa-shopping-cart" />
                   </button>
                 </div>
               ) : (

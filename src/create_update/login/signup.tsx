@@ -127,13 +127,13 @@ export default function Signup(props: any) {
           <InputAdornment position="end">
             {showPassword ? (
               <i
-                className="fa fa-eye"
+                className="fa-solid fa-eye"
                 onClick={handleClickShowPassword}
                 onMouseDown={handleMouseDownPassword}
               ></i>
             ) : (
               <i
-                className="fa fa-eye-slash"
+                className="fa-solid fa-eye-slash"
                 onClick={handleClickShowPassword}
                 onMouseDown={handleMouseDownPassword}
               ></i>
@@ -168,13 +168,13 @@ export default function Signup(props: any) {
           <InputAdornment position="end">
             {showPassword ? (
               <i
-                className="fa fa-eye"
+                className="fa-solid fa-eye"
                 onClick={handleClickShowPassword}
                 onMouseDown={handleMouseDownPassword}
               ></i>
             ) : (
               <i
-                className="fa fa-eye-slash"
+                className="fa-solid fa-eye-slash"
                 onClick={handleClickShowPassword}
                 onMouseDown={handleMouseDownPassword}
               ></i>

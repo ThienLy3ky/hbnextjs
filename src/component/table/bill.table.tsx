@@ -159,7 +159,7 @@ export default function EnhancedTableBill(props: IProps) {
                           ) : val.id === "wasPayment" ? (
                             <SwitchText
                               status={row[val.id]}
-                              left={<i className="fa fa-check"></i>}
+                              left={<i className="fa-solid fa-check"></i>}
                               right={<i className="mdi mdi-close"></i>}
                               change={changePayment}
                             />
