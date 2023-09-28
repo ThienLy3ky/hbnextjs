@@ -14,14 +14,15 @@ import CountDownBtn from "@/src/component/countDown";
 export default function VerifyCode(props: any) {
   const { email = "" } = props;
   const [code, setCode] = useState("");
+  const [loading, setLoading] = useState(false);
   const url = useRouter();
-  const [isLoading, setIsLoadding] = useState(false);
   const [exp, setExp] = useState<any>();
   const today = new Date();
 
   const handerSend = async (e: any) => {
     e.preventDefault();
-    if (code?.length === 5) {
+    setLoading(true);
+    if (code?.length === 5 && !loading) {
       const res = await UserAdminService.verifyCode({ email, code });
       if (res) {
         showNotificationSuccess(email + " Xác thực thành công!");
@@ -29,13 +30,16 @@ export default function VerifyCode(props: any) {
       }
     }
     showNotificationError("Mã code chưa chính xác");
+    setLoading(false);
   };
   const handerReCode = async () => {
     if (!exp) {
+      setLoading(true);
       const res = await UserAdminService.reCode(email);
       const { message, exp, expVerify } = res;
       setExp(exp ?? expVerify ?? undefined);
       setCode("");
+      setLoading(false);
     }
   };
   return (
@@ -62,9 +66,16 @@ export default function VerifyCode(props: any) {
         Email không đúng
       </i>
       <div>
-        <button type="submit">Xác nhận </button>
+        <button disabled={loading} type="submit">
+          Xác nhận{" "}
+        </button>
         {!exp ? (
-          <button type="button" className="forgot ml-3" onClick={handerReCode}>
+          <button
+            disabled={loading}
+            type="button"
+            className="forgot ml-3"
+            onClick={() => (loading ? handerReCode() : {})}
+          >
             Gửi lại mã code
           </button>
         ) : (

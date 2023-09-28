@@ -32,6 +32,7 @@ export default function Signup(props: any) {
   const url = useRouter();
   const handleSingUp = async (e: any) => {
     e.preventDefault();
+
     if (
       !emailSG ||
       !passwordSG ||
@@ -39,14 +40,15 @@ export default function Signup(props: any) {
       validateEmailsSG ||
       validatePasswordSG ||
       validatePasswordRSG ||
-      validatErr
+      validatErr ||
+      loading
     ) {
       setValidateEmailsSG(!emailSG || validateEmailsSG);
       setValidatePasswordSG(!passwordSG || validatePasswordSG);
       showNotificationError("Email or password incorect");
-      setLoading(false);
       return;
     }
+    setLoading(true);
     const res = await UserAdminService.signup({
       emailSG,
       passwordSG,
@@ -57,6 +59,7 @@ export default function Signup(props: any) {
       setTimeout(() => {}, 3000);
       url.replace({ query: { verify: emailSG } });
     }
+    setLoading(false);
     // redirect("/manager");
   };
   const validateEmail = (email: string) => {
@@ -199,7 +202,9 @@ export default function Signup(props: any) {
       ) : (
         ""
       )}
-      <button type="submit">Đăng kí</button>
+      <button disabled={loading} type="submit">
+        Đăng kí
+      </button>
     </form>
   );
 }

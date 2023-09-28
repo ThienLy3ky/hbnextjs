@@ -1,12 +1,18 @@
+import CartContext from "@/src/component/context/client.context";
 import { formatMoney } from "@/src/utils/action.helper";
-import { getCart } from "@/src/utils/cart.client";
+import {
+  decreaseProduct,
+  getCart,
+  increaseProduct,
+  removeProduct,
+} from "@/src/utils/cart.client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function CartDetail(props: any) {
-  const [carts, setCarts] = useState([]);
+  const { carts, setCarts } = useContext(CartContext);
   useEffect(() => {
-    setCarts(getCart());
+    // setCarts(getCart());
   }, []);
   let sumPrice = 0,
     ship = 20000;
@@ -47,17 +53,36 @@ export default function CartDetail(props: any) {
                     </div>
                   </div>
                   <div className="d-flex flex-row align-items-center">
-                    <div style={{ width: "50px" }}>
+                    <div
+                      style={{ width: "100px" }}
+                      className=" d-inline-flex justify-content-center align-items-center"
+                    >
+                      <button
+                        className="btn"
+                        onClick={() => setCarts(decreaseProduct(cart))}
+                      >
+                        -
+                      </button>
                       <h5 className="fw-normal mb-0">{cart.quanlity}</h5>
+                      <button
+                        className="btn"
+                        onClick={() => setCarts(increaseProduct(cart))}
+                      >
+                        +
+                      </button>
                     </div>
-                    <div style={{ width: "80px" }}>
+                    <div style={{ width: "150px" }}>
                       <h5 className="mb-0">
                         {formatMoney(cart.priceNew * cart?.quanlity)}
                       </h5>
                     </div>
-                    <a href="#!" style={{ color: "#cecece " }}>
+                    <button
+                      className="btn btn-outline-primary"
+                      style={{ color: "#cecece " }}
+                      onClick={() => setCarts(removeProduct(cart))}
+                    >
                       <i className="fas fa-trash-alt"></i>
-                    </a>
+                    </button>
                   </div>
                 </div>
               )

@@ -49,7 +49,7 @@ const MenuClient = (props: any) => {
                       data-toggle="collapse"
                       href="#cart-dropdown"
                     >
-                      <i className="fas fa-shopping-cart text-primary"></i>
+                      <i className="fa-solid fa-cart-shopping text-primary"></i>
                     </a>
                     <span
                       className="badge number-noti rounded-circle"
@@ -149,7 +149,7 @@ const MenuClient = (props: any) => {
                         data-toggle="collapse"
                         href="#cart-dropdown"
                       >
-                        <i className="fas fa-shopping-cart text-primary"></i>
+                        <i className="fa-solid fa-cart-shopping text-primary"></i>
                       </a>
                       <span
                         className="badge number-noti rounded-circle"

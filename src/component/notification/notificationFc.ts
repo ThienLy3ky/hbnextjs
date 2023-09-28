@@ -1,8 +1,6 @@
 import { toast } from "react-toastify";
 
 export const showNotificationError = (errorMessage = "") => {
-  console.log("loi");
-
   toast.error(errorMessage, {
     hideProgressBar: true,
     autoClose: 5000,

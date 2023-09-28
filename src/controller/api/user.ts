@@ -55,7 +55,7 @@ const UserService = {
       this.updateProfile.name,
       cancelTokenHandlerObject,
       null,
-      { data },
+      data,
       null
     );
   },

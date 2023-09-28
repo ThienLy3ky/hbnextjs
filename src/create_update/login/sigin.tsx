@@ -32,14 +32,14 @@ export default function Sigin(props: any) {
   const dispatch = useDispatch();
   const handleLogin = async (e: any) => {
     e.preventDefault();
-    setLoading(true);
-    if (!email || !password || validateEmails || validatePassword) {
+
+    if (!email || !password || validateEmails || validatePassword || loading) {
       setValidateEmails(!email || validateEmails);
       setValidatePassword(!password || validatePassword);
       showNotificationError("Email or password incorect");
-      setLoading(false);
       return;
     }
+    setLoading(true);
     const res = await UserAdminService.login({ email, password });
     const { access_token, role } = res;
 

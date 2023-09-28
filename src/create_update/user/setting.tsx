@@ -3,8 +3,9 @@ import {
   showNotificationSuccess,
 } from "@/src/component/notification/notificationFc";
 import UserService from "@/src/controller/api/user";
-import { OutlinedInput, InputAdornment } from "@mui/material";
+import { OutlinedInput, InputAdornment, CircularProgress } from "@mui/material";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function Setting({ data }: any) {
@@ -15,7 +16,9 @@ export default function Setting({ data }: any) {
   const [newPassWord, setNewPassWord] = useState("");
   const [reNewPass, setReNewPass] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const [err, setErr] = useState<string>();
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (
@@ -24,6 +27,8 @@ export default function Setting({ data }: any) {
     event.preventDefault();
   };
   const handleUpdate = async () => {
+    if (loading) return;
+    setLoading(true);
     const res = await UserService.updateProfile({
       name,
       sdt: phone,
@@ -33,11 +38,21 @@ export default function Setting({ data }: any) {
     res
       ? showNotificationSuccess("Cập nhật thành công")
       : showNotificationError("Thay đổi chưa thành công");
-    console.log("🚀 ~ file: setting.tsx:24 ~ handleUpdate ~ res:", res);
+    setLoading(false);
   };
   const handleChangePass = async () => {
+    if (newPassWord !== reNewPass) {
+      setErr(" Mật khẩu mới không trùng");
+      showNotificationError("Dữ liệu không đúng");
+      return;
+    }
+    if (loading) return;
+    setLoading(true);
     const res = await UserService.changePassword({ password, newPassWord });
-    console.log("🚀 ~ file: setting.tsx:33 ~ handleChangePass ~ res:", res);
+    res
+      ? showNotificationSuccess("Cập nhật thành công")
+      : showNotificationError("Thay đổi chưa thành công");
+    router.replace("/login");
   };
   useEffect(() => {
     setName(data.name ?? "");
@@ -135,13 +150,19 @@ export default function Setting({ data }: any) {
           <div className="form-group col-12 row">
             <label className="col-12 col-md-3 control-label"></label>
             <div className="col-12 col-md-8">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => handleUpdate()}
-              >
-                Lưu
-              </button>
+              {loading ? (
+                <button type="button" className="btn btn-primary">
+                  <CircularProgress />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => handleUpdate()}
+                >
+                  Lưu
+                </button>
+              )}
             </div>
           </div>
         </form>
@@ -206,7 +227,10 @@ export default function Setting({ data }: any) {
                 className="col-12"
                 type={showPassword ? "text" : "password"}
                 value={newPassWord}
-                onChange={({ target }) => setNewPassWord(target.value)}
+                onChange={({ target }) => {
+                  setNewPassWord(target.value);
+                  target.value === reNewPass ? setErr(undefined) : "";
+                }}
               />
             </div>
           </div>
@@ -235,20 +259,34 @@ export default function Setting({ data }: any) {
                 className="col-12"
                 type={showPassword ? "text" : "password"}
                 value={reNewPass}
-                onChange={({ target }) => setReNewPass(target.value)}
+                onChange={({ target }) => {
+                  setReNewPass(target.value);
+                  target.value === newPassWord ? setErr(undefined) : "";
+                }}
               />
             </div>
+            {err ? (
+              <i className="col-12 text-center text-primary">{err}</i>
+            ) : (
+              ""
+            )}
           </div>
           <div className="form-group col-12 row">
             <label className="col-12 col-md-3 control-label"></label>
             <div className="col-12 col-md-8">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => handleChangePass()}
-              >
-                Lưu
-              </button>
+              {loading ? (
+                <button type="button" className="btn btn-primary">
+                  <CircularProgress />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => handleChangePass()}
+                >
+                  Lưu
+                </button>
+              )}
             </div>
           </div>
         </form>

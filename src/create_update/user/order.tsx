@@ -1,3 +1,8 @@
+import {
+  showNotificationError,
+  showNotificationSuccess,
+} from "@/src/component/notification/notificationFc";
+import UserService from "@/src/controller/api/user";
 import useProfilelHook from "@/src/controller/hooks/profile.hook";
 import { formatMoney } from "@/src/utils/action.helper";
 import Image from "next/image";
@@ -11,9 +16,22 @@ const status: any = {
   3: "Đang giao",
   4: "Hoàn Thành",
 };
-export default function Order({ handleCancel }: any) {
+export default function Order(props: any) {
   const [statusBill, setStatusBill] = useState<number>();
-  const { data } = useProfilelHook(statusBill);
+  const [loading, setLoading] = useState(false);
+  const { data, refetch } = useProfilelHook(statusBill);
+  const handleCancel = async (code: string) => {
+    if (loading) return;
+    setLoading(true);
+    const res = await UserService.cancelOrder(code);
+    if (res) {
+      showNotificationSuccess("Đã huỷ đơn");
+      refetch();
+      return;
+    }
+    showNotificationError("Lỗi huỷ đơn");
+    setLoading(false);
+  };
   return (
     <>
       <h5 className="mb-3">Đơn hàng của bạn</h5>

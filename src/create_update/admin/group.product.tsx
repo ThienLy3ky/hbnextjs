@@ -50,6 +50,7 @@ export default function ProductGroup(props: IGroupProps) {
   const [imagesUpload, setImageUploadC] = useState<Array<Object>>([]);
   const [imagesDelete, setImageDeleteC] = useState<Array<String>>([]);
   const [check, setCheck] = useState<Array<Object>>([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     setCheck([]);
     setImageDeleteC([]);
@@ -60,14 +61,16 @@ export default function ProductGroup(props: IGroupProps) {
   const err = false;
 
   const handleSubmit = () => {
-    if (checkExit()) {
+    if (checkExit() || loading) {
       showNotificationError("Dữ liệu trùng lặp");
       return;
     }
+    setLoading(true);
     onSave(groupPrice);
     setImageDelete(imagesDelete);
     setImageUpload(imagesUpload);
     onclose(false);
+    setLoading(false);
   };
   const add = () => {
     setGroupPrice([

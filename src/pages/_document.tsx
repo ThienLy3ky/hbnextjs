@@ -1,16 +1,11 @@
 import { Html, Head, Main, NextScript } from "next/document";
 import Script from "next/script";
-
 export default function Document() {
   return (
     <Html lang="en">
       <Head>
         <meta name="deScription" content="Health and beautiful " />
         <link rel="manifest" href="/manifest.json" />
-        <link
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-          rel="stylesheet"
-        />
       </Head>
       <body>
         <Main />
@@ -33,6 +28,11 @@ export default function Document() {
         <Script
           type="text/javascript"
           src="/static/library/js/index.js"
+        ></Script>
+        <Script
+          type="text/javascript"
+          src="/static/library/font-awesome/js/fontawesome.min.js"
+          strategy="beforeInteractive"
         ></Script>
       </body>
     </Html>

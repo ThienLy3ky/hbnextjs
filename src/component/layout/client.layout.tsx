@@ -5,21 +5,24 @@ import Header from "@/src/component/header/index.client";
 import "@/public/static/library/css/style.css";
 import Script from "next/script";
 import Footer from "../footer/footer";
+import ToastProvider from "../notification";
 export default function ClientLayout({ children }: any) {
   return (
     <CartProvider value="any">
-      <Header />
-      <MenuClient />
-      {children}
-      <button className="btn btn-primary back-to-top">
-        <i className="fa fa-angle-double-up"></i>
-      </button>
-      <Script
-        type="text/javascript"
-        src="/static/library/js/main.js"
-        strategy="lazyOnload"
-      ></Script>
-      <Footer />
+      <ToastProvider>
+        <Header />
+        <MenuClient />
+        {children}
+        <button className="btn btn-primary back-to-top">
+          <i className="fa fa-angle-double-up"></i>
+        </button>
+        <Script
+          type="text/javascript"
+          src="/static/library/js/main.js"
+          strategy="lazyOnload"
+        ></Script>
+        <Footer />
+      </ToastProvider>
     </CartProvider>
   );
 }

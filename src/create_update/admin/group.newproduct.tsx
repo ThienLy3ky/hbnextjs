@@ -37,14 +37,7 @@ interface IGroupProps {
 // };
 export default function NewProductGroup(props: IGroupProps) {
   const { options, openModal, onclose, groups, onSave } = props;
-  const [size, setSize] = useState("");
-  const [priceOlder, setpriceOlder] = useState(0);
-  const [priceNew, setpriceNew] = useState(0);
-  // const [group, setgroup] = useState("");
-  const [groupPrice, setGroupPrice] = useState<Array<IGroupconst>>([]);
-  const [style, setStyle] = useState("");
-  const [quantity, setquantity] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const err = false;
 
   const handleSubmit = () => {
@@ -160,6 +153,7 @@ export default function NewProductGroup(props: IGroupProps) {
         <FooterModal
           save="Lưu"
           cancel="Huỷ"
+          loading={loading}
           onCancel={() => onclose(false)}
           onsubmit={() => handleSubmit()}
         />

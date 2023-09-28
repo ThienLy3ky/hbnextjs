@@ -94,6 +94,7 @@ export default function TypeModal(props: any) {
         {!err ? (
           <FooterModal
             save="Lưu"
+            loading={loading}
             cancel="Huỷ"
             onCancel={() => onclose(false)}
           />

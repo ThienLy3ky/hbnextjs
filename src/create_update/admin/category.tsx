@@ -130,6 +130,7 @@ export default function CategoryModal(props: any) {
         {!err ? (
           <FooterModal
             save="Lưu"
+            loading={loading}
             cancel="Huỷ"
             onCancel={() => onclose(false)}
           />

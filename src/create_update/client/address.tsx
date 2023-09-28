@@ -1,4 +1,4 @@
-import { Modal } from "@mui/material";
+import { CircularProgress, Modal } from "@mui/material";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Provices from "@/src/config/tinh_tp.json";
@@ -12,6 +12,7 @@ import {
 import UserService from "@/src/controller/api/user";
 export default function AddressModal(props: any) {
   const { show, onclose, data = [], setData } = props;
+  const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState({
     provice: "{}",
     ditrict: "{}",
@@ -28,6 +29,7 @@ export default function AddressModal(props: any) {
   );
   useEffect(() => {}, []);
   const handleAdd = async () => {
+    if (loading) return;
     if (
       address.name === "" ||
       address.phone === "" ||
@@ -39,11 +41,13 @@ export default function AddressModal(props: any) {
       showNotificationError("Dữ liệu chưa chính xác");
       return;
     }
+    setLoading(true);
     const res = await UserService.addAddress(JSON.stringify(address));
     if (!res) showNotificationError("Loi tao moi");
     showNotificationSuccess("Tao thanh cong");
     setData(JSON.stringify(address));
     data.push(JSON.stringify(address));
+    setLoading(false);
     onclose();
   };
   return (
@@ -100,7 +104,8 @@ export default function AddressModal(props: any) {
                     onClick={() => setData(item)}
                   >
                     <div>
-                      Tên: <b className=" text-primary">{name}</b>
+                      <i className="fa"></i>:{" "}
+                      <b className=" text-primary">{name}</b>
                     </div>
                     <div>
                       {" "}
@@ -215,12 +220,16 @@ export default function AddressModal(props: any) {
                   </select>
                 </div>
                 <div className="col-12 d-flex justify-content-center">
-                  <button
-                    className="btn btn-warning"
-                    onClick={() => handleAdd()}
-                  >
-                    Save
-                  </button>
+                  {loading ? (
+                    <CircularProgress />
+                  ) : (
+                    <button
+                      className="btn btn-warning"
+                      onClick={() => handleAdd()}
+                    >
+                      Save
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

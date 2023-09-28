@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import "@/public/static/library/css/bootstrap.min.css";
 import "@/public/static/library/css/owl.carousel.min.css";
+import "@/public/static/library/font-awesome/css/all.min.css";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { Provider } from "react-redux";
 import { store } from "../controller/store";

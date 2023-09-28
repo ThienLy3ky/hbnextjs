@@ -70,30 +70,30 @@ export const addCart = (productAdd: productcart) => {
   setCartToLS(JSON.stringify(products));
   return products;
 };
-// export const increaseProduct = (id: string) => {
-//   let products = getCartFromLS() ? JSON.parse(getCartFromLS()) : false;
-//   products?.find((product, i: number) => {
-//     if (product.id === id) {
-//       if (parseInt(product.quanlity) == 100) return;
-//       products[i].quanlity++;
-//     }
-//     return products;
-//   });
-//   setCartToLS(JSON.stringify(products));
-//   return products;
-// };
-// export const decreaseProduct = (id) => {
-//   let products = getCartFromLS() ? JSON.parse(getCartFromLS()) : false;
-//   products?.find((product, i) => {
-//     if (product?.id === id) {
-//       if (parseInt(product.quanlity) <= 1) products.splice(i, 1);
-//       else products[i].quanlity--;
-//     }
-//     return products;
-//   });
-//   setCartToLS(JSON.stringify(products));
-//   return products;
-// };
+export const increaseProduct = (productAdd: productcart) => {
+  let products = getCartFromLS() ? JSON.parse(getCartFromLS()) : false;
+  products?.find((product: productcart, i: number) => {
+    if (product._id === productAdd._id) {
+      if (product.quanlity >= 100) return;
+      products[i].quanlity++;
+    }
+    return products;
+  });
+  setCartToLS(JSON.stringify(products));
+  return products;
+};
+export const decreaseProduct = (productAdd: productcart) => {
+  let products = getCartFromLS() ? JSON.parse(getCartFromLS()) : false;
+  products?.find((product: productcart, i: number) => {
+    if (product?._id === productAdd._id) {
+      if (product.quanlity <= 1) products.splice(i, 1);
+      else products[i].quanlity--;
+    }
+    return products;
+  });
+  setCartToLS(JSON.stringify(products));
+  return products;
+};
 // export const changeProduct = (id, value) => {
 //   let products = getCartFromLS() ? JSON.parse(getCartFromLS()) : false;
 //   if (parseInt(value) <= 100)
@@ -106,15 +106,15 @@ export const addCart = (productAdd: productcart) => {
 //   setCartToLS(JSON.stringify(products));
 //   return products;
 // };
-// export const removeProduct = (id) => {
-//   let products = getCartFromLS() ? JSON.parse(getCartFromLS()) : false;
-//   products?.find((product, i) => {
-//     if (product?.id === id) products.splice(i, 1);
-//     return products;
-//   });
-//   setCartToLS(JSON.stringify(products));
-//   return products;
-// };
+export const removeProduct = (productAdd: productcart) => {
+  let products = getCartFromLS() ? JSON.parse(getCartFromLS()) : false;
+  products?.find((product: productcart, i: number) => {
+    if (product?._id === productAdd._id) products.splice(i, 1);
+    return products;
+  });
+  setCartToLS(JSON.stringify(products));
+  return products;
+};
 export const getCart = () => {
   try {
     return getCartFromLS() ? JSON.parse(getCartFromLS()) : false;
