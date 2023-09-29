@@ -17,7 +17,7 @@ export const addCart = (productAdd: productcart) => {
     : false;
   let isProduct = false;
   if (products && products.length > 0) {
-    products?.find((product: productcart, i: number) => {
+    products?.filter((product: productcart, i: number) => {
       if (
         product._id === productAdd._id &&
         product.group._id === productAdd.group?._id &&
@@ -72,8 +72,13 @@ export const addCart = (productAdd: productcart) => {
 };
 export const increaseProduct = (productAdd: productcart) => {
   let products = getCartFromLS() ? JSON.parse(getCartFromLS()) : false;
-  products?.find((product: productcart, i: number) => {
-    if (product._id === productAdd._id) {
+  products?.filter((product: productcart, i: number) => {
+    if (
+      product._id === productAdd._id &&
+      product.group._id === productAdd.group?._id &&
+      product.size._id === productAdd.size._id &&
+      product.style._id === productAdd.style._id
+    ) {
       if (product.quanlity >= 100) return;
       products[i].quanlity++;
     }
@@ -84,8 +89,13 @@ export const increaseProduct = (productAdd: productcart) => {
 };
 export const decreaseProduct = (productAdd: productcart) => {
   let products = getCartFromLS() ? JSON.parse(getCartFromLS()) : false;
-  products?.find((product: productcart, i: number) => {
-    if (product?._id === productAdd._id) {
+  products?.filter((product: productcart, i: number) => {
+    if (
+      product._id === productAdd._id &&
+      product.group._id === productAdd.group?._id &&
+      product.size._id === productAdd.size._id &&
+      product.style._id === productAdd.style._id
+    ) {
       if (product.quanlity <= 1) products.splice(i, 1);
       else products[i].quanlity--;
     }
@@ -109,7 +119,13 @@ export const decreaseProduct = (productAdd: productcart) => {
 export const removeProduct = (productAdd: productcart) => {
   let products = getCartFromLS() ? JSON.parse(getCartFromLS()) : false;
   products?.find((product: productcart, i: number) => {
-    if (product?._id === productAdd._id) products.splice(i, 1);
+    if (
+      product._id === productAdd._id &&
+      product.group._id === productAdd.group?._id &&
+      product.size._id === productAdd.size._id &&
+      product.style._id === productAdd.style._id
+    )
+      products.splice(i, 1);
     return products;
   });
   setCartToLS(JSON.stringify(products));

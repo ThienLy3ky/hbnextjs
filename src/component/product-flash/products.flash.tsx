@@ -1,6 +1,7 @@
 import "@/public/static/css/owl-carousel-custom.css";
 import CardProductShort from "@/src/component/card/card.product.short";
 import dynamic from "next/dynamic";
+import CountDownBtn from "../countDown";
 const ReactOwlCarousel = dynamic(() => import("react-owl-carousel"), {
   // Do not import in server side
   ssr: false,
@@ -46,11 +47,14 @@ export default function FlashProducts(props: any) {
           style={{
             right: "0px",
             color: "red",
-            backgroundColor: "white",
             padding: "0 15px",
           }}
-          id="time-count"
-        ></a>
+        >
+          <CountDownBtn
+            time={59 * 60 * 1000 + 59 * 1000}
+            setExp={() => {}}
+          ></CountDownBtn>
+        </a>
       </div>
 
       <div className="row px-xl-5">

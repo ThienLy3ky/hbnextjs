@@ -32,7 +32,9 @@ export default function CardProductShort(props: propsIF) {
             <button
               className="btn btn-slide btn-square btn-cart"
               onClick={openModal}
-            ></button>
+            >
+              <i className="fa-solid fa-cart-plus"></i>
+            </button>
           </div>
         </div>
       ) : (

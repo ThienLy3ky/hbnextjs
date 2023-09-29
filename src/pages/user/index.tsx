@@ -11,10 +11,13 @@ import CartDetail from "@/src/create_update/user/cart";
 import Order from "@/src/create_update/user/order";
 import Setting from "@/src/create_update/user/setting";
 import { formatMoney } from "@/src/utils/action.helper";
+import { productcart } from "@/src/utils/cart.client";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import CheckOut from "../checkout";
+import CheckOutContent from "@/src/create_update/checkout";
 const status: any = {
   0: "Đã huỷ",
   1: "Đang xử lý",
@@ -26,7 +29,8 @@ export default function Account() {
   const { data, isLoading } = useUserHook();
   const { data: bills, refetch } = useProfilelHook(undefined);
   const router = useRouter();
-
+  const [showPayment, setShowPayment] = useState(false);
+  const [productPayment, setProductPayment] = useState<productcart[]>();
   const [show, setShow] = useState(false);
   useEffect(() => {
     if (!data && !isLoading) router.replace("./");
@@ -306,8 +310,11 @@ export default function Account() {
                                               </div>
                                             </div>
                                             <strong className="ml-2">
-                                              {product.quanlity} =
-                                              {formatMoney(product.price)}
+                                              {product.quanlity}x =
+                                              <i className="text-primary">
+                                                {" " +
+                                                  formatMoney(product.price)}
+                                              </i>
                                             </strong>
                                           </li>
                                         );
@@ -324,7 +331,19 @@ export default function Account() {
                     <Order handleCancel={(code: any) => handleCancel(code)} />
                   </div>
                   <div className="tab-pane fade" id="tab-pane-cart">
-                    <CartDetail />
+                    <CartDetail
+                      showPayment={() => setShowPayment(true)}
+                      setproductPayment={(data: productcart[]) =>
+                        setProductPayment(data)
+                      }
+                      productPayment={productPayment}
+                    />
+                    <CheckOutContent
+                      showMD={showPayment}
+                      onclose={() => setShowPayment(false)}
+                      data={data}
+                      products={productPayment}
+                    />
                   </div>
                   <div className="tab-pane fade" id="tab-pane-setting">
                     <Setting data={data} />

@@ -6,7 +6,7 @@ import CheckOutContent from "@/src/create_update/checkout";
 export default function CheckOut() {
   const { data, isLoading, refetch } = useUserHook();
 
-  return (
+  return !isLoading ? (
     <ClientLayout>
       <Title
         nameLink={{ name: "Trang Chủ", link: "/" }}
@@ -14,5 +14,7 @@ export default function CheckOut() {
       />
       <CheckOutContent data={data} />
     </ClientLayout>
+  ) : (
+    ""
   );
 }

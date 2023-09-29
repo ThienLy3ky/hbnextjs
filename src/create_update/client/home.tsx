@@ -155,7 +155,7 @@ export default function HomeModal(props: any) {
                     style={{ borderRadius: "10px", height: "20%" }}
                   >
                     {"Mua ngay "}
-                    <i className="fa-solid fa-calculator" />
+                    <i className="fa-solid fa-money-bill-transfer"></i>
                   </button>
                   <button
                     className="col-8 btn btn-outline-warning"

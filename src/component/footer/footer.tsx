@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { it } from "node:test";
 import { useSelector } from "react-redux";
@@ -88,8 +89,22 @@ export default function Footer() {
                 <a className="btn btn-primary btn-square mr-2" href="#">
                   <i className="fab fa-linkedin-in"></i>
                 </a>
-                <a className="btn btn-primary btn-square" href="#">
+                <a className="btn btn-primary btn-square mr-2" href="#">
                   <i className="fab fa-instagram"></i>
+                </a>
+                <a
+                  className="btn btn-primary btn-square"
+                  href={Settings?.Zalolink}
+                >
+                  <Image
+                    alt="Zalo"
+                    height={20}
+                    width={20}
+                    style={{
+                      filter: "invert(100%) ",
+                    }}
+                    src="/static/image/zalo.png"
+                  />
                 </a>
               </div>
             </div>

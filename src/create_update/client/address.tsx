@@ -104,16 +104,16 @@ export default function AddressModal(props: any) {
                     onClick={() => setData(item)}
                   >
                     <div>
-                      <i className="fa"></i>:{" "}
-                      <b className=" text-primary">{name}</b>
+                      <i className="fa-regular fa-address-card"></i>:{" "}
+                      <b className=" text-info">{name}</b>
                     </div>
                     <div>
-                      {" "}
-                      SĐT: <b className=" text-primary">{phone}</b>
+                      <i className="fa-solid fa-mobile-screen-button"></i>:{" "}
+                      <b className=" text-primary">{phone}</b>
                     </div>
                     <div>
-                      Địa chỉ:{" "}
-                      <b className=" text-primary">
+                      <i className="fa-solid fa-map-location-dot"></i>:{" "}
+                      <b className=" text-blue">
                         {street},{JSON.parse(ward)?.name ?? ""},
                         {JSON.parse(ditrict)?.name ?? ""},
                         {JSON.parse(provice)?.name ?? ""}

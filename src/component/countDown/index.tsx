@@ -11,7 +11,7 @@ export default function CountDownBtn(props: any) {
     Math.floor(((time % (60 * 60 * 1000)) % (60 * 1000)) / 1000)
   );
   useEffect(() => {
-    setText(Min + ":" + Sec);
+    setText((Min < 10 ? "0" + Min : Min) + ":" + (Sec < 10 ? "0" + Sec : Sec));
     let myInterval = setInterval(() => {
       if (Sec > 0) {
         setSec(Sec - 1);

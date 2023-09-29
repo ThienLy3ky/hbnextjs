@@ -166,7 +166,10 @@ export default function Order(props: any) {
                                 </div>
                               </div>
                               <strong className="ml-2">
-                                {product.quanlity} ={formatMoney(product.price)}
+                                {product.quanlity}x =
+                                <i className="text-primary">
+                                  {" " + formatMoney(product.price)}
+                                </i>
                               </strong>
                             </li>
                           );

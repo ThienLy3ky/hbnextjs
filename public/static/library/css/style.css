@@ -10862,9 +10862,11 @@ h6 {
   height: 200px;
 }
 .btn-slide {
-  background: var(--warning);
-  width: 0px;
-  height: 0%;
+  color: red;
+  background: transparent;
+  width: 0;
+  height: 0;
+  font-size: 0;
   animation: display-out 0.3s;
   margin: 0 5px 0 0 !important;
   border: 0;
@@ -10875,6 +10877,7 @@ h6 {
   animation: display-over 0.5s;
   width: 30px;
   height: 30px;
+  font-size: 1.5rem;
   animation-timing-function: ease-out;
   background-size: 100%;
   background-repeat: no-repeat;
@@ -10885,11 +10888,13 @@ h6 {
   to {
     width: 30px;
     height: 30px;
+    font-size: 1.5rem;
     transform: rotate(0deg);
   }
   from {
     width: 0;
     height: 0;
+    font-size: 0;
     transform: rotate(180deg);
   }
 }
@@ -10897,15 +10902,16 @@ h6 {
   from {
     width: 30px;
     height: 30px;
+    font-size: 1.5rem;
     transform: rotate(0deg);
   }
   to {
     height: 0;
+    font-size: 0;
     transform: rotate(180deg);
   }
 }
 .btn-cart {
-  background-image: url("/static/image/cart.png");
   cursor: url("/static/image/cart.png"), auto;
 }
 .btn-heart {
