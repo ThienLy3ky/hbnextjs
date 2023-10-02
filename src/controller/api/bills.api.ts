@@ -25,6 +25,26 @@ const BillService = {
       payload
     );
   },
+  updateStatus(id: string, payload: object) {
+    return APIService.request(
+      METHOD_TYPE.PATCH,
+      `${apiUrl}/status/${id}`,
+      this.updateStatus.name,
+      cancelTokenHandlerObject,
+      null,
+      payload
+    );
+  },
+  updatePayment(id: string, payload: object) {
+    return APIService.request(
+      METHOD_TYPE.PATCH,
+      `${apiUrl}/payment/${id}`,
+      this.updatePayment.name,
+      cancelTokenHandlerObject,
+      null,
+      payload
+    );
+  },
 
   delete(id: string) {
     return APIService.request(

@@ -139,3 +139,22 @@ export const getCart = () => {
     return "";
   }
 };
+export const setCartsCT = (
+  carts: productcart[],
+  productCart: productcart[]
+) => {
+  const data = carts.filter((__product: productcart, i: number) => {
+    for (const _product of productCart) {
+      if (
+        _product._id === __product._id &&
+        _product.group._id === __product.group?._id &&
+        _product.size._id === __product.size._id &&
+        _product.style._id === __product.style._id
+      )
+        return false;
+    }
+    return __product;
+  });
+  setCartToLS(JSON.stringify(data));
+  return data;
+};

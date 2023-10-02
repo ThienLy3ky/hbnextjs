@@ -21,7 +21,6 @@ export default function CartDetail({
   productPayment?: productcart[];
 }) {
   const { carts, setCarts } = useContext(CartContext);
-  console.log("🚀 ~ file: cart.tsx:24 ~ carts:", carts);
   useEffect(() => {
     // setCarts(getCart());
   }, []);

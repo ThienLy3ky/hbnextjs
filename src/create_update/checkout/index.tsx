@@ -12,6 +12,7 @@ import {
   increaseProduct,
   productcart,
   removeProduct,
+  setCartsCT,
 } from "@/src/utils/cart.client";
 import { Checkbox, Modal } from "@mui/material";
 import Image from "next/image";
@@ -26,15 +27,16 @@ export default function CheckOutContent({
   products,
   setData,
 }: any) {
-  const [carts, setCarts] = useState<any[]>();
+  const { carts, setCarts } = useContext(CartContext);
+  const [productCart, setproductCart] = useState<any[]>();
   const [show, setShow] = useState(false);
   const [address, setAddress] = useState("{}");
   const [typePayment, settypePayment] = useState<number>();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    setCarts(products);
-    setAddress(data?.address[0] ? data?.address[0] ?? "{}" : "{}");
+    setproductCart(products);
+    setAddress(data?.address ? data?.address[0] ?? "{}" : "{}");
   }, [data, products]);
   let sumPrice = 0,
     ship = 20000;
@@ -47,13 +49,13 @@ export default function CheckOutContent({
     name = "",
   } = JSON.parse(address);
   const payment = async () => {
-    if (!carts || carts.length === 0) {
+    if (!productCart || productCart.length === 0) {
       showNotificationError("Chưa có sản phẩm trong giỏ hàng");
       return;
     }
     if (loading) return;
     setLoading(true);
-    const product = carts.map(
+    const product = productCart.map(
       ({ _id, group, name, size, style, priceNew, quanlity }: productcart) => {
         return {
           _id,
@@ -66,6 +68,7 @@ export default function CheckOutContent({
         };
       }
     );
+
     const res = await ClientService.payment({
       address: JSON.parse(address),
       typePayment,
@@ -74,8 +77,10 @@ export default function CheckOutContent({
     });
     if (res) {
       showNotificationSuccess("Thanh toán thành công");
-      clearCartFromLS();
-      router.replace("/user");
+      setCarts(setCartsCT(carts, productCart));
+      if (typePayment === 1) {
+      }
+      router.reload();
     }
     setLoading(false);
   };
@@ -108,8 +113,8 @@ export default function CheckOutContent({
               <div className="bg-light p-30 mb-5">
                 <div className="border-bottom">
                   <h6 className="mb-3">Sản phẩm</h6>
-                  {carts ? (
-                    carts.map(
+                  {productCart ? (
+                    productCart.map(
                       (cart: any, index: number) => (
                         (sumPrice = sumPrice + cart?.quanlity * cart?.priceNew),
                         (
@@ -282,7 +287,7 @@ export default function CheckOutContent({
                       </div>
                     </div>
                   </div>
-                  {carts && carts.length > 0 ? (
+                  {productCart && productCart.length > 0 ? (
                     data ? (
                       <button
                         className="btn btn-block btn-primary font-weight-bold py-3"

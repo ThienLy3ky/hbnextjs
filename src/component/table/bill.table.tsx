@@ -26,6 +26,13 @@ interface HeadCell {
   numeric: boolean;
   sort: boolean;
 }
+const status: any = {
+  0: "Đã huỷ",
+  1: "Đang xử lý",
+  2: "Đang đóng gói",
+  3: "Đang giao",
+  4: "Hoàn Thành",
+};
 const StatusBill = ["Cancel", "Pendding", "Processing", "Shipping", "complete"];
 function EnhancedTableHead(props: any) {
   const { option, onSelectAllClick, order, numSelected, rowCount, setOder } =
@@ -87,6 +94,8 @@ interface IProps {
   isPagination: boolean;
   changeStatus: any;
   changePayment: any;
+  setStatus: any;
+  setPayment: any;
 }
 export default function EnhancedTableBill(props: IProps) {
   const {
@@ -105,7 +114,8 @@ export default function EnhancedTableBill(props: IProps) {
     isPagination,
     onUpdate,
     changePayment,
-    changeStatus,
+    setStatus,
+    setPayment,
   } = props;
   const [selected, setSelected] = React.useState<readonly string[]>([]);
 
@@ -153,15 +163,25 @@ export default function EnhancedTableBill(props: IProps) {
                           key={index}
                         >
                           {val.id === "status" ? (
-                            <button className="btn btn-success">
-                              {StatusBill[row[val.id]]}
+                            <button
+                              className={"btn status-" + row[val.id]}
+                              onClick={() =>
+                                setStatus({ id: row.code, value: row[val.id] })
+                              }
+                            >
+                              {status[row[val.id]]}
                             </button>
                           ) : val.id === "wasPayment" ? (
                             <SwitchText
                               status={row[val.id]}
                               left={<i className="fa-solid fa-check"></i>}
                               right={<i className="mdi mdi-close"></i>}
-                              change={changePayment}
+                              change={() =>
+                                changePayment({
+                                  id: row.code,
+                                  value: row[val.id],
+                                })
+                              }
                             />
                           ) : (
                             row[val.id]

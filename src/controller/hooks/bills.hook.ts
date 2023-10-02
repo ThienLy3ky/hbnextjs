@@ -5,7 +5,6 @@ import BillService from "../api/bills.api";
 const getData = async ({ queryKey }: any) => {
   const query = queryKey[1];
   const res = await BillService.getAll(query);
-  console.log("🚀 ~ file: bills.hook.ts:8 ~ getData ~ res:", res);
   return {
     items: res?.items || [],
     totalPages: res?.totalPages || 0,
