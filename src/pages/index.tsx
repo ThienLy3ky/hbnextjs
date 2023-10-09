@@ -45,7 +45,7 @@ export default function Home() {
           data={data.saleProduct}
         />
       </div>
-      <Sale data={data.bannerImage} />
+      {/* <Sale data={data.bannerImage} /> */}
       <HomeModal
         show={showmodal}
         data={product}
